@@ -1,7 +1,6 @@
-### File managed with puppet ###
-## Served by:   Unable to determine (static file).
-## Module:      'puppet'
-## File source: 'MODULES/puppet/files/config.ru'
+### Next part of the file is managed by a different template ###
+## Module:           'puppet'
+## Template source:  'MODULES/puppet/templates/server/config.ru.erb'
 # a config.ru, for use with every rack-compatible webserver.
 # SSL needs to be handled outside this, though.
 

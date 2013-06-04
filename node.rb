@@ -1,21 +1,21 @@
 #!/usr/bin/env ruby
-### File managed with puppet ###
+#### File managed with puppet ###
 ## Served by:        ''
 ## Module:           'foreman'
 ## Template source:  'MODULES/foreman/templates/external_node.rb.erb'
 
-
+# If copying this template by hand, replace the settings below including the angle brackets
 SETTINGS = {
-  :url          => "https://manage.dice.cluster",
-  :puppetdir    => "/var/lib/puppet",
-  :facts        => true,
-  :storeconfigs => false,
-  :timeout      => 3,
+  :url          => "https://manage.dice.cluster",  # e.g. https://foreman.example.com
+  :puppetdir    => "/var/lib/puppet",  # e.g. /var/lib/puppet
+  :facts        => true,          # true/false to upload facts
+  :storeconfigs => false,   # true/false if sharing ActiveRecord-storeconfigs
+  :timeout      => 10,
   # if CA is specified, remote Foreman host will be verified
-  :ssl_ca       => "/var/lib/puppet/ssl/certs/ca.pem",
+  :ssl_ca       => "/var/lib/puppet/ssl/certs/ca.pem",      # e.g. /var/lib/puppet/ssl/certs/ca.pem
   # ssl_cert and key are required if require_ssl_puppetmasters is enabled in Foreman
-  :ssl_cert     => "/var/lib/puppet/ssl/certs/manage.dice.cluster.pem",
-  :ssl_key      => "/var/lib/puppet/ssl/private_keys/manage.dice.cluster.pem"
+  :ssl_cert     => "/var/lib/puppet/ssl/certs/manage.dice.cluster.pem",    # e.g. /var/lib/puppet/ssl/certs/FQDN.pem
+  :ssl_key      => "/var/lib/puppet/ssl/private_keys/manage.dice.cluster.pem"      # e.g. /var/lib/puppet/ssl/private_keys/FQDN.pem
 }
 
 # Script usually acts as an ENC for a single host, with the certname supplied as argument
@@ -44,6 +44,7 @@ def tsecs
   SETTINGS[:timeout] || 3
 end
 
+require 'etc'
 require 'net/http'
 require 'net/https'
 require 'fileutils'
@@ -70,13 +71,13 @@ def upload_facts(certname, filename)
       res             = Net::HTTP.new(uri.host, uri.port)
       res.use_ssl     = uri.scheme == 'https'
       if res.use_ssl?
-        if SETTINGS[:ssl_ca]
+        if SETTINGS[:ssl_ca] && !SETTINGS[:ssl_ca].empty?
           res.ca_file = SETTINGS[:ssl_ca]
           res.verify_mode = OpenSSL::SSL::VERIFY_PEER
         else
           res.verify_mode = OpenSSL::SSL::VERIFY_NONE
         end
-        if SETTINGS[:ssl_cert] and SETTINGS[:ssl_key]
+        if SETTINGS[:ssl_cert] && !SETTINGS[:ssl_cert].empty? && SETTINGS[:ssl_key] && !SETTINGS[:ssl_key].empty?
           res.cert = OpenSSL::X509::Certificate.new(File.read(SETTINGS[:ssl_cert]))
           res.key  = OpenSSL::PKey::RSA.new(File.read(SETTINGS[:ssl_key]), nil)
         end
@@ -123,7 +124,17 @@ def enc(certname)
 end
 
 # Actual code starts here
+
+# Setuid to puppet if we can
 begin
+  Process::GID.change_privilege(Etc.getgrnam('puppet').gid) unless Etc.getpwuid.name == 'puppet'
+  Process::UID.change_privilege(Etc.getpwnam('puppet').uid) unless Etc.getpwuid.name == 'puppet'
+rescue
+  $stderr.puts "cannot switch to user 'puppet', continuing as '#{Etc.getpwuid.name}'"
+end
+
+begin
+  no_env = ARGV.delete("--no-environment")
   if ARGV.delete("--push-facts")
     # push all facts files to Foreman and don't act as an ENC
     upload_all_facts
@@ -147,7 +158,13 @@ begin
       # Read from cache, we got some sort of an error.
       result = read_cache(certname)
     ensure
-      puts result
+      require 'yaml'
+      yaml = YAML.load(result)
+      if no_env
+        yaml.delete('environment')
+      end
+      # Always reset the result to back to clean yaml on our end
+      puts yaml.to_yaml
     end
   end
 rescue => e
