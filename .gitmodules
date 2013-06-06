@@ -1,9 +1,0 @@
-[submodule "modules/common"]
-	path = modules/common
-	url = git@github.com:uobdic/puppet-modules.git
-[submodule "modules/production"]
-	path = modules/production
-	url = git@github.com:uobdic/puppet-modules.git
-[submodule "modules/development"]
-	path = modules/development
-	url = git@github.com:uobdic/puppet-modules.git

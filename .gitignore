@@ -1,1 +1,6 @@
 .project
+.tmp/
+modules/
+environments
+rack/log
+rack/tmp
