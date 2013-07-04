@@ -1,21 +1,19 @@
 #!/usr/bin/env ruby
 #### File managed with puppet ###
-## Served by:        ''
 ## Module:           'foreman'
 ## Template source:  'MODULES/foreman/templates/external_node.rb.erb'
 
 # If copying this template by hand, replace the settings below including the angle brackets
 SETTINGS = {
-  :url          => "https://manage.dice.cluster",  # e.g. https://foreman.example.com
+  :url          => "https://manage.acrc.bris.ac.uk",  # e.g. https://foreman.example.com
   :puppetdir    => "/var/lib/puppet",  # e.g. /var/lib/puppet
   :facts        => true,          # true/false to upload facts
-  :storeconfigs => false,   # true/false if sharing ActiveRecord-storeconfigs
   :timeout      => 10,
   # if CA is specified, remote Foreman host will be verified
   :ssl_ca       => "/var/lib/puppet/ssl/certs/ca.pem",      # e.g. /var/lib/puppet/ssl/certs/ca.pem
   # ssl_cert and key are required if require_ssl_puppetmasters is enabled in Foreman
-  :ssl_cert     => "/var/lib/puppet/ssl/certs/manage.dice.cluster.pem",    # e.g. /var/lib/puppet/ssl/certs/FQDN.pem
-  :ssl_key      => "/var/lib/puppet/ssl/private_keys/manage.dice.cluster.pem"      # e.g. /var/lib/puppet/ssl/private_keys/FQDN.pem
+  :ssl_cert     => "/var/lib/puppet/ssl/certs/manage.acrc.bris.ac.uk.pem",    # e.g. /var/lib/puppet/ssl/certs/FQDN.pem
+  :ssl_key      => "/var/lib/puppet/ssl/private_keys/manage.acrc.bris.ac.uk.pem"      # e.g. /var/lib/puppet/ssl/private_keys/FQDN.pem
 }
 
 # Script usually acts as an ENC for a single host, with the certname supplied as argument
@@ -66,7 +64,7 @@ def upload_facts(certname, filename)
     fact = File.read(filename)
     begin
       uri = URI.parse("#{url}/fact_values/create?format=yml")
-      req = Net::HTTP::Post.new(uri.path)
+      req = Net::HTTP::Post.new(uri.request_uri)
       req.set_form_data('facts' => fact)
       res             = Net::HTTP.new(uri.host, uri.port)
       res.use_ssl     = uri.scheme == 'https'
@@ -102,7 +100,7 @@ end
 def enc(certname)
   foreman_url      = "#{url}/node/#{certname}?format=yml"
   uri              = URI.parse(foreman_url)
-  req              = Net::HTTP::Get.new(foreman_url)
+  req              = Net::HTTP::Get.new(uri.request_uri)
   http             = Net::HTTP.new(uri.host, uri.port)
   http.use_ssl     = uri.scheme == 'https'
   if http.use_ssl?
@@ -143,7 +141,7 @@ begin
     # send facts to Foreman - enable 'facts' setting to activate
     # if you use this option below, make sure that you don't send facts to foreman via the rake task or push facts alternatives.
     #
-    if SETTINGS[:facts] && !SETTINGS[:storeconfigs]
+    if SETTINGS[:facts]
       upload_facts certname, "#{puppetdir}/yaml/facts/#{certname}.yaml"
     end
     #
