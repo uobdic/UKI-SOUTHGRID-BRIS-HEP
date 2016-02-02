@@ -1,11 +1,19 @@
 forge "http://forge.puppetlabs.com"
-mod "puppetlabs/inifile", :latest
-mod "puppetlabs/stdlib", :latest
+
+mod 'puppetlabs/apache', :latest
 mod "puppetlabs/concat", :latest
-mod "puppetlabs/ntp", :latest
 mod "puppetlabs/dhcp", :latest
+mod "puppetlabs/firewall", :latest
+mod "puppetlabs/inifile", :latest
+mod "puppetlabs/ntp", :latest
+mod "puppetlabs/stdlib", :latest
 mod "puppetlabs/tftp", :latest
 mod "puppetlabs/xinetd", :latest
-mod "puppetlabs/firewall", :latest
 
 mod "Lavaburn/razor", :latest
+
+# HEP-Puppet
+mod 'htcondor',
+  :git => 'https://github.com/HEP-Puppet/htcondor'
+mod 'arc_ce',
+  :git => 'https://github.com/HEP-Puppet/arc_ce'
