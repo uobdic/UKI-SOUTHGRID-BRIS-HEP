@@ -15,6 +15,13 @@
 #http://docs.puppetlabs.com/pe/latest/release_notes.html#filebucket-resource-no-longer-created-by-default
 File { backup => false }
 
+# enable the inclusion of classes defined in hiera
+# this allows to specify roles in hiera
+hiera_include('classes')
+
+# alternatively nodes can be set up using role manifests (see below)
+# at some point we have to decide for one or the other
+
 # DEFAULT NODE
 # Node definitions in this file are merged with node data from the console. See
 # http://docs.puppetlabs.com/guides/language_guide.html#nodes for more on
@@ -34,7 +41,4 @@ node default {
     include "role::${trusted['extensions']['pp_role']}"
   }
 
-  # This is where you can declare classes for all nodes.
-  # Example:
-  #   class { 'my_class': }
 }
