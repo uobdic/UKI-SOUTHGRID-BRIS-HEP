@@ -1,6 +1,7 @@
 # Clears rules and sets up pre and post classes
-class profile::firewall {
+class profile::firewall::setup {
   include profile::firewall::pre
+  include ::firewall
   include profile::firewall::post
 
   resources { 'firewall': purge => true }
@@ -10,8 +11,5 @@ class profile::firewall {
   Firewall {
     before  => Class['profile::firewall::post'],
     require => Class['profile::firewall::pre'],
-  }
-
-  class { 'firewall':
   }
 }

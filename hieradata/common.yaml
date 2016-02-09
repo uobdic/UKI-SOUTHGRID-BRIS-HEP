@@ -1,7 +1,6 @@
 ---
 classes:
  - 'profile::base'
- - 'profile::firewall'
 
 ntp::enable: true
 ntp::servers:
