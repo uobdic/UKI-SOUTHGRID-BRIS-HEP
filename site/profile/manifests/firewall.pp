@@ -5,11 +5,11 @@ class profile::firewall {
     }
 
     Firewall {
-        before  => Class['profiles::firewall::post'],
-        require => Class['profiles::firewall::pre'],
+        before  => Class['profile::firewall::post'],
+        require => Class['profile::firewall::pre'],
     }
 
-    class { ['profiles::firewall::pre', 'profiles::firewall::post']: }
+    class { ['profile::firewall::pre', 'profile::firewall::post']: }
 
 #    $firewall_rules = hiera_hash('firewall_rules')
 #    create_resources('firewall', $firewall_rules)
