@@ -1,7 +1,9 @@
 ---
 classes:
  - 'profile::base'
+ - 'profile::firewall'
 
+ntp::enable: true
 ntp::servers:
   - 137.222.8.25
   - 137.222.8.26
