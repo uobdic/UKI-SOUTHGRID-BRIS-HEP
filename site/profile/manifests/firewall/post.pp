@@ -1,12 +1,4 @@
 class profile::firewall::post {
-  # after pre, before custom rules
-  firewall { '199 Reject anything else':
-    chain  => 'FORWARD',
-    proto  => 'all',
-    action => 'reject',
-    reject => 'icmp-host-prohibited',
-  }
-
   # after everything
   firewall { '9996 Log once all DROPs are done':
     proto      => 'all',

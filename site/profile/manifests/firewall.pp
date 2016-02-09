@@ -1,16 +1,17 @@
 # Clears rules and sets up pre and post classes
 class profile::firewall {
-    resources { '::firewall':
-        purge => true
-    }
+  include profile::firewall::pre
+  include profile::firewall::post
 
-    Firewall {
-        before  => Class['profile::firewall::post'],
-        require => Class['profile::firewall::pre'],
-    }
+  resources { 'firewall': purge => true }
 
-    class { ['profile::firewall::pre', 'profile::firewall::post']: }
+  resources { 'firewallchain': purge => true, }
 
-#    $firewall_rules = hiera_hash('firewall_rules')
-#    create_resources('firewall', $firewall_rules)
+  Firewall {
+    before  => Class['profile::firewall::post'],
+    require => Class['profile::firewall::pre'],
+  }
+
+  class { 'firewall':
+  }
 }
