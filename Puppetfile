@@ -12,6 +12,8 @@ mod "puppetlabs/xinetd", :latest
 
 mod "Lavaburn/razor", :latest
 
+mod "puppet/mcollective", :latest
+
 # HEP-Puppet
 mod 'htcondor',
   :git => 'https://github.com/HEP-Puppet/htcondor'
