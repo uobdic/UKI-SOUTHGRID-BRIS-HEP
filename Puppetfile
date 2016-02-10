@@ -16,6 +16,7 @@ mod "puppet/mcollective", :latest
 
 # HEP-Puppet
 mod 'htcondor',
-  :git => 'https://github.com/HEP-Puppet/htcondor'
+  :git => 'https://github.com/kreczko/htcondor',
+  :ref => 'development'
 mod 'arc_ce',
   :git => 'https://github.com/HEP-Puppet/arc_ce'
