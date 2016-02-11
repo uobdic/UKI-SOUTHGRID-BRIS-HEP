@@ -1,7 +1,7 @@
 ---
 classes:
  - 'profile::base'
-# - 'profile::firewall::default_rules'
+# - 'profile::firewall::setup'
 
 ntp::enable: true
 ntp::servers:
