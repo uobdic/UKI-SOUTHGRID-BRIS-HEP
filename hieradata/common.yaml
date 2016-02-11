@@ -1,5 +1,6 @@
 ---
 classes:
+ - site
  - 'profile::base'
 # - 'profile::firewall::setup'
 
