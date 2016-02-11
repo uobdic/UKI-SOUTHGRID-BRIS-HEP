@@ -1,0 +1,7 @@
+---
+site::node_info:
+  cluster: dice
+  group: htcondor
+  role: htcondor_manager
+
+htcondor::use_gangliad: true

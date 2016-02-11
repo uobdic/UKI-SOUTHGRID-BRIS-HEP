@@ -1,0 +1,38 @@
+---
+# common htcondor bits
+# all install condor
+classes:
+  - htcondor
+# common parameters
+htcondor::collectors:
+  - htc00.dice.priv
+  - htc01.dice.priv
+
+htcondor::schedulers:
+  - lcgce01.phy.bris.ac.uk
+  - lcgce02.phy.bris.ac.uk
+  - soolin.phy.bris.ac.uk
+  - mensa.star.bris.ac.uk
+  - vm-astro.dice.priv
+  - vm-hep.dice.priv
+
+htcondor::workers:
+  - '*.dice.priv'
+  - '10.129.5.*'
+  - 'bse*.phy.bris.ac.uk'
+  - '*.hadoop.cluster'
+  - '10.129.1.*'
+
+htcondor::uid_domain: 'phy.bris.ac.uk'
+htcondor::collector_name: 'DICE-HTCondor-Cluster'
+htcondor::cluster_has_multiple_domains: true
+htcondor::admin_email: localhost
+htcondor::condor_user: condor
+htcondor::condor_group: condor
+htcondor::machine_owner: condor
+htcondor::include_username_in_accounting: true
+
+htcondor::pool_home: '/condor'
+htcondor::use_pkg_condor_config: true
+
+

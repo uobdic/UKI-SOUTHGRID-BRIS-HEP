@@ -2,7 +2,10 @@
 :backends:
   - yaml
 :hierarchy:
-  - "nodes/%{::trusted.certname}"
+  - "nodes/%{::fqdn}"
+  - "cluster/%{::node_info.cluster}"
+  - "groups/%{::node_info.group}"
+  - "roles/%{::node_info.role}"
   - common
 
 :yaml:
