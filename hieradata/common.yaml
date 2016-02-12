@@ -1,4 +1,5 @@
 ---
+message: "This is our common yaml file"
 classes:
  - site
  - 'profile::base'
