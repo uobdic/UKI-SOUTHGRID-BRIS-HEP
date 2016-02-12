@@ -1,4 +1,5 @@
 ---
+message: "This is condor!"
 # common htcondor bits
 # all install condor
 classes:
