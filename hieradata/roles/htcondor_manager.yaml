@@ -2,7 +2,7 @@
 classes:
   - htcondor
 
-htcondor::is_scheduler: true
+htcondor::is_manager: true
 
 htcondor::high_priority_groups:
   dteam: -10
