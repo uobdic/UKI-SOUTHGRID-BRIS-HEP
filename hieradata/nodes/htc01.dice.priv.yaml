@@ -3,5 +3,6 @@ site::node_info:
   cluster: dice
   group: htcondor
   role: htcondor_manager
+  environment: production
 
 htcondor::use_gangliad: true

@@ -5,7 +5,7 @@ message: "This is condor!"
 classes:
   - htcondor
 # common parameters
-htcondor::collectors:
+htcondor::managers:
   - htc00.dice.priv
   - htc01.dice.priv
 
@@ -25,6 +25,8 @@ htcondor::workers:
   - '10.129.1.*'
 
 htcondor::uid_domain: 'phy.bris.ac.uk'
+htcondor::default_domain_name: 'phy.bris.ac.uk'
+htcondor::cluster_has_multiple_domains: true
 htcondor::collector_name: 'DICE-HTCondor-Cluster'
 htcondor::cluster_has_multiple_domains: true
 htcondor::admin_email: localhost
@@ -35,5 +37,7 @@ htcondor::include_username_in_accounting: true
 
 htcondor::pool_home: '/condor'
 htcondor::use_pkg_condor_config: true
+htcondor::pool_password_file: /etc/puppetlabs/secrets/files/pool_password
 
-
+# should be off for a production system (only true for fresh install if needed)
+htcondor::install_repositories: true

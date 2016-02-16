@@ -3,3 +3,4 @@ site::node_info:
   cluster: dice
   group: service
   role: puppetserver
+  environment: production
