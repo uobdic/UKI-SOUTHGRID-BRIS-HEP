@@ -1,0 +1,3 @@
+---
+# hadoop cluster is on a private network, need to use connection broker
+htcondor::uses_connection_broker: true

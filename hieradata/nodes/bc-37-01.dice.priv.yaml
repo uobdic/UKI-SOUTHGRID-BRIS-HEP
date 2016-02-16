@@ -7,3 +7,5 @@ site::node_info:
 
 # this node has HT enabled and we only want to use the number of real cores
 htcondor::number_of_cpus: 12
+# we also have the pool_home as a symlink, so we do not want it to be a folder:
+htcondor::pool_create: false
