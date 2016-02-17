@@ -17,6 +17,6 @@ mod "puppet/mcollective", :latest
 # HEP-Puppet
 mod 'htcondor',
   :git => 'https://github.com/kreczko/htcondor',
-  :ref => 'connection-broker'
+  :ref => 'more-readable-security'
 mod 'arc_ce',
   :git => 'https://github.com/HEP-Puppet/arc_ce'
