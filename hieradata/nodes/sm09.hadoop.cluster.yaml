@@ -6,6 +6,7 @@ site::node_info:
 
 htcondor::install_repositories: true
 
-packages_to_remove:
-  - torque
-  - lcg-pbs-utils
+# in order to remove package one needs to specify the dependencies as well!
+#packages_to_remove:
+#  - torque
+#  - lcg-pbs-utils
