@@ -5,3 +5,7 @@ site::node_info:
   role: htcondor_worker
 
 htcondor::install_repositories: true
+
+packages_to_remove:
+  - torque
+  - lcg-pbs-utils
