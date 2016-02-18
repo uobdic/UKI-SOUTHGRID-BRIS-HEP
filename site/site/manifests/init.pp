@@ -8,10 +8,9 @@ class site (
 
     if ($site_info and has_key($site_info, 'hepspec06_baseline')) {
       if ($node_info and has_key($node_info, 'hepspec06')) {
-        $baseline                             = 0 + $site_info['hepspec06_baseline'
-          ]
-        $node_value                           = 0 + $node_info['hepspec06']
-        $node_info['accounting_scale_factor'] = $node_value / $baseline
+        $baseline                = 0 + $site_info['hepspec06_baseline']
+        $node_value              = 0 + $node_info['hepspec06']
+        $accounting_scale_factor = $node_value / $baseline
       }
     }
 
