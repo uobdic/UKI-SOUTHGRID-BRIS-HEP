@@ -1,0 +1,7 @@
+---
+<% if @site_info -%>
+site_info:
+<% @site_info.keys.sort.each do |key| -%>
+  <%=key -%>: <%=@site_info[key] %>
+<% end -%>
+<% end %>

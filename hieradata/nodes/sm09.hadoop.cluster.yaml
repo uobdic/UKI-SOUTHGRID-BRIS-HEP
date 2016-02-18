@@ -3,6 +3,9 @@ site::node_info:
   cluster: hadoop
   group: htcondor
   role: htcondor_worker
+  hepspec06: 1
+  specfp2000: 250
+  specint2000: 250
 
 htcondor::install_repositories: true
 

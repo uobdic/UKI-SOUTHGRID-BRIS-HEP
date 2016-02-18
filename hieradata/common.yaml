@@ -10,3 +10,12 @@ ntp::servers:
   - 137.222.8.25
   - 137.222.8.26
   - 137.222.9.26
+  
+site::site_info:
+  gocdb_name: 'UKI-SOUTHGRID-BRIS-HEP'
+  # for CPU scaling
+  hepspec06_baseline: 1
+  specfp2000_baseline: 250
+  specint2000_baseline: 250
+  cms_name: 'T2_UK_SGrid_Bristol'
+  storage_element: 'lcgse01.phy.bris.ac.uk'
