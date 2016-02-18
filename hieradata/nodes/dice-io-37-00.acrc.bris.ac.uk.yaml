@@ -1,0 +1,6 @@
+---
+site::node_info:
+  cluster: dice
+  group: dmlite
+  role: dmlite_hdfs_gateway
+  environment: production
