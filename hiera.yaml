@@ -5,6 +5,7 @@
   - "nodes/%{::fqdn}"
   - "virtual/%{::is_virtual}"
   - "cluster/%{::node_info.cluster}"
+  - "benchmark_results/%{::node_info.benchmark_results}"
   - "groups/%{::node_info.group}"
   - "roles/%{::node_info.role}"
   - common
