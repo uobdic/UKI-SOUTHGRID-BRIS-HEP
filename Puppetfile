@@ -45,3 +45,7 @@ mod 'argus',
 # CERN OPS fork
 mod 'htcondor_ce',
   :git => 'https://github.com/IainSteers/puppet-htcondor_ce'
+  
+# secondary control repo
+mod 'site_private',
+  :git => 'git@spender.isys.bris.ac.uk:bristolT2/site_private.git'
