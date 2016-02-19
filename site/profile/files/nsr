@@ -1,0 +1,12 @@
+<< ./misc >>
++skip: .
+<< ./usr>>
++skip: .
+<< ./lib >>
++skip: .
+<< ./lib64 >>
++skip: .
+<< ./var/lib >>
++skip: .
+<< ./var/cache >>
++skip: .
