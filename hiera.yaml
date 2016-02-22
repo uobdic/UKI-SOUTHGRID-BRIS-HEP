@@ -2,13 +2,14 @@
 :backends:
   - yaml
 :hierarchy:
-  - "nodes/%{::fqdn}"
-  - "virtual/%{::is_virtual}"
-  - "cluster/%{::node_info.cluster}"
-  - "benchmark_results/%{::node_info.benchmark_results}"
-  - "groups/%{::node_info.group}"
-  - "roles/%{::node_info.role}"
-  - common
+  - "hieradata/nodes/%{::fqdn}"
+  - "hieradata/virtual/%{::is_virtual}"
+  - "hieradata/cluster/%{::node_info.cluster}"
+  - "hieradata/benchmark_results/%{::node_info.benchmark_results}"
+  - "hieradata/groups/%{::node_info.group}"
+  - "hieradata/roles/%{::node_info.role}"
+  - modules/site_private/hieradata/common
+  - hieradata/common
 
 :yaml:
-  :datadir: "/etc/puppetlabs/code/environments/%{::environment}/hieradata"
+  :datadir: "/etc/puppetlabs/code/environments/%{::environment}"
