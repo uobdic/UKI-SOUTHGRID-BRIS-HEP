@@ -1,4 +1,8 @@
 ---
+lookup_options:
+  site::node_info:
+    merge: unique
+
 site::node_info:
   hepspec06: 9.29
   specfp2000: 2322.5
