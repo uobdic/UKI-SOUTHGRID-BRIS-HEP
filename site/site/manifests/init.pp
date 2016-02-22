@@ -1,6 +1,7 @@
-class site (
-  $node_info = undef,
-  $site_info = undef,) {
+class site {
+  $node_info = hiera_hash('site::node_info', undef)
+  $site_info = hiera_hash('site::site_info', undef)
+
   if $node_info {
     file { [
       '/etc/puppetlabs/facter/',
