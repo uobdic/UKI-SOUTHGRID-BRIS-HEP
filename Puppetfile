@@ -39,7 +39,7 @@ mod 'CERNOps/fetchcrl', :latest
 mod 'vosupport',
   :git => 'https://github.com/cernops/puppet-vosupport'
 mod 'glexecwn',
-  :git => 'https://github.com/cernops/puppet-glexecwn'
+  :git => 'https://github.com/HEP-Puppet/puppet-glexecwn'
 mod 'argus',
   :git => 'https://github.com/cernops/puppet-argus'
 # CERN OPS fork
