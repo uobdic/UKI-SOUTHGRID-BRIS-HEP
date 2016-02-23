@@ -37,7 +37,8 @@ mod 'CERNOps/bdii', :latest
 mod 'CERNOps/cvmfs', :latest
 mod 'CERNOps/fetchcrl', :latest
 mod 'vosupport',
-  :git => 'https://github.com/cernops/puppet-vosupport'
+  :git => 'https://github.com/HEP-Puppet/puppet-vosupport',
+  :ref => 'development'
 mod 'glexecwn',
   :git => 'https://github.com/HEP-Puppet/puppet-glexecwn'
 mod 'argus',
