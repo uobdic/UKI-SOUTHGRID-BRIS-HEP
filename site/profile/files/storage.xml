@@ -1,0 +1,37 @@
+<!-- storage.xml for T2_UK_SGrid_Bristol
+
+    Storage element:  lcgse01.phy.bris.ac.uk
+    Storage software: DMlite 0.7.3
+    Phedex host:      heplnv144.pp.rl.ac.uk
+
+    All CMS data are stored using the /store convention
+    Therefore we only need to map:
+           /+store/(.*)
+    
+    Special case: LoadTest. Needs to come first for every type of mapping.
+-->
+<storage-mapping>
+<!-- The file system is mounted on all machines on /hdfs -->
+  <lfn-to-pfn protocol="file"   destination-match=".*" path-match="/+store/(.*)" result="file:/hdfs/dpm/phy.bris.ac.uk/home/cms/store/$1"/>
+<!-- direct paths refer to the HDFS path, hence start with /dpm and not /hdfs (posix mount) -->
+  <lfn-to-pfn protocol="direct" path-match=".*/LoadTest07_Bristol_(.*)_.*_.*" result="/dpm/phy.bris.ac.uk/home/cms/store/PhEDEx_LoadTest07/LoadTest07_Debug_T2_UK_SGrid_Bristol/LoadTest07_SouthGrid_Bristol_$1"/>
+  <lfn-to-pfn protocol="direct" path-match=".*/LoadTest07_SouthGrid_Bristol_(.*)_.*_.*" result="/dpm/phy.bris.ac.uk/home/cms/store/PhEDEx_LoadTest07/LoadTest07_Debug_T2_UK_SGrid_Bristol/LoadTest07_SouthGrid_Bristol_$1"/>
+  <lfn-to-pfn protocol="direct" path-match="/+store/test/xrootd/T2_UK_SGrid_Bristol/store/(.*)" result="/dpm/phy.bris.ac.uk/home/cms/store/$1" />
+  <lfn-to-pfn protocol="direct" destination-match=".*" path-match="/+store/(.*)" result="/dpm/phy.bris.ac.uk/home/cms/store/$1"/>
+<!-- For FTP transfers we need to drop the /hdfs bit as well -->
+  <lfn-to-pfn protocol="gsiftp" destination-match=".*" path-match="/+store/(.*)" result="gsiftp://lcgse01.phy.bris.ac.uk/dpm/phy.bris.ac.uk/home/cms/store/$1"/>
+  <lfn-to-pfn protocol="srmv2" path-match=".*/LoadTest07_.*_Bristol_(.*)_.*_.*" result="gsiftp://lcgse01.phy.bris.ac.uk/dpm/phy.bris.ac.uk/home/cms/store/PhEDEx_LoadTest07/LoadTest07_Debug_T2_UK_SGrid_Bristol/LoadTest07_SouthGrid_Bristol_$1"/>
+  <lfn-to-pfn protocol="srmv2" destination-match=".*" path-match="/+store/(.*)" result="gsiftp://lcgse01.phy.bris.ac.uk/dpm/phy.bris.ac.uk/home/cms/store/$1"/>
+<!-- Xrootd fallback rules -->
+  <lfn-to-pfn protocol="xrootdfallback" destination-match=".*" path-match="/+store/(.*)" result="root://xrootd-cms.infn.it//store/$1"/>
+<!-- Xrootd stageout rules -->
+   <lfn-to-pfn protocol="xrootd" destination-match=".*" path-match="/+store/(.*)" result="root://lcgse01.phy.bris.ac.uk//store/$1"/>
+
+<!-- Translation rules for PFN to LFN (Physical File Name to Logical File Name) -->
+  <pfn-to-lfn protocol="direct" path-match="/dpm/phy.bris.ac.uk/home/cms/store/PhEDEx_LoadTest07/LoadTest07_Debug_T2_UK_SGrid_Bristol/(.*)" result="/LoadTest/$1"/>
+  <pfn-to-lfn protocol="file"   destination-match=".*" path-match="file:/hdfs/dpm/phy.bris.ac.uk/home/cms/store/(.*)"   result="/store/$1"/>
+  <pfn-to-lfn protocol="direct" destination-match=".*" path-match="/+dpm/phy.bris.ac.uk/home/cms/store/(.*)"        result="/store/$1"/>
+  <pfn-to-lfn protocol="gsiftp" destination-match=".*" path-match=".*/dpm/phy.bris.ac.uk/home/cms/store/(.*)"           result="/store/$1"/>
+  <pfn-to-lfn protocol="srmv2" destination-match=".*" path-match=".*/dpm/phy.bris.ac.uk/home/cms/store/(.*)"            result="/store/$1"/>
+  <pfn-to-lfn protocol="xrootd" destination-match=".*" path-match=".*/+cms/store/(.*)"         result="/store/$1"/>
+</storage-mapping>

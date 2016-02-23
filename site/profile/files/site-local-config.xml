@@ -1,0 +1,39 @@
+<site-local-config>
+  <site name="T2_UK_SGrid_Bristol">
+    <event-data>
+	  <!-- for old CMSSW -->
+         <catalog url="trivialcatalog_file:/cvmfs/cms.cern.ch/SITECONF/local/PhEDEx/storage.xml?protocol=file"/>
+         <catalog url="trivialcatalog_file:/cvmfs/cms.cern.ch/SITECONF/local/PhEDEx/storage.xml?protocol=xrootdfallback"/>
+    </event-data>
+    <local-stage-out>
+         <command value="gfal2"/>
+         <catalog url="trivialcatalog_file:/cvmfs/cms.cern.ch/SITECONF/local/PhEDEx/storage.xml?protocol=gsiftp"/>
+         <se-name value="lcgse01.phy.bris.ac.uk"/>
+         <phedex-node value="T2_UK_SGrid_Bristol"/>
+    </local-stage-out>
+    <fallback-stage-out>
+      <se-name value="heplnx204.pp.rl.ac.uk"/>
+      <lfn-prefix value="srm://heplnx204.pp.rl.ac.uk:8443/srm/managerv2?SFN=/pnfs/pp.rl.ac.uk/data/cms"/>
+      <command value="srmv2-lcg"/>
+      <option value="-Dsrmv2 -b"/>
+      <phedex-node value="T2_UK_SGrid_RALPP"/>
+    </fallback-stage-out>
+    <calib-data>
+      <catalog url=""/> <!-- for old CMSSW -->
+      <frontier-connect>
+        <load balance="proxies"/>
+        <proxy url="http://lcgsq1.phy.bris.ac.uk:3128"/>
+        <proxy url="http://lcgsq2.phy.bris.ac.uk:3128"/>
+        <backupproxy url="http://cmsbpfrontier.cern.ch:3128"/>
+        <backupproxy url="http://cmsbproxy.fnal.gov:3128"/>
+        <server url="http://cmsfrontier.cern.ch:8000/FrontierInt"/>
+        <server url="http://cmsfrontier1.cern.ch:8000/FrontierInt"/>
+        <server url="http://cmsfrontier2.cern.ch:8000/FrontierInt"/>
+        <server url="http://cmsfrontier3.cern.ch:8000/FrontierInt"/>
+      </frontier-connect>
+    </calib-data>
+  <source-config>
+    <statistics-destination name="cms-udpmon-collector.cern.ch:9331" />
+  </source-config>
+  </site>
+</site-local-config>

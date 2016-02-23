@@ -19,3 +19,25 @@ site::site_info:
   specint2000_baseline: 250
   cms_name: 'T2_UK_SGrid_Bristol'
   storage_element: 'lcgse01.phy.bris.ac.uk'
+  argus_server: 'lcgarg.phy.bris.ac.uk'
+  argus_port: 8154
+  cvmfs_mounts:
+    grid.cern.ch:
+      cvmfs_quota_limit: 1000
+    atlas.cern.ch:
+      cvmfs_quota_limit: 10000
+    cms.cern.ch:
+      cvmfs_quota_limit: 20000
+      cvmfs_env_variables:
+        CMS_LOCAL_SITE: /opt/cvmfs/cms.cern.ch/SITECONF/local
+    lhcb.cern.ch:
+      cvmfs_quota_limit: 10000
+    ilc.desy.de:
+      cvmfs_quota_limit: 5000
+      cvmfs_public_key: /etc/cvmfs/keys/desy.de.pub
+      cvmfs_server_url: http://grid-cvmfs-one.desy.de:8000/cvmfs/@fqrn@;http://cvmfs-stratum-one.cern.ch:8000/cvmfs/@fqrn@;http://cvmfs-egi.gridpp.rl.ac.uk:8000/cvmfs/@fqrn@
+
+cvmfs:
+  cvmfs_quota_limit: 40000
+  cvmfs_http_proxy: 'http://lcgsq1.phy.bris.ac.uk:3128|http://lcgsq2.phy.bris.ac.uk:3128'
+  cvmfs_server_url: 'http://cernvmfs.gridpp.rl.ac.uk:8000/opt/@org@;http://cvmfs-stratum-one.cern.ch:8000/opt/@org@; http://cvmfs.racf.bnl.gov:8000/opt/@org@'
