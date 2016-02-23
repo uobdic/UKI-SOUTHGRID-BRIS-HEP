@@ -35,7 +35,7 @@ site::site_info:
     ilc.desy.de:
       cvmfs_quota_limit: 5000
       cvmfs_public_key: /etc/cvmfs/keys/desy.de.pub
-      cvmfs_server_url: http://grid-cvmfs-one.desy.de:8000/cvmfs/@fqrn@;http://cvmfs-stratum-one.cern.ch:8000/cvmfs/@fqrn@;http://cvmfs-egi.gridpp.rl.ac.uk:8000/cvmfs/@fqrn@
+      cvmfs_server_url: 'http://grid-cvmfs-one.desy.de:8000/cvmfs/@fqrn@;http://cvmfs-stratum-one.cern.ch:8000/cvmfs/@fqrn@;http://cvmfs-egi.gridpp.rl.ac.uk:8000/cvmfs/@fqrn@'
 
 cvmfs:
   cvmfs_quota_limit: 40000
