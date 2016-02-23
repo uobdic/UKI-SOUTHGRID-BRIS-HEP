@@ -1,10 +1,11 @@
 ---
 <% if @node_info -%>
 node_info:
-<% @node_info.keys.sort.each do |key| -%>
-  <%=key -%>: <%=@node_info[key] %>
-<% end -%>
+<% info = @node_info.to_yaml.split("\n") -%>
+<% info.drop(1).each do |line| -%>
+  <%= line %>
 <% end -%>
 <% if @accounting_scale_factor -%>
   accounting_scale_factor: <%=@accounting_scale_factor -%>
+<% end -%>
 <% end %>

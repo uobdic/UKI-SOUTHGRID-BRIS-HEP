@@ -1,7 +1,8 @@
 ---
 <% if @site_info -%>
 site_info:
-<% @site_info.keys.sort.each do |key| -%>
-  <%=key -%>: <%=@site_info[key] %>
+<% info = @site_info.to_yaml.split("\n") -%>
+<% info.drop(1).each do |line| -%>
+  <%= line %>
 <% end -%>
 <% end %>
