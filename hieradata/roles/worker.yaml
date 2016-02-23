@@ -11,46 +11,44 @@ packages_to_install:
 
 htcondor::is_worker: true
 
-glexecwn:
-  argus_server: lcgarg.phy.bris.ac.uk
-  lcg_gfal_infosys: 'lcgbdii.gridpp.rl.ac.uk:2170,topbdii.grid.hep.ph.ic.ac.uk:2170,top-bdii.tier2.hep.manchester.ac.uk:2170'
-  myproxy_server: lcgrbp01.gridpp.rl.ac.uk
-  user_white_list: '.alice, .alicepil, .atlas, .atlpil, .cms, .cmspil, cmssgm, cmsprd, .dteam, .ilc, .lhcb, .lhcbpil, .southgrid, .gridpp, .ops, .zeus, root, opssgm'
-  emi_version: 3
-  glexec_permissions: 4711
-  install_dummydpm: false
-  supported_vos: 
+glexecwn::argus_server: lcgarg.phy.bris.ac.uk
+glexecwn::lcg_gfal_infosys: 'lcgbdii.gridpp.rl.ac.uk:2170,topbdii.grid.hep.ph.ic.ac.uk:2170,top-bdii.tier2.hep.manchester.ac.uk:2170'
+glexecwn::myproxy_server: lcgrbp01.gridpp.rl.ac.uk
+glexecwn::user_white_list: '.alice, .alicepil, .atlas, .atlpil, .cms, .cmspil, cmssgm, cmsprd, .dteam, .ilc, .lhcb, .lhcbpil, .southgrid, .gridpp, .ops, .zeus, root, opssgm'
+glexecwn::emi_version: 3
+glexecwn::glexec_permissions: 4711
+glexecwn::install_dummydpm: false
+glexecwn::supported_vos: []
 
-profile::voenv:
-  vo_environments: 
-    alice:
-      vo_sw_dir: /software/alice
-      voname: alice
-    atlas:
-      vo_sw_dir: /cvmfs/atlas.cern.ch/repo/sw
-      voname: atlas
-    cms:
-      vo_sw_dir: /cvmfs/cms.cern.ch
-      voname: cms
-    dteam:
-      vo_sw_dir: /software/dteam
-      voname: dteam
-    gridpp:
-      vo_sw_dir: /software/gridpp
-      voname: gridpp
-    lhcb:
-      vo_sw_dir: /cvmfs/lhcb.cern.ch
-      voname: lhcb
-    ilc:
-      vo_sw_dir: /cvmfs/ilc.desy.de
-      voname: ilc
-    ops:
-      vo_sw_dir: /cvmfs/ops.cern.ch
-      voname: ops
-    southgrid:
-      vo_sw_dir: /software/southgrid
-      voname: vo_southgrid_ac_uk
-    landslides:
-      vo_sw_dir: /cvmfs/landslides.cern.ch
-      voname: vo_landslides_mossaic_org
+profile::voenv::vo_environments:
+  alice:
+    vo_sw_dir: /software/alice
+    voname: alice
+  atlas:
+    vo_sw_dir: /cvmfs/atlas.cern.ch/repo/sw
+    voname: atlas
+  cms:
+    vo_sw_dir: /cvmfs/cms.cern.ch
+    voname: cms
+  dteam:
+    vo_sw_dir: /software/dteam
+    voname: dteam
+  gridpp:
+    vo_sw_dir: /software/gridpp
+    voname: gridpp
+  lhcb:
+    vo_sw_dir: /cvmfs/lhcb.cern.ch
+    voname: lhcb
+  ilc:
+    vo_sw_dir: /cvmfs/ilc.desy.de
+    voname: ilc
+  ops:
+    vo_sw_dir: /cvmfs/ops.cern.ch
+    voname: ops
+  southgrid:
+    vo_sw_dir: /software/southgrid
+    voname: vo_southgrid_ac_uk
+  landslides:
+    vo_sw_dir: /cvmfs/landslides.cern.ch
+    voname: vo_landslides_mossaic_org
     
