@@ -1,5 +1,5 @@
 class profile::cvmfs {
-  $cvmfs_mounts     = hiera_hash('site_info::cvmfs_mounts', undef)
+  $cvmfs_mounts     = hiera_hash('site_info::cvmfs_mounts', {})
   $cvmfs_server_url = hiera('cvmfs::cvmfs_server_url')
 
   include cvmfs
