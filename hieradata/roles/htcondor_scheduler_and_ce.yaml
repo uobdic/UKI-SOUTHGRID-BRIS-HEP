@@ -1,6 +1,7 @@
 ---
 classes:
   - htcondor
+  - profile::htcondor_ce
 
 htcondor::is_scheduler: true
 # max CPU time in seconds
