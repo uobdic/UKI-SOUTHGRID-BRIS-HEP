@@ -2,7 +2,7 @@
 :backends:
   - yaml
 :hierarchy:
-  - "hieradata/nodes/%{::fqdn}"
+  - "modules/site_private/hieradata/nodes/%{::fqdn}"
   - "hieradata/virtual/%{::is_virtual}"
   - "hieradata/cluster/%{::node_info.cluster}"
   - "hieradata/benchmark_results/%{::node_info.benchmark_results}"
