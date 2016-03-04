@@ -45,7 +45,8 @@ mod 'argus',
   :git => 'https://github.com/cernops/puppet-argus'
 # CERN OPS fork
 mod 'htcondor_ce',
-  :git => 'https://github.com/IainSteers/puppet-htcondor_ce'
+  :git => 'https://github.com/kreczko/puppet-htcondor_ce',
+  :ref => 'htcondor-workshop-adjustments'
   
 # secondary control repo
 mod 'site_private',
