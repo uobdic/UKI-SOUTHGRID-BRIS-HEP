@@ -18,6 +18,8 @@ htcondor_ce::gsi_backend: 'argus'
 htcondor_ce::argus_resourceid: 'http://authz-interop.org/xacml/resource/resource-type/arc'
 # optimisation
 htcondor_ce::use_static_shadow: true
+# job routes
+htcondor_ce::job_routes_template: 'profile/job_routes.conf.erb'
 
 # bdii settings
 htcondor_ce::install_bdii: true
