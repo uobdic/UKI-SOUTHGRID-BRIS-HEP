@@ -41,3 +41,6 @@ htcondor::pool_password: 'puppet:///modules/site_private/pool_password'
 
 # should be off for a production system (only true for fresh install if needed)
 htcondor::install_repositories: false
+# disabled condor calling home
+htcondor::enable_condor_reporting: false
+
