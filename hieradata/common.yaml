@@ -36,16 +36,15 @@ site::site_info:
       cvmfs_quota_limit: 5000
       cvmfs_public_key: /etc/cvmfs/keys/desy.de.pub
       cvmfs_server_url: 'http://grid-cvmfs-one.desy.de:8000/cvmfs/@fqrn@;http://cvmfs-stratum-one.cern.ch:8000/cvmfs/@fqrn@;http://cvmfs-egi.gridpp.rl.ac.uk:8000/cvmfs/@fqrn@'
-
-site_info::supported_vos:
-  - alice
-  - atlas
-  - cms
-  - dteam
-  - gridpp
-  - lhcb
-  - ops
-  - 'vo.southgrid.org'
+  supported_vos:
+    - alice
+    - atlas
+    - cms
+    - dteam
+    - gridpp
+    - lhcb
+    - ops
+    - 'vo.southgrid.org'
 
 cvmfs::cvmfs_quota_limit: 40000
 cvmfs::cvmfs_http_proxy: 'http://lcgsq1.phy.bris.ac.uk:3128|http://lcgsq2.phy.bris.ac.uk:3128'
