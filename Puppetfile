@@ -20,8 +20,8 @@ mod 'thias/tuned', :latest
 
 # HEP-Puppet
 mod 'htcondor',
-  :git => 'https://github.com/kreczko/htcondor',
-  :ref => 'more-readable-security'
+  :git => 'https://github.com/HEP-Puppet/htcondor',
+  :ref => 'development'
 mod 'arc_ce',
   :git => 'https://github.com/HEP-Puppet/arc_ce'
   
