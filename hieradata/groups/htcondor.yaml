@@ -1,9 +1,6 @@
 ---
 message: "This is condor!"
-# common htcondor bits
-# all install condor
-classes:
-  - htcondor
+
 # common parameters
 htcondor::managers:
   - htc00.dice.priv
