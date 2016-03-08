@@ -3,3 +3,5 @@ site::node_info:
   hepspec06: 1
   specfp2000: 250
   specint2000: 250
+
+htcondor::number_of_cpus: 24

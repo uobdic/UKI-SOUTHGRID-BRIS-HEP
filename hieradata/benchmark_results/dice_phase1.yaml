@@ -3,3 +3,6 @@ site::node_info:
   hepspec06: 14.45
   specfp2000: 3612.5
   specint2000: 3612.5
+
+# this node has HT enabled and we only want to use the number of real cores
+htcondor::number_of_cpus: 12

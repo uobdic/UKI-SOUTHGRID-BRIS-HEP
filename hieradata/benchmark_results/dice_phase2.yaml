@@ -3,3 +3,5 @@ site::node_info:
   hepspec06: 11.17
   specfp2000: 2792.5
   specint2000: 2792.5
+
+  htcondor::number_of_cpus: 16
