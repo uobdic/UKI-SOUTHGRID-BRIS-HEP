@@ -17,7 +17,9 @@ mod 'puppet/mcollective', :latest
 mod 'jhoblitt/mcelog', :latest
 mod 'example42/network', :latest
 mod 'thias/tuned', :latest
-mod 'torrancew/account', :latest
+mod 'account',
+  :git => 'https://github.com/torrancew/puppet-account.git',
+  :ref => 'develop'
 
 # HEP-Puppet
 mod 'htcondor',
