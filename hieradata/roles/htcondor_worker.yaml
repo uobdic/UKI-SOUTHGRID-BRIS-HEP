@@ -1,5 +1,11 @@
 ---
 classes:
   - role::htcondor_worker
+  - 'profile::cvmfs'
+  - 'profile::arc_env'
+  - 'profile::voenv'
+
+packages_to_install:
+  - HEP_OSlibs_SL6
 
 htcondor::is_worker: true
