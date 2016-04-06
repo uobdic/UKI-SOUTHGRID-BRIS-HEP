@@ -17,6 +17,7 @@ mod 'puppet/mcollective', :latest
 mod 'jhoblitt/mcelog', :latest
 mod 'example42/network', :latest
 mod 'thias/tuned', :latest
+mod 'torrancew/account', :latest
 
 # HEP-Puppet
 mod 'htcondor',
