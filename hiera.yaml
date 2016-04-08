@@ -5,7 +5,7 @@
   - "modules/site_private/hieradata/nodes/%{::fqdn}"
   - "hieradata/virtual/%{::is_virtual}"
   - "hieradata/cluster/%{::node_info.cluster}"
-  - "hieradata/benchmark_results/%{::node_info.benchmark_results}"
+  - "hieradata/generation/%{::node_info.generation}"
   - "hieradata/groups/%{::node_info.group}"
   - "hieradata/roles/%{::node_info.role}"
   - modules/site_private/hieradata/common
