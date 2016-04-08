@@ -5,3 +5,5 @@ site::node_info:
   specint2000: 5000
 
 htcondor::number_of_cpus: 36
+htcondor::pool_create: true
+htcondor::install_repositories: true
