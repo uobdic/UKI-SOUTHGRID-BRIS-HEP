@@ -1,0 +1,4 @@
+$template sysklogd,"<%PRI%>%TIMESTAMP% %syslogtag%%msg%"
+<% @central_log.each do |c| -%>
+*.* @<%= c -%>
+<% end %>
