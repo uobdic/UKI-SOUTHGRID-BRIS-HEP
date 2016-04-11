@@ -26,7 +26,7 @@ htcondor::default_domain_name: 'phy.bris.ac.uk'
 htcondor::cluster_has_multiple_domains: true
 htcondor::collector_name: 'DICE-HTCondor-Cluster'
 htcondor::cluster_has_multiple_domains: true
-htcondor::admin_email: localhost
+htcondor::admin_email: root@localhost
 htcondor::condor_user: condor
 htcondor::condor_group: condor
 htcondor::machine_owner: condor
