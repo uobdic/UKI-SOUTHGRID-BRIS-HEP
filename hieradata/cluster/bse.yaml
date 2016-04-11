@@ -1,1 +1,7 @@
 ---
+profile::monitored::servers:
+  - 137.222.74.99
+  - 137.222.171.31
+
+profile::monitored::port: 8650
+profile::monitored::cluster_name: 'vivaldi'

@@ -1,1 +1,6 @@
 ---
+profile::monitored::servers:
+  - 137.222.171.36
+
+profile::monitored::port: 8649
+profile::monitored::cluster_name: 'DICE'

@@ -3,6 +3,7 @@ message: "This is our common yaml file"
 classes:
  - site
  - 'profile::base'
+ - 'profile::monitored'
 # - 'profile::firewall::setup'
 
 ntp::enable: true
