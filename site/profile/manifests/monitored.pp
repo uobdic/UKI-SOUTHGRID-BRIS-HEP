@@ -1,7 +1,7 @@
 class profile::monitored {
-  $servers          = hiera_array('profile::monitored::servers', ['localhost'])
-  $port             = hiera('profile::monitored::port', 8650)
-  $cluster_name     = hiera('profile::monitored::cluster_name', 'unknown')
+  $ganglia_servers          = hiera_array('profile::monitored::ganglia_servers', ['localhost'])
+  $ganglia_port             = hiera('profile::monitored::ganglia_port', 8650)
+  $ganglia_cluster_name     = hiera('profile::monitored::ganglia_cluster_name', 'unknown')
 
   $ganglia_packages = ['ganglia-gmond-python', 'ganglia', 'ganglia-gmond']
 

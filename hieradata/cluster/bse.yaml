@@ -1,10 +1,10 @@
 ---
-profile::monitored::servers:
+profile::monitored::ganglia_servers:
   - 137.222.74.99
   - 137.222.171.31
 
-profile::monitored::port: 8650
-profile::monitored::cluster_name: 'vivaldi'
+profile::monitored::ganglia_port: 8650
+profile::monitored::ganglia_cluster_name: 'vivaldi'
 
 profile::monitored::central_log:
   - 'telemann.phy.bris.ac.uk:514;sysklogd'

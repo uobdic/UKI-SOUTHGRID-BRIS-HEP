@@ -2,11 +2,11 @@
 # hadoop cluster is on a private network, need to use connection broker
 htcondor::uses_connection_broker: true
 
-profile::monitored::servers:
+profile::monitored::ganglia_servers:
   - 10.129.1.30
 
-profile::monitored::port: 8659
-profile::monitored::cluster_name: 'hadoop-cluster'
+profile::monitored::ganglia_port: 8659
+profile::monitored::ganglia_cluster_name: 'hadoop-cluster'
 
 profile::monitored::central_log:
   - 'lcgui02.phy.bris.ac.uk:514;sysklogd'
