@@ -1,4 +1,5 @@
-$template sysklogd,"<%PRI%>%TIMESTAMP% %syslogtag%%msg%"
+$template sysklogd,"<%%PRI%>%TIMESTAMP% %syslogtag%%msg%"
+<% if @central_log -%>
 <% @central_log.each do |c| -%>
-*.* @<%= c -%>
+*.* @<%= c %>
 <% end %>

@@ -4,6 +4,7 @@ classes:
   - 'profile::cvmfs'
   - 'profile::arc_env'
   - 'profile::voenv'
+  - 'profile::users'
 
 packages_to_install:
   - HEP_OSlibs_SL6
