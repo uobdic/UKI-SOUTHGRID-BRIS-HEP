@@ -4,6 +4,6 @@ site::node_info:
   specfp2000: 5000
   specint2000: 5000
 
-htcondor::number_of_cpus: 36
+htcondor::number_of_cpus: 32
 htcondor::pool_create: true
 htcondor::install_repositories: true
