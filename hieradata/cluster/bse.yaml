@@ -5,3 +5,7 @@ profile::monitored::servers:
 
 profile::monitored::port: 8650
 profile::monitored::cluster_name: 'vivaldi'
+
+profile::monitored::central_log:
+  - 'telemann.phy.bris.ac.uk:514;sysklogd'
+  - 'lcgui02.phy.bris.ac.uk:514;sysklogd'
