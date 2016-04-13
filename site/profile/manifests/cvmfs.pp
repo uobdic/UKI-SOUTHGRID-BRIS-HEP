@@ -1,5 +1,5 @@
 class profile::cvmfs {
-  $cvmfs_mounts     = hiera_hash('site_info::cvmfs_mounts', {})
+  $cvmfs_mounts     = $::site_info['cvmfs_mounts']
   $cvmfs_server_url = hiera('cvmfs::cvmfs_server_url')
 
   include cvmfs
@@ -7,7 +7,7 @@ class profile::cvmfs {
   $defaults = {
     'cvmfs_server_url' => $cvmfs_server_url,
   }
-  create_resources('cvmfs::mount', $cvmfs_mounts)
+  create_resources('cvmfs::mount', $cvmfs_mounts, $defaults)
 
   # create folder structure for local site configuration
   file { [
