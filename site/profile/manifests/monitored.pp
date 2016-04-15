@@ -7,4 +7,7 @@ class profile::monitored {
 
   # central log
   include ::profile::monitored::central_log
+
+  # psacct
+  include ::profile::monitored::psacct
 }
