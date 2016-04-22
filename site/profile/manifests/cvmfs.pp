@@ -7,7 +7,10 @@ class profile::cvmfs {
   $defaults = {
     'cvmfs_server_url' => $cvmfs_server_url,
   }
-  create_resources('cvmfs::mount', $cvmfs_mounts, $defaults)
+
+  if $cvmfs_mounts {
+    create_resources('cvmfs::mount', $cvmfs_mounts, $defaults)
+  }
 
   # create folder structure for local site configuration
   file { [
