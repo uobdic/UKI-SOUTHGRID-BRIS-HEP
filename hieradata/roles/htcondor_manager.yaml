@@ -54,3 +54,5 @@ htcondor::accounting_groups:
   physics.jonas:
     dynamic_quota: 0.1
     priority_factor: 1000.0
+    
+profile::users::shell: '/sbin/nologin'
