@@ -1,3 +1,5 @@
 ---
 classes:
   - 'profile::users'
+
+profile::users::shell: '/sbin/nologin'

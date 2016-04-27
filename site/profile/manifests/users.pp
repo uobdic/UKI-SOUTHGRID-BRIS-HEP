@@ -5,6 +5,7 @@ class profile::users {
   $users    = hiera_hash('profile::users::users', {
   }
   )
+  $shell = hiera('profile::users::shell', '/bin/bash')
 
   $defaults = {
     'ensure' => present,
@@ -14,7 +15,7 @@ class profile::users {
 
   $acc_defaults = {
     'ensure'       => present,
-    'shell'        => '/bin/bash',
+    'shell'        => $shell,
     'password'     => '!!',
     'create_group' => false,
   }
