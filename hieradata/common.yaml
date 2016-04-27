@@ -11,6 +11,9 @@ ntp::servers:
   - 137.222.8.25
   - 137.222.8.26
   - 137.222.9.26
+ntp::restrict:
+  - "default nomodify notrap noquery"
+  - "127.0.0.1"
   
 site::site_info:
   gocdb_name: 'UKI-SOUTHGRID-BRIS-HEP'
