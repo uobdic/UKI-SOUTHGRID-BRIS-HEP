@@ -20,8 +20,10 @@
 
 DEFAULT -a -R 5 -I 1 -I 7 -I 9 -I 188 -I 190 -I 194 -I 195 -m root
 <% @disks.keys.sort.each do |disk| -%>
+<% if not disk.start_with?('sr') -%>
 /dev/<%= disk %>
 <% end -%>
+<% end -%>    
 
 # Alternative setting to ignore temperature and power-on hours reports
 # in syslog.
