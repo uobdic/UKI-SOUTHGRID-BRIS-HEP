@@ -1,5 +1,8 @@
 ---
 message: "This is condor!"
+# everything to do with condor needs to know all users
+classes:
+  - 'profile::users'
 
 # common parameters
 htcondor::managers:
