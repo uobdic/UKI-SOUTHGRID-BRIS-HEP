@@ -7,5 +7,7 @@ classes:
 
 packages_to_install:
   - HEP_OSlibs_SL6
+  - cmake
+  - gcc-gfortran
 
 htcondor::is_worker: true
