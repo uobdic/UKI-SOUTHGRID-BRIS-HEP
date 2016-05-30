@@ -27,7 +27,7 @@ mod 'htcondor',
   :ref => 'custom_attributes'
 mod 'arc_ce',
   :git => 'https://github.com/HEP-Puppet/arc_ce'
-  
+
 # CERN IT
 mod 'lcgdm/dmlite', :latest
 mod 'lcgdm/gridftp', :latest
@@ -50,7 +50,7 @@ mod 'argus',
 mod 'htcondor_ce',
   :git => 'https://github.com/kreczko/puppet-htcondor_ce',
   :ref => 'htcondor-workshop-adjustments'
-  
+
 # secondary control repo
 mod 'site_private',
-  :git => 'git@spender.isys.bris.ac.uk:bristolT2/site_private.git'
+  :git => 'git@gitlab.isys.bris.ac.uk:pp-computing/site_private.git'
