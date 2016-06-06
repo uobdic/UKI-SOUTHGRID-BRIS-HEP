@@ -1,6 +1,8 @@
 ---
 :backends:
   - yaml
+  - eyaml
+
 :hierarchy:
   - "modules/site_private/hieradata/nodes/%{::fqdn}"
   - "hieradata/virtual/%{::is_virtual}"
@@ -13,5 +15,10 @@
 
 :yaml:
   :datadir: "/etc/puppetlabs/code/environments/%{::environment}"
+
+:eyaml:
+  :datadir: "/etc/puppetlabs/code/environments/%{::environment}"
+  :pkcs7_private_key: /etc/puppetlabs/secure/keys/private_key.pkcs7.pem
+  :pkcs7_public_key:  /etc/puppetlabs/secure/keys/public_key.pkcs7.pem
 
 :merge_behavior: deeper
