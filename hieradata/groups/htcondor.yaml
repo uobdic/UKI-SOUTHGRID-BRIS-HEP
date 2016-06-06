@@ -36,7 +36,6 @@ htcondor::machine_owner: condor
 htcondor::include_username_in_accounting: true
 
 htcondor::pool_home: '/condor'
-htcondor::use_pkg_condor_config: true
 htcondor::pool_password: 'puppet:///modules/site_private/pool_password'
 
 # should be off for a production system (only true for fresh install if needed)

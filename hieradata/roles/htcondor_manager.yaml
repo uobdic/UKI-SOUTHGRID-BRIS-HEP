@@ -3,6 +3,7 @@ classes:
   - htcondor
 
 htcondor::is_manager: true
+htcondor::use_anonymous_auth: true
 
 htcondor::high_priority_groups:
   dteam: -10
