@@ -6,6 +6,7 @@ mod 'puppetlabs/concat', :latest
 mod 'puppetlabs/dhcp', :latest
 mod 'puppetlabs/firewall', :latest
 mod 'puppetlabs/inifile', :latest
+mod 'puppetlabs/mysql', :latest
 mod 'puppetlabs/ntp', :latest
 mod 'puppetlabs/stdlib', :latest
 mod 'puppetlabs/tftp', :latest
@@ -15,7 +16,9 @@ mod 'puppetlabs/xinetd', :latest
 mod 'Lavaburn/razor', :latest
 mod 'puppet/mcollective', :latest
 mod 'jhoblitt/mcelog', :latest
+mod 'saz/memcached', :latest
 mod 'example42/network', :latest
+mod 'erwbgy/limits', :latest
 mod 'thias/tuned', :latest
 mod 'account',
   :git => 'https://github.com/torrancew/puppet-account.git',
@@ -36,7 +39,8 @@ mod 'lcgdm/voms', :latest
 mod 'lcgdm/xrootd', :latest
 
 # CERN OPS
-mod 'CERNOps/bdii', :latest
+mod 'bdii',
+  :git => 'https://github.com/cernops/puppet-bdii.git'
 mod 'CERNOps/cvmfs', :latest
 mod 'CERNOps/fetchcrl', :latest
 mod 'vosupport',

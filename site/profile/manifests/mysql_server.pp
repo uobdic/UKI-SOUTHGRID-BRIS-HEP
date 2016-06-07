@@ -26,7 +26,7 @@ class profile::mysql_server (
   }
 
   if $remote_hosts {
-    profile::mysql::grant_remove_access { $remote_hosts:
+    profile::mysql::grant_remote_access { $remote_hosts:
       databases => $databases,
       db_user   => $remote_db_user,
       db_pass   => $remote_db_pass,

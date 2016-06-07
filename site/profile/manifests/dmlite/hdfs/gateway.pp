@@ -6,11 +6,12 @@ class profile::dmlite::hdfs::gateway {
   $db_host          = hiera('profile::dmlite::db_host')
   $token_password   = hiera('profile::dmlite::token_password')
   $xrootd_sharedkey = hiera('profile::dmlite::xrootd_sharedkey')
-  $supported_vos    = hiera('site::site_info::supported_vos')
-  $debug            = hiera('profile::dmlite::::debug')
+  $debug            = hiera('profile::dmlite::debug')
   $hdfs_namenode    = hiera('profile::dmlite::hdfs_namenode')
   $hdfs_port        = hiera('profile::dmlite::hdfs_port')
   $localdomain      = hiera('profile::dmlite::localdomain')
+
+  $supported_vos    = $::site_info['supported_vos']
 
   include profile::firewall::dmlite_gateway
   include profile::dmlite::vo_support

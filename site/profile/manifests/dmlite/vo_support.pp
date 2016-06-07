@@ -1,5 +1,5 @@
 class profile::dmlite::vo_support {
-  $supported_vos    = hiera('site::site_info::supported_vos')
+  $supported_vos    = $::site_info['supported_vos']
 
   # for the moment use this safe list instead of $supported_vos
   $vo_array = ['atlas', 'cms', 'dteam', 'ops', 'lhcb', 'alice']

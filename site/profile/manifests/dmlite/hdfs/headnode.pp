@@ -6,13 +6,12 @@ class profile::dmlite::hdfs::headnode {
   $db_host          = hiera('profile::dmlite::db_host')
   $token_password   = hiera('profile::dmlite::token_password')
   $xrootd_sharedkey = hiera('profile::dmlite::xrootd_sharedkey')
-  $supported_vos    = hiera('site::site_info::supported_vos')
-  $debug            = hiera('profile::dmlite::::debug')
+  $debug            = hiera('profile::dmlite::debug')
   $hdfs_namenode    = hiera('profile::dmlite::hdfs_namenode')
   $hdfs_port        = hiera('profile::dmlite::hdfs_port')
-
   $localdomain      = hiera('profile::dmlite::localdomain')
-  $remote_hosts     = union($gateways, [$::fqdn])
+
+  $supported_vos    = $::site_info['supported_vos']
   $databases        = ['dpm_db.*', 'cns_db.*']
   $disk_nodes       = join($gateways, ' ')
   $remotes          = suffix($gateways, ':2811')
@@ -21,7 +20,7 @@ class profile::dmlite::hdfs::headnode {
   Class['Mysql::Server'] -> Class['Lcgdm::Ns::Service']
 
   class { 'profile::mysql_server':
-    remote_hosts   => $remote_hosts,
+    remote_hosts   => $gateways,
     databases      => $databases,
     remote_db_user => $db_user,
     remote_db_pass => $db_pass,
@@ -29,7 +28,6 @@ class profile::dmlite::hdfs::headnode {
 
   include profile::firewall::dmlite_headnode
   include profile::dmlite::vo_support
-  }
 
   #
   # DPM and DPNS daemon configuration.
@@ -150,42 +148,20 @@ class profile::dmlite::hdfs::headnode {
   #
   class { 'dmlite::shell':
   }
-  
-  $commands = ['dmlite-shell -e \'pooladd  hdfs_pool hdfs\'',
+
+  $commands = [
+    'dmlite-shell -e \'pooladd  hdfs_pool hdfs\'',
     "dmlite-shell -e 'poolmodify hdfs_pool hostname ${hdfs_namenode}'",
     "dmlite-shell -e 'poolmodify hdfs_pool port ${hdfs_port}'",
     'dmlite-shell -e \'poolmodify hdfs_pool username dpmmgr\'',
-    'dmlite-shell -e \'poolmodify hdfs_pool mode rw\''
-  ]
-  
+    'dmlite-shell -e \'poolmodify hdfs_pool mode rw\'']
+
   exec { 'configurepool':
     path        => '/bin:/sbin:/usr/bin:/usr/sbin',
     environment => ['LD_LIBRARY_PATH=/usr/lib/jvm/java/jre/lib/amd64/server/'],
     command     => join($commands, ';'),
     unless      => 'dmlite-shell -e \'poolinfo rw\'',
     require     => [Package['dmlite-shell'], Class['Dmlite::shell']],
-  }
-
-  # limit conf
-
-  $limits_config = {
-    '*' => {
-      nofile => {
-        soft => 65000,
-        hard => 65000
-      }
-      ,
-      nproc  => {
-        soft => 65000,
-        hard => 65000
-      }
-      ,
-    }
-  }
-
-  class { 'limits':
-    config    => $limits_config,
-    use_hiera => false
   }
 
   #

@@ -1,5 +1,5 @@
 # grants access for local MySQL DBs to remote host
-define profile::dmlite::grant_mysql_access (
+define profile::mysql::grant_remote_access (
   $remote_host = $title,
   $databases   = [],
   $db_user     = undef,
