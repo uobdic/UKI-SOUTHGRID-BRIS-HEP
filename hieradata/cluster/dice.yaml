@@ -1,6 +1,6 @@
 ---
 profile::monitored::ganglia_servers:
-  - 137.222.171.36
+  - 137.222.79.10
 
 profile::monitored::ganglia_port: 8649
 profile::monitored::ganglia_cluster_name: 'DICE'
