@@ -75,4 +75,18 @@ class profile::firewall::dmlite_headnode {
     dport  => '2170',
     action => 'accept'
   }
+
+  firewall { '950 allow xrootd atlas':
+    state  => 'NEW',
+    proto  => 'tcp',
+    dport  => '11000',
+    action => 'accept'
+  }
+
+  firewall { '950 allow xrootd cms':
+    state  => 'NEW',
+    proto  => 'tcp',
+    dport  => '11001',
+    action => 'accept'
+  }
 }

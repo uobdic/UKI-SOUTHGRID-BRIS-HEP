@@ -1,9 +1,10 @@
 class profile::dmlite::vo_support {
-  $supported_vos    = $::site_info['supported_vos']
+  $supported_vos = $::site_info['supported_vos']
 
   # for the moment use this safe list instead of $supported_vos
-  $vo_array = ['atlas', 'cms', 'dteam', 'ops', 'lhcb', 'alice']
-  $vos = prefix($vo_array, 'voms::')
+  $vo_array      = ['atlas', 'cms', 'dteam', 'ops', 'lhcb', 'alice']
+  $vos           = prefix($vo_array, 'voms::')
+
   class { $vos: }
 
   #
@@ -35,12 +36,14 @@ class profile::dmlite::vo_support {
     ,
   }
 
-  $cmd    = '/usr/sbin/edg-mkgridmap'
-  $conf   = '/etc/lcgdm-mkgridmap.conf'
-  $output = '/etc/lcgdm-mapfile'
+  if $::node_info['role'] == 'dmlite_hdfs_headnode' {
+    $cmd    = '/usr/sbin/edg-mkgridmap'
+    $conf   = '/etc/lcgdm-mkgridmap.conf'
+    $output = '/etc/lcgdm-mapfile'
 
-  exec { "${cmd} --conf=${conf} --safe --output=${output}":
-    require   => File['/etc/lcgdm-mkgridmap.conf'],
-    subscribe => File['/etc/lcgdm-mkgridmap.conf'],
+    exec { "${cmd} --conf=${conf} --safe --output=${output}":
+      require   => File['/etc/lcgdm-mkgridmap.conf'],
+      subscribe => File['/etc/lcgdm-mkgridmap.conf'],
+    }
   }
 }

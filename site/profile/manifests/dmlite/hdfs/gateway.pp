@@ -12,25 +12,46 @@ class profile::dmlite::hdfs::gateway {
   $localdomain      = hiera('profile::dmlite::localdomain')
 
   $supported_vos    = $::site_info['supported_vos']
+  $hdfs_tmp_folder  = '/dmlite/tmp'
+  $hdfs_replication = 2
 
   include profile::firewall::dmlite_gateway
   include profile::dmlite::vo_support
 
+  # lcgdm configuration.
+  #
+  class { 'lcgdm::base::config':
+  }
+
+  class { 'lcgdm::base::install':
+  }
+
+  class { 'lcgdm::ns::client':
+    flavor  => 'dpns',
+    dpmhost => $headnode_fqdn,
+  }
+
   #
   # dmlite configuration.
   #
-
-
   class { 'dmlite::disk_hdfs':
-    token_password  => $token_password,
-    mysql_username  => $db_user,
-    mysql_password  => $db_pass,
-    mysql_host      => $headnode_fqdn,
-    hdfs_namenode   => $hdfs_namenode,
-    hdfs_port       => $hdfs_port,
-    hdfs_user       => 'dpmmgr',
-    enable_io       => true,
-    hdfs_tmp_folder => '/data/dpm/tmp',
+    token_password   => $token_password,
+    mysql_username   => $db_user,
+    mysql_password   => $db_pass,
+    mysql_host       => $headnode_fqdn,
+    hdfs_namenode    => $hdfs_namenode,
+    hdfs_port        => $hdfs_port,
+    hdfs_user        => 'dpmmgr',
+    enable_io        => true,
+    hdfs_tmp_folder  => $hdfs_tmp_folder,
+    hdfs_replication => $hdfs_replication,
+  }
+
+  cron { 'tmpfs_cleaner':
+    ensure  => 'absent',
+    command => "/usr/bin/find ${hdfs_tmp_folder} -type f -cmin +300 -delete",
+    user    => 'root',
+    minute  => '00',
   }
 
   #
@@ -54,7 +75,7 @@ class profile::dmlite::hdfs::gateway {
     dpmhost     => $headnode_fqdn,
     enable_hdfs => true,
     data_node   => 1,
-    log_level   => 'ERROR',
+    log_level   => 'INFO',
   #   log_level => 'ERROR,WARN,INFO,TRANSFER,DUMP,ALL',
   }
 
@@ -76,29 +97,10 @@ class profile::dmlite::hdfs::gateway {
     dpm_xrootd_debug     => $debug,
     dpm_xrootd_sharedkey => $xrootd_sharedkey,
     enable_hdfs          => true,
+    xrd_report           => 'xrootd.t2.ucsd.edu:9931,atl-prod05.slac.stanford.edu:9931 every 60s all sync',
+    xrootd_monitor       => 'all flush 30s ident 5m fstat 60 lfn ops ssq xfr 5 window 5s dest fstat info user redir CMS-AAA-EU-COLLECTOR.cern.ch:9330 dest fstat info user redir atlas-fax-eu-collector.cern.ch:9330',
   }
 
-  # limit conf
-
-  $limits_config = {
-    '*' => {
-      nofile => {
-        soft => 65000,
-        hard => 65000
-      }
-      ,
-      nproc  => {
-        soft => 65000,
-        hard => 65000
-      }
-      ,
-    }
-  }
-
-  class { 'limits':
-    config    => $limits_config,
-    use_hiera => false
-  }
   #
   # Set inter-module dependencies
   #

@@ -16,6 +16,7 @@ class profile::dmlite::hdfs::headnode {
   $disk_nodes       = join($gateways, ' ')
   $remotes          = suffix($gateways, ':2811')
   $remote_nodes     = join($remotes, ',')
+  $hdfs_replication = 2
 
   Class['Mysql::Server'] -> Class['Lcgdm::Ns::Service']
 
@@ -72,15 +73,16 @@ class profile::dmlite::hdfs::headnode {
   # dmlite configuration.
   #
   class { 'dmlite::head_hdfs':
-    token_password  => $token_password,
-    mysql_username  => $db_user,
-    mysql_password  => $db_pass,
-    hdfs_namenode   => $hdfs_namenode,
-    hdfs_port       => $hdfs_port,
-    hdfs_user       => 'dpmmgr',
-    enable_io       => true,
-    hdfs_tmp_folder => '/tmp',
-    hdfs_gateway    => join($gateways, ','),
+    token_password   => $token_password,
+    mysql_username   => $db_user,
+    mysql_password   => $db_pass,
+    hdfs_namenode    => $hdfs_namenode,
+    hdfs_port        => $hdfs_port,
+    hdfs_user        => 'dpmmgr',
+    enable_io        => true,
+    hdfs_tmp_folder  => '/tmp',
+    hdfs_gateway     => join($gateways, ','),
+    hdfs_replication => $hdfs_replication,
   }
 
   #
@@ -99,7 +101,8 @@ class profile::dmlite::hdfs::headnode {
   class { 'dmlite::gridftp':
     dpmhost      => $::fqdn,
     remote_nodes => $remote_nodes,
-    enable_hdfs  => true
+    enable_hdfs  => true,
+    log_level    => 'INFO',
   }
 
   # The XrootD configuration is a bit more complicated and
@@ -114,12 +117,37 @@ class profile::dmlite::hdfs::headnode {
     xrootd_group => 'dpmmgr'
   }
 
+  $atlas_fed = {
+    name           => 'fedredir_atlas',
+    fed_host       => 'atlas-xrd-uk.cern.ch',
+    xrootd_port    => 1094,
+    cmsd_port      => 1098,
+    local_port     => 11000,
+    namelib_prefix => "/dpm/${localdomain}/home/atlas",
+    namelib        => "XrdOucName2NameLFC.so pssorigin=localhost sitename=UKI-SOUTHGRID-BRIS-HEP",
+    paths          => ['/atlas']
+  }
+
+  $cms_fed   = {
+    name           => 'fedredir_cms',
+    fed_host       => 'xrootd-cms.infn.it',
+    xrootd_port    => 1094,
+    cmsd_port      => 1213,
+    local_port     => 11001,
+    namelib_prefix => "/dpm/${localdomain}/home/cms",
+    namelib        => "libXrdCmsTfc.so file:/etc/xrootd/storage.xml?protocol=direct",
+    paths          => ['/store']
+  }
+
   class { 'dmlite::xrootd':
     nodetype             => ['head'],
     domain               => $localdomain,
     dpm_xrootd_debug     => $debug,
     dpm_xrootd_sharedkey => $xrootd_sharedkey,
     enable_hdfs          => true,
+    xrd_report           => "xrootd.t2.ucsd.edu:9931,atl-prod05.slac.stanford.edu:9931 every 60s all sync",
+    xrootd_monitor       => "all flush 30s ident 5m fstat 60 lfn ops ssq xfr 5 window 5s dest fstat info user redir CMS-AAA-EU-COLLECTOR.cern.ch:9330 dest fstat info user redir atlas-fax-eu-collector.cern.ch:9330",
+    dpm_xrootd_fedredirs => { "atlas" => $atlas_fed, "cms" => $cms_fed },
   }
 
   # BDII
@@ -128,10 +156,11 @@ class profile::dmlite::hdfs::headnode {
   # DPM GIP config
   class { 'lcgdm::bdii::dpm':
     sitename => 'UKI-SOUTHGRID-BRIS-HEP',
-    vos      => $supported_vos
+    vos      => $supported_vos,
+    hdfs     => true,
   }
 
-  Class[Lcgdm::Base::Config] ->
+  Class['Lcgdm::Base::Config'] ->
   class { 'memcached':
     max_memory => 2000,
     listen_ip  => '127.0.0.1',
