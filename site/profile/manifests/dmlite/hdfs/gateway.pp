@@ -1,6 +1,6 @@
 #
 class profile::dmlite::hdfs::gateway {
-  $headnode_fqdn    = hiera_array('profile::dmlite::headnode')
+  $headnode_fqdn    = hiera('profile::dmlite::headnode')
   $db_user          = hiera('profile::dmlite::mysql_dpm_user')
   $db_pass          = hiera('profile::dmlite::mysql_dpm_pass')
   $db_host          = hiera('profile::dmlite::db_host')

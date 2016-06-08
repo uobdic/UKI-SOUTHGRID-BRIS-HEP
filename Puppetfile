@@ -32,11 +32,13 @@ mod 'arc_ce',
   :git => 'https://github.com/HEP-Puppet/arc_ce'
 
 # CERN IT
-mod 'lcgdm/dmlite', :latest
+mod 'dmlite',
+  :git => 'https://github.com/cern-it-sdc-id/puppet-dmlite.git'
 mod 'lcgdm/gridftp', :latest
 mod 'lcgdm/lcgdm', :latest
 mod 'lcgdm/voms', :latest
-mod 'lcgdm/xrootd', :latest
+mod 'xrootd',
+  :git => 'https://github.com/cern-it-sdc-id/puppet-xrootd.git'
 
 # CERN OPS
 mod 'bdii',
