@@ -7,9 +7,9 @@ class profile::cgroups {
     require => [Package['libcgroup']],
   }
 
-  file { '/etc/cgconfig.d/--_cg_htcondor.conf':
+  file { '/etc/cgconfig.d/00_cg_htcondor.conf':
     ensure  => present,
-    source  => 'puppet:///modules/${module_name}/00_cg_htcondor.conf',
+    source  => "puppet:///modules/${module_name}/00_cg_htcondor.conf",
     require => [Package['libcgroup']],
     notify  => Service['cgconfig'],
   }
