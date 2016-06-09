@@ -13,3 +13,4 @@ packages_to_install:
 
 htcondor::is_worker: true
 htcondor::enable_cgroup: true
+htcondor::use_pid_namespaces: true
