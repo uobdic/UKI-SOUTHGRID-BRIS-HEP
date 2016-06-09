@@ -4,6 +4,7 @@ classes:
   - 'profile::cvmfs'
   - 'profile::arc_env'
   - 'profile::voenv'
+  - profile::cgroups
 
 packages_to_install:
   - HEP_OSlibs_SL6
@@ -11,3 +12,4 @@ packages_to_install:
   - gcc-gfortran
 
 htcondor::is_worker: true
+htcondor::enable_cgroup: true
