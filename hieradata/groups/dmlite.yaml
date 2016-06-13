@@ -4,7 +4,7 @@ profile::dmlite::gateways:
   - 'dice-io-37-01.acrc.bris.ac.uk'
   
 profile::dmlite::debug: false
-profile::dmlite::hdfs_namenode: 'jt-37-00.dice.priv'
-profile::dmlite::hdfs_port: 8020
+profile::dmlite::hdfs_namenode: default
+profile::dmlite::hdfs_port: 0
 profile::dmlite::db_host: 'lcgse01.phy.bris.ac.uk'
 profile::dmlite::localdomain: 'phy.bris.ac.uk'
