@@ -6,6 +6,7 @@
 :hierarchy:
   - "modules/site_private/hieradata/nodes/%{::fqdn}"
   - "modules/site_private/hieradata/firewall/%{::node_info.firewall}"
+  - "modules/site_private/hieradata/users/%{::node_info.users}"
   - "hieradata/virtual/%{::is_virtual}"
   - "hieradata/cluster/%{::node_info.cluster}"
   - "hieradata/generation/%{::node_info.generation}"
