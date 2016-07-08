@@ -10,6 +10,7 @@ packages_to_install:
   - HEP_OSlibs_SL6
   - cmake
   - gcc-gfortran
+  - git
 
 htcondor::is_worker: true
 htcondor::enable_cgroup: true
