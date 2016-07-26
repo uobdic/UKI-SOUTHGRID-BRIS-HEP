@@ -34,7 +34,8 @@ mod 'arc_ce',
 
 # CERN IT
 mod 'dmlite',
-  :git => 'https://github.com/cern-it-sdc-id/puppet-dmlite.git'
+  :git => 'https://github.com/kreczko/puppet-dmlite.git',
+  :ref => 'java-home'
 mod 'lcgdm/gridftp', :latest
 mod 'lcgdm/lcgdm', :latest
 mod 'lcgdm/voms', :latest
