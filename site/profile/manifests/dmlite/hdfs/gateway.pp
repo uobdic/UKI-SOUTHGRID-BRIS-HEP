@@ -10,7 +10,7 @@ class profile::dmlite::hdfs::gateway {
   $hdfs_namenode    = hiera('profile::dmlite::hdfs_namenode')
   $hdfs_port        = hiera('profile::dmlite::hdfs_port')
   $localdomain      = hiera('profile::dmlite::localdomain')
-  $java_home        = hiera('profile::dmlite::java_home')
+  $java_home        = hiera('dmlite::plugins::hdfs::params::java_home')
 
   $supported_vos    = $::site_info['supported_vos']
   $hdfs_tmp_folder  = '/dmlite/tmp'
