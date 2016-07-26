@@ -10,6 +10,7 @@ class profile::dmlite::hdfs::headnode {
   $hdfs_namenode    = hiera('profile::dmlite::hdfs_namenode')
   $hdfs_port        = hiera('profile::dmlite::hdfs_port')
   $localdomain      = hiera('profile::dmlite::localdomain')
+  $java_home        = hiera('dmlite::plugins::hdfs::params::java_home')
 
   $supported_vos    = $::site_info['supported_vos']
   $databases        = ['dpm_db.*', 'cns_db.*']
@@ -124,7 +125,7 @@ class profile::dmlite::hdfs::headnode {
     cmsd_port      => 1098,
     local_port     => 11000,
     namelib_prefix => "/dpm/${localdomain}/home/atlas",
-    namelib        => "XrdOucName2NameLFC.so pssorigin=localhost sitename=UKI-SOUTHGRID-BRIS-HEP",
+    namelib        => 'XrdOucName2NameLFC.so pssorigin=localhost sitename=UKI-SOUTHGRID-BRIS-HEP',
     paths          => ['/atlas']
   }
 
@@ -135,7 +136,7 @@ class profile::dmlite::hdfs::headnode {
     cmsd_port      => 1213,
     local_port     => 11001,
     namelib_prefix => "/dpm/${localdomain}/home/cms",
-    namelib        => "libXrdCmsTfc.so file:/etc/xrootd/storage.xml?protocol=direct",
+    namelib        => 'libXrdCmsTfc.so file:/etc/xrootd/storage.xml?protocol=direct',
     paths          => ['/store']
   }
 
@@ -145,9 +146,9 @@ class profile::dmlite::hdfs::headnode {
     dpm_xrootd_debug     => $debug,
     dpm_xrootd_sharedkey => $xrootd_sharedkey,
     enable_hdfs          => true,
-    xrd_report           => "xrootd.t2.ucsd.edu:9931,atl-prod05.slac.stanford.edu:9931 every 60s all sync",
-    xrootd_monitor       => "all flush 30s ident 5m fstat 60 lfn ops ssq xfr 5 window 5s dest fstat info user redir CMS-AAA-EU-COLLECTOR.cern.ch:9330 dest fstat info user redir atlas-fax-eu-collector.cern.ch:9330",
-    dpm_xrootd_fedredirs => { "atlas" => $atlas_fed, "cms" => $cms_fed },
+    xrd_report           => 'xrootd.t2.ucsd.edu:9931,atl-prod05.slac.stanford.edu:9931 every 60s all sync',
+    xrootd_monitor       => 'all flush 30s ident 5m fstat 60 lfn ops ssq xfr 5 window 5s dest fstat info user redir CMS-AAA-EU-COLLECTOR.cern.ch:9330 dest fstat info user redir atlas-fax-eu-collector.cern.ch:9330',
+    dpm_xrootd_fedredirs => { 'atlas' => $atlas_fed, 'cms' => $cms_fed },
   }
 
   # BDII
@@ -187,7 +188,7 @@ class profile::dmlite::hdfs::headnode {
 
   exec { 'configurepool':
     path        => '/bin:/sbin:/usr/bin:/usr/sbin',
-    environment => ['LD_LIBRARY_PATH=/usr/lib/jvm/java/jre/lib/amd64/server/'],
+    environment => ["LD_LIBRARY_PATH=${java_home}/jre/lib/amd64/server/"],
     command     => join($commands, ';'),
     unless      => 'dmlite-shell -e \'poolinfo rw\'',
     require     => [Package['dmlite-shell'], Class['Dmlite::shell']],
