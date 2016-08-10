@@ -6,4 +6,4 @@ profile::monitored::ganglia_port: 8649
 profile::monitored::ganglia_cluster_name: 'DICE'
 profile::monitored::central_log:
   - '10.129.5.3:514'
-  - '10.129.5.4:514'
+  - '137.222.171.36:514'
