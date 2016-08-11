@@ -5,6 +5,13 @@ class profile::users {
   $users        = hiera_hash('profile::users::users', {
   }
   )
+  if empty($groups){
+    notice('No profile::users::groups specified')
+  }
+  if empty($users){
+    notice('No profile::users::users specified')
+  }
+
   $shell        = hiera('profile::users::shell', '/bin/bash')
 
   $defaults     = {
