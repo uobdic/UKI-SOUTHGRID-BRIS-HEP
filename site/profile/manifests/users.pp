@@ -26,7 +26,7 @@ class profile::users {
   }
 
   if $::fqdn != 'soolin.phy.bris.ac.uk' {
-    create_resources(group, $groups, $defaults)
+    create_resources('group', $groups, $defaults)
     create_resources('account', $users, $acc_defaults)
   }
 }
