@@ -11,6 +11,13 @@ class profile::monitored::central_log {
       mode    => '0644',
       notify  => Service['rsyslog'],
     }
+
+    file { '/etc/rsyslog.conf':
+      ensure => 'present',
+      source => "puppet:///modules/${module_name}/rsyslog.conf",
+      mode   => '0644',
+      notify => Service['rsyslog'],
+    }
   }
 
   service { 'rsyslog':
