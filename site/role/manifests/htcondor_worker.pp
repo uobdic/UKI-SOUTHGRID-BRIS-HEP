@@ -1,11 +1,7 @@
 class role::htcondor_worker {
-  $custom_machine_attributes = hiera_hash('htcondor::custom_machine_attributes',
-  {
-  }
-  )
-  $custom_job_attributes     = hiera_hash('htcondor::custom_job_attributes', {
-  }
-  )
+  $custom_machine_attributes = hiera_hash('htcondor::custom_machine_attributes',{})
+  $custom_job_attributes     = hiera_hash('htcondor::custom_job_attributes', {})
+  $start_jobs                  = hiera_hash('htcondor::start_jobs', true)
 
   $site_machine_attributes   = {
     'CLUSTER'                 => $::node_info['cluster'],
@@ -27,6 +23,14 @@ class role::htcondor_worker {
   class { '::htcondor':
     custom_machine_attributes => $merged_machine_attributes,
     custom_job_attributes     => $merged_job_attributes,
+  }
+
+  unless $start_jobs {
+    file {'/etc/condor/config.d/999_off.config':
+      ensure => 'present',
+      content => 'START = FALSE',
+      notify  => Exec['/usr/sbin/condor_reconfig'],
+    }
   }
 
 }
