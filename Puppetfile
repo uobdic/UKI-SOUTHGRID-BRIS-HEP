@@ -15,6 +15,7 @@ mod 'puppetlabs/xinetd', :latest
 
 # community modules
 mod 'Lavaburn/razor', :latest
+mod 'puppet/fetchcrl', :latest
 mod 'puppet/mcollective', :latest
 mod 'jhoblitt/mcelog', :latest
 mod 'saz/memcached', :latest
@@ -46,7 +47,6 @@ mod 'xrootd',
 mod 'bdii',
   :git => 'https://github.com/cernops/puppet-bdii.git'
 mod 'CERNOps/cvmfs', :latest
-mod 'CERNOps/fetchcrl', :latest
 mod 'vosupport',
   :git => 'https://github.com/HEP-Puppet/puppet-vosupport',
   :ref => 'development'
