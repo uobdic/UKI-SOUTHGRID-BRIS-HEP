@@ -11,9 +11,9 @@ class profile::users {
   if empty($users){
     notice('No profile::users::users specified')
   }
-  $role = hiera('site::node_info::role')
+  $node_info = hiera_hash('site::node_info')
 
-  if ($role == 'hdfs_namenode'){
+  if ($node_info['role'] == 'hdfs_namenode'){
     $shell        = hiera('profile::users::shell', '/sbin/nologin')
   }
   else {
