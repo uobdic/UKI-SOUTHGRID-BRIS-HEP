@@ -11,8 +11,15 @@ class profile::users {
   if empty($users){
     notice('No profile::users::users specified')
   }
+  $role = hiera('site::node_info::role')
 
-  $shell        = hiera('profile::users::shell', '/bin/bash')
+  if ($role == 'hdfs_namenode'){
+    $shell        = hiera('profile::users::shell', '/sbin/nologin')
+  }
+  else {
+    $shell        = hiera('profile::users::shell', '/bin/bash')
+  }
+
 
   $defaults     = {
     'ensure' => present,
