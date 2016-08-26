@@ -16,6 +16,7 @@ htcondor::schedulers:
   - soolin.phy.bris.ac.uk
   - mensa.star.bris.ac.uk
   - hyperion.phy.bris.ac.uk
+  - soolin.dice.priv
 
 htcondor::workers:
   - '*.dice.priv'
