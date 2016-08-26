@@ -1,8 +1,8 @@
 class profile::users {
-  $empty_hash  = {
+  $empty_hash = {
   }
-  $groups      = hiera_hash('profile::users::groups', $empty_hash)
-  $users       = hiera_hash('profile::users::users', $empty_hash)
+  $groups     = hiera_hash('profile::users::groups', $empty_hash)
+  $users      = hiera_hash('profile::users::users', $empty_hash)
 
   if empty($groups) {
     notice('No profile::users::groups specified')
@@ -28,11 +28,13 @@ class profile::users {
     'shell'        => $shell,
     'password'     => '!!',
     'create_group' => false,
+    'managehome'   => false,
+    'gid'          => 100,
   }
 
   unless 'soolin' in $::fqdn {
     create_resources('group', $groups, $defaults)
-    create_resources('account', $users, $acc_defaults)
+    create_resources('accounts::user', $users, $acc_defaults)
   }
 
   if $::fqdn == 'soolin.dice.priv' {
@@ -41,11 +43,12 @@ class profile::users {
       'ensure'       => present,
       'shell'        => $shell,
       'password'     => '!!',
+      'managehome'   => false,
       'create_group' => false,
-      'managehome'   => false, # do not create home folders
+      'gid'          => 100,
     }
     # use puppetlabs/accounts
-    create_resources('accounts', $users, $soolin_defaults)
+    create_resources('accounts::user', $users, $soolin_defaults)
   }
 
 }
