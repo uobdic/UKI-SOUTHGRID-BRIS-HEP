@@ -32,7 +32,7 @@ class profile::users {
     'create_group' => false,
   }
 
-  if $::fqdn != 'soolin.phy.bris.ac.uk' {
+  unless 'soolin' in $::fqdn {
     create_resources('group', $groups, $defaults)
     create_resources('account', $users, $acc_defaults)
   }
