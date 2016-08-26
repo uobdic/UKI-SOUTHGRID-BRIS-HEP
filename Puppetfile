@@ -2,6 +2,7 @@ forge 'http://forge.puppetlabs.com'
 
 # Puppetlabs modules
 mod 'puppetlabs/apache', :latest
+mod 'puppetlabs/accounts', :latest
 mod 'puppetlabs/activemq', :latest
 mod 'puppetlabs/concat', :latest
 mod 'puppetlabs/dhcp', :latest
