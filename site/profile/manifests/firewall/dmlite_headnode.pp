@@ -4,7 +4,7 @@ class profile::firewall::dmlite_headnode {
     proto    => 'tcp',
     dport    => [80, 443],
     action   => 'accept',
-    provider => ['iptables', 'ip6tables'],
+    provider => 'ip6tables',
   }
 
   firewall { '950 allow rfio':
@@ -12,7 +12,7 @@ class profile::firewall::dmlite_headnode {
     proto    => 'tcp',
     dport    => '5001',
     action   => 'accept',
-    provider => ['iptables', 'ip6tables'],
+    provider => 'ip6tables',
   }
 
   firewall { '950 allow rfio range':
@@ -20,7 +20,7 @@ class profile::firewall::dmlite_headnode {
     proto    => 'tcp',
     dport    => '20000-25000',
     action   => 'accept',
-    provider => ['iptables', 'ip6tables'],
+    provider => 'ip6tables',
   }
 
   firewall { '950 allow gridftp control':
@@ -28,7 +28,7 @@ class profile::firewall::dmlite_headnode {
     proto    => 'tcp',
     dport    => '2811',
     action   => 'accept',
-    provider => ['iptables', 'ip6tables'],
+    provider => 'ip6tables',
   }
 
   firewall { '950 allow gridftp range':
@@ -36,7 +36,7 @@ class profile::firewall::dmlite_headnode {
     proto    => 'tcp',
     dport    => '20000-25000',
     action   => 'accept',
-    provider => ['iptables', 'ip6tables'],
+    provider => 'ip6tables',
   }
 
   firewall { '950 allow srmv2.2':
@@ -51,7 +51,7 @@ class profile::firewall::dmlite_headnode {
     proto    => 'tcp',
     dport    => '1095',
     action   => 'accept',
-    provider => ['iptables', 'ip6tables'],
+    provider => 'ip6tables',
   }
 
   firewall { '950 allow cmsd':
@@ -59,7 +59,7 @@ class profile::firewall::dmlite_headnode {
     proto    => 'tcp',
     dport    => '1094',
     action   => 'accept',
-    provider => ['iptables', 'ip6tables'],
+    provider => 'ip6tables',
   }
 
   firewall { '950 allow DPNS':
@@ -74,7 +74,7 @@ class profile::firewall::dmlite_headnode {
     proto    => 'tcp',
     dport    => '5015',
     action   => 'accept',
-    provider => ['iptables', 'ip6tables'],
+    provider => 'ip6tables',
   }
 
   firewall { '950 allow bdii':
@@ -89,7 +89,7 @@ class profile::firewall::dmlite_headnode {
     proto    => 'tcp',
     dport    => '11000',
     action   => 'accept',
-    provider => ['iptables', 'ip6tables'],
+    provider => 'ip6tables',
   }
 
   firewall { '950 allow xrootd cms':
@@ -97,6 +97,6 @@ class profile::firewall::dmlite_headnode {
     proto    => 'tcp',
     dport    => '11001',
     action   => 'accept',
-    provider => ['iptables', 'ip6tables'],
+    provider => 'ip6tables',
   }
 }

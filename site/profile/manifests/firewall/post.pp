@@ -6,7 +6,7 @@ class profile::firewall::post {
     action   => 'reject',
     reject   => 'icmp-host-prohibited',
     before   => undef,
-    provider => ['iptables', 'ip6tables'],
+    provider => 'ip6tables',
   }
 
   # after everything
@@ -23,7 +23,7 @@ class profile::firewall::post {
     action   => 'reject',
     reject   => 'icmp-host-prohibited',
     before   => undef,
-    provider => ['iptables', 'ip6tables'],
+    provider => 'ip6tables',
   }
 
 }
