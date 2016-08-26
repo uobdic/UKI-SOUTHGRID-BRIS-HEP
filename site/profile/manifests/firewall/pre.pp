@@ -4,14 +4,16 @@ class profile::firewall::pre {
 
   # Default firewall rules
   firewall { '000 accept all icmp':
-    proto  => 'icmp',
-    action => 'accept',
+    proto    => 'icmp',
+    action   => 'accept',
+    provider => ['iptables', 'ip6tables'],
   }
 
   firewall { '001 accept all to lo interface':
-    proto   => 'all',
-    iniface => 'lo',
-    action  => 'accept',
+    proto    => 'all',
+    iniface  => 'lo',
+    action   => 'accept',
+    provider => ['iptables', 'ip6tables'],
   }
 
   firewall { '002 reject local traffic not on loopback interface':
@@ -22,9 +24,10 @@ class profile::firewall::pre {
   }
 
   firewall { '003 accept related established rules':
-    proto  => 'all',
-    state  => ['RELATED', 'ESTABLISHED'],
-    action => 'accept',
+    proto    => 'all',
+    state    => ['RELATED', 'ESTABLISHED'],
+    action   => 'accept',
+    provider => ['iptables', 'ip6tables'],
   }
 
 }
