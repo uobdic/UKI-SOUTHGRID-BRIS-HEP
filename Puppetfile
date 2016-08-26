@@ -2,7 +2,9 @@ forge 'http://forge.puppetlabs.com'
 
 # Puppetlabs modules
 mod 'puppetlabs/apache', :latest
-mod 'puppetlabs/accounts', :latest
+mod 'puppetlabs/accounts',
+  :git => 'https://github.com/kreczko/puppetlabs-accounts.git',
+  :ref => 'fixing-uid-and-gid'
 mod 'puppetlabs/activemq', :latest
 mod 'puppetlabs/concat', :latest
 mod 'puppetlabs/dhcp', :latest
