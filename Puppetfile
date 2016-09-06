@@ -22,7 +22,8 @@ mod 'puppet/fetchcrl', :latest
 mod 'puppet/mcollective', :latest
 mod 'jhoblitt/mcelog', :latest
 mod 'saz/memcached', :latest
-mod 'example42/network', :latest
+# voxpupuli, see https://wikis.bris.ac.uk/display/BristolT2/Puppet+modules#Puppetmodules-Network
+mod 'adrien/network', :latest
 mod 'erwbgy/limits', :latest
 mod 'thias/tuned', :latest
 mod 'account',
