@@ -10,7 +10,6 @@ class profile::base {
   package { $packages_to_remove: ensure => 'absent', }
 
   class { '::mlocate':
-    extra_prunefs    => ['gpfs',],
     update_command   => '/etc/cron.daily/mlocate.cron',
     extra_prunepaths => [
       '/exports',
