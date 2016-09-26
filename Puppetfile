@@ -29,6 +29,9 @@ mod 'account',
   :git => 'https://github.com/torrancew/puppet-account.git',
   :ref => 'develop'
 
+# other
+mod 'adamcrews/mlocate', :latest
+
 # HEP-Puppet
 mod 'htcondor',
   :git => 'https://github.com/kreczko/htcondor',
