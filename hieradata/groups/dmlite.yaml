@@ -1,7 +1,7 @@
 profile::dmlite::headnode: 'lcgse01.phy.bris.ac.uk'
 profile::dmlite::gateways:
-  - 'dice-io-37-00.acrc.bris.ac.uk'
-  - 'dice-io-37-01.acrc.bris.ac.uk'
+#  - 'dice-io-37-00.acrc.bris.ac.uk'
+#  - 'dice-io-37-01.acrc.bris.ac.uk'
   - 'io-37-02.acrc.bris.ac.uk'
   
 profile::dmlite::debug: false
