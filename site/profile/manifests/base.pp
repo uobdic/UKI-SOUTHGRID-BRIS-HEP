@@ -11,12 +11,12 @@ class profile::base {
 
   $_cron_min     = fqdn_rand(60, "${module_name}-min")
   $_cron_hour    = fqdn_rand(24, "${module_name}-hour")
-  $_cron_day     = fqdn_rand(7, "${module_name}-day")
 
-  # default run weekly at a random minute in a random hour on a random day.
-  $cron_schedule = "${_cron_min} ${_cron_hour} * * ${_cron_day}"
+  # run daily at a random minute in a random hour.
+  $cron_schedule = "${_cron_min} ${_cron_hour} * * *"
 
   class { '::mlocate':
+    cron_schedule    => $cron_schedule,
     extra_prunefs    => ['gpfs',],
     extra_prunepaths => [
       '/exports',
