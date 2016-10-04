@@ -32,7 +32,7 @@ class profile::users {
     'gid'          => 100,
   }
 
-  unless 'soolin' in $::fqdn {
+  unless 'soolin' in $::fqdn or 'lcgce' in $::fqdn {
     create_resources('group', $groups, $defaults)
     create_resources('accounts::user', $users, $acc_defaults)
   }
