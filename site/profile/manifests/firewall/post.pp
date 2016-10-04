@@ -1,12 +1,21 @@
 class profile::firewall::post {
   # after pre, before custom rules
+  firewall { '199 Reject anything else - IPv6':
+    chain    => 'FORWARD',
+    proto    => 'all',
+    action   => 'reject',
+    reject   => 'icmp6-adm-prohibited',
+    before   => undef,
+    provider => 'ip6tables',
+  }
+
   firewall { '199 Reject anything else':
     chain    => 'FORWARD',
     proto    => 'all',
     action   => 'reject',
     reject   => 'icmp-host-prohibited',
     before   => undef,
-    provider => 'ip6tables',
+    provider => 'iptables',
   }
 
   # after everything
@@ -18,12 +27,20 @@ class profile::firewall::post {
     provider   => ['iptables', 'ip6tables'],
   }
 
+  firewall { '9998 Reject anything else - IPv6':
+    proto    => 'all',
+    action   => 'reject',
+    reject   => 'icmp6-adm-prohibited',
+    before   => undef,
+    provider => 'ip6tables',
+  }
+
   firewall { '9998 Reject anything else':
     proto    => 'all',
     action   => 'reject',
     reject   => 'icmp-host-prohibited',
     before   => undef,
-    provider => 'ip6tables',
+    provider => 'iptables',
   }
 
 }
