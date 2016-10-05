@@ -28,6 +28,9 @@ htcondor::accounting_groups:
   ilc:
     dynamic_quota: 0.01
     priority_factor: 10000.0
+  gridpp:
+    dynamic_quota: 0.01
+    priority_factor: 10000.0
   lhcb:
     dynamic_quota: 0.05
     priority_factor: 10000.0
@@ -55,5 +58,5 @@ htcondor::accounting_groups:
   physics.jonas:
     dynamic_quota: 0.1
     priority_factor: 1000.0
-    
+
 profile::users::shell: '/sbin/nologin'
