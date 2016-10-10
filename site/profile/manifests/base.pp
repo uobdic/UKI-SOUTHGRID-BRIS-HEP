@@ -9,14 +9,7 @@ class profile::base {
 
   package { $packages_to_remove: ensure => 'absent', }
 
-  $_cron_min     = fqdn_rand(60, "${module_name}-min")
-  $_cron_hour    = fqdn_rand(24, "${module_name}-hour")
-
-  # run daily at a random minute in a random hour.
-  $cron_schedule = "${_cron_min} ${_cron_hour} * * *"
-
   class { '::mlocate':
-    cron_schedule    => $cron_schedule,
     extra_prunefs    => ['gpfs',],
     update_command   => '/etc/cron.daily/mlocate.cron',
     extra_prunepaths => [
@@ -40,5 +33,9 @@ class profile::base {
       '/h11',
       '/h12',
       ],
+  }
+  # cleanup after bad mlocate module (it is OK now, but first time was bad)
+  file{['/etc/cron.d/mlocate.cron', '/usr/local/bin/mlocate.cron']:
+    ensure => 'absent',
   }
 }
