@@ -18,6 +18,7 @@ class profile::base {
   class { '::mlocate':
     cron_schedule    => $cron_schedule,
     extra_prunefs    => ['gpfs',],
+    update_command   => '/etc/cron.daily/mlocate.cron',
     extra_prunepaths => [
       '/exports',
       '/hdfs',

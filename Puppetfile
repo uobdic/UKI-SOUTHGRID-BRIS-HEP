@@ -30,7 +30,8 @@ mod 'account',
   :ref => 'develop'
 
 # other
-mod 'adamcrews/mlocate', :latest
+mod 'mlocate',
+  :git => 'git@github.com:kreczko/puppet-mlocate.git'
 
 # HEP-Puppet
 mod 'htcondor',
