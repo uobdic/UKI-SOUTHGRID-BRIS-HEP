@@ -1,6 +1,6 @@
 class profile::firewall {
-  $accept          = hiera_hash('profile::firewall::accept')
-  $drop            = hiera_hash('profile::firewall::drop')
+  $accept          = hiera_hash('profile::firewall::accept', {})
+  $drop            = hiera_hash('profile::firewall::drop', {})
   include profile::firewall::setup
 
   $accept_defaults = {
