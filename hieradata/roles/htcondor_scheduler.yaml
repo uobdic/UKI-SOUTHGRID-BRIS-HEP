@@ -4,5 +4,5 @@ classes:
 
 htcondor::is_scheduler: true
 # max CPU time in seconds
-htcondor::max_cputime: '80 * 60 * 60'
-htcondor::max_walltime: '80 * 60 * 60'
+htcondor::max_cputime: '30 * 24 * 60 * 60'
+htcondor::max_walltime: '30 * 24 *80 * 60 * 60'
