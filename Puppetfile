@@ -23,7 +23,9 @@ mod 'puppet/mcollective', :latest
 mod 'jhoblitt/mcelog', :latest
 mod 'saz/memcached', :latest
 # voxpupuli, see https://wikis.bris.ac.uk/display/BristolT2/Puppet+modules#Puppetmodules-Network
-mod 'adrien/network', :latest
+#mod 'adrien/network', :latest
+# recommended by NetComms
+mod 'razorsedge/network', :latest
 mod 'erwbgy/limits', :latest
 mod 'thias/tuned', :latest
 mod 'account',
