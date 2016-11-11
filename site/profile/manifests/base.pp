@@ -37,4 +37,9 @@ class profile::base {
   file{['/etc/cron.d/mlocate.cron', '/usr/local/bin/mlocate.cron']:
     ensure => 'absent',
   }
+
+
+  if $facts['node_info']['managed_network'] {
+    include network::hiera
+  }
 }
