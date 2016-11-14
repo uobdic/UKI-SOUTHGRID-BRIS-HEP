@@ -11,6 +11,7 @@ class profile::base {
 
   class { '::mlocate':
     update_command   => '/etc/cron.daily/mlocate.cron',
+    extra_prunefs    => ['gpfs',],
     extra_prunepaths => [
       '/exports',
       '/hdfs',
@@ -40,6 +41,7 @@ class profile::base {
 
 
   if $facts['node_info']['managed_network'] {
+    include network::global
     include network::hiera
   }
 }
