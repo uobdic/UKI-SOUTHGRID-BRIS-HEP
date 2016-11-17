@@ -7,14 +7,30 @@ class profile::monitored::ganglia {
   $ganglia_use_multicast = hiera('profile::monitored::ganglia_use_multicast',
   false)
 
+  if $ganglia_cluster_name == 'DICE' {
   $ganglia_packages      = ['ganglia-gmond-python', 'ganglia', 'ganglia-gmond']
+  }
+  else {
+  $ganglia_packages      = ['ganglia-gmond']
+  }
 
   package { $ganglia_packages:
-    ensure          => 'installed',
+    if $ganglia_cluster_name == 'DICE' {
+       $version = '3.7.2-2'
     install_options => [{
         '--enablerepo' => 'epel'
       }
-      ],
+      ]
+    }
+    else {
+       $version =  '3.0.7-1'
+    install_options => [{
+        '--enablerepo' => 'bristol'
+      }
+      ]
+    }
+
+    ensure          => $version,
   }
 
   file { '/etc/ganglia/gmond.conf':
