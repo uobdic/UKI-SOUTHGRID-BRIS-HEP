@@ -1,11 +1,9 @@
 class profile::monitored::ganglia {
-  $ganglia_servers       = hiera_array('profile::monitored::ganglia_servers', ['localhost'
-    ])
+  $ganglia_servers       = hiera_array('profile::monitored::ganglia_servers', ['localhost' ])
   $ganglia_port          = hiera('profile::monitored::ganglia_port', 8650)
   $ganglia_cluster_name  = hiera('profile::monitored::ganglia_cluster_name', 'unknown'
   )
-  $ganglia_use_multicast = hiera('profile::monitored::ganglia_use_multicast',
-  false)
+  $ganglia_use_multicast = hiera('profile::monitored::ganglia_use_multicast', false)
 
   if $ganglia_cluster_name == 'DICE' {
   $ganglia_packages      = ['ganglia-gmond-python', 'ganglia', 'ganglia-gmond']
