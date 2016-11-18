@@ -13,6 +13,7 @@ class profile::monitored::ganglia {
   }
 
   package { $ganglia_packages:
+
     if $ganglia_cluster_name == 'DICE' {
        $version = '3.7.2-2'
     install_options => [{
