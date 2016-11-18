@@ -20,37 +20,40 @@ class profile::monitored::ganglia {
     install_options => [{
         '--enablerepo' => 'epel'
       }
-      ]
+      ],
     }
     else {
        $version =  '3.0.7-1'
     install_options => [{
         '--enablerepo' => 'bristol'
       }
-      ]
+      ],
     }
 
     ensure          => $version,
+  }
+
+  if $ganglia_cluster_name == 'DICE' {
+    $require_packages = [
+      Package['ganglia-gmond-python'],
+      Package['ganglia'],
+      Package['ganglia-gmond']]
+  } else{
+    $require_packages = [
+      Package['ganglia-gmond']]
   }
 
   file { '/etc/ganglia/gmond.conf':
     ensure  => 'present',
     content => template("${module_name}/gmond.conf.erb"),
     mode    => '0644',
-    require => [
-      Package['ganglia-gmond-python'],
-      Package['ganglia'],
-      Package['ganglia-gmond']],
     notify  => Service['gmond'],
+
   }
 
   file {'/etc/ganglia/conf.d/netstats.pyconf':
     ensure  => 'present',
     source  => "puppet:///modules/${module_name}/ganglia.netstats.pyconf.fixed",
-    require => [
-      Package['ganglia-gmond-python'],
-      Package['ganglia'],
-      Package['ganglia-gmond']],
     notify  => Service['gmond'],
   }
 
