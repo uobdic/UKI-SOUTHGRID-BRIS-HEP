@@ -12,7 +12,6 @@ class profile::monitored::ganglia {
   $ganglia_packages      = ['ganglia-gmond']
   }
 
-  package { $ganglia_packages:
 
     if $ganglia_cluster_name == 'DICE' {
        $version = '3.7.2-2'
@@ -29,6 +28,7 @@ class profile::monitored::ganglia {
       ],
     }
 
+  package { $ganglia_packages:
     ensure          => $version,
   }
 
