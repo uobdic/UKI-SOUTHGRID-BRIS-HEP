@@ -14,14 +14,14 @@ class profile::monitored::ganglia {
 
 
     if $ganglia_cluster_name == 'DICE' {
-       $version = '3.7.2-2.el6'
+       $version = '3.7.2-2.el6';
     install_options => [{
         '--enablerepo' => 'epel'
       }
       ],
     }
     else {
-       $version =  '3.0.7-1'
+       $version =  '3.0.7-1';
     install_options => [{
         '--enablerepo' => 'bristol'
       }
