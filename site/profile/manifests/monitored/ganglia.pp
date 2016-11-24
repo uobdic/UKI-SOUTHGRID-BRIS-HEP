@@ -7,21 +7,21 @@ class profile::monitored::ganglia {
 
   if $ganglia_cluster_name == 'DICE' {
   $ganglia_packages      = ['ganglia-gmond-python', 'ganglia', 'ganglia-gmond']
+  $version = '3.7.2-2.el6'
   }
   else {
   $ganglia_packages      = ['ganglia-gmond']
+  $version =  '3.0.7-1'
   }
 
 
     if $ganglia_cluster_name == 'DICE' {
-       $version = '3.7.2-2.el6',
         install_options => [{
         '--enablerepo' => 'epel'
       }
       ],
     }
     else {
-       $version =  '3.0.7-1',
        install_options => [{
         '--enablerepo' => 'bristol'
       }
