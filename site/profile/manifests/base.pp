@@ -10,8 +10,8 @@ class profile::base {
   package { $packages_to_remove: ensure => 'absent', }
 
   class { '::mlocate':
-    extra_prunefs    => ['gpfs',],
     update_command   => '/etc/cron.daily/mlocate.cron',
+    extra_prunefs    => ['gpfs',],
     extra_prunepaths => [
       '/exports',
       '/hdfs',
@@ -37,5 +37,11 @@ class profile::base {
   # cleanup after bad mlocate module (it is OK now, but first time was bad)
   file{['/etc/cron.d/mlocate.cron', '/usr/local/bin/mlocate.cron']:
     ensure => 'absent',
+  }
+
+
+  if $facts['node_info']['managed_network'] {
+    include network::global
+    include network::hiera
   }
 }
