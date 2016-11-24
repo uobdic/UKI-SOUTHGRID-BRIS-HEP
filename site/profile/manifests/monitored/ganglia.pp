@@ -48,8 +48,8 @@ class profile::monitored::ganglia {
     notify  => Service['gmond'],
   }
   }
+
   else {
-  if $ganglia_cluster_name == 'DICE' {
   file {'/etc/gmond.conf':
     ensure  => 'present',
     notify  => Service['gmond'],
