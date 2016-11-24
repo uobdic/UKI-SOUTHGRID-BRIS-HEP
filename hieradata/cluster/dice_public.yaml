@@ -10,8 +10,8 @@ profile::monitored::central_log:
 
 # global network config
 network::global::vlan: 'yes'
-network::global::gateway: 10.129.5.250
+network::global::gateway: 137.222.79.250
 # IPv6 networking is also steered at NIC level and in /etc/sysctl.conf
 # safe to enable here
-network::global::ipv6gateway: 2001:630:e4:2811::1
+network::global::ipv6gateway: 2001:630:e4:2810::1
 network::global::ipv6networking: true
