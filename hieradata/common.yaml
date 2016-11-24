@@ -14,8 +14,8 @@ ntp::servers:
 ntp::restrict:
   - "default nomodify notrap noquery"
   - "127.0.0.1"
-  - "-6 ::1"
-  
+#  - "-6 ::1"
+
 site::site_info:
   gocdb_name: 'UKI-SOUTHGRID-BRIS-HEP'
   # for CPU scaling
