@@ -37,7 +37,7 @@ class profile::monitored::ganglia {
     content => template("${module_name}/gmond.conf.erb"),
     mode    => '0644',
     notify  => Service['gmond'],
-
+  }
   file {'/etc/ganglia/conf.d/netstats.pyconf':
     ensure  => 'present',
     source  => "puppet:///modules/${module_name}/ganglia.netstats.pyconf.fixed",
