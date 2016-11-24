@@ -8,25 +8,19 @@ class profile::monitored::ganglia {
   if $ganglia_cluster_name == 'DICE' {
   $ganglia_packages      = ['ganglia-gmond-python', 'ganglia', 'ganglia-gmond']
   $version = '3.7.2-2.el6'
+
   }
   else {
   $ganglia_packages      = ['ganglia-gmond']
   $version =  '3.0.7-1'
   }
 
-
-    if $ganglia_cluster_name == 'DICE' {
-        install_options => [{
-        '--enablerepo' => 'epel'
-      }
-      ],
-    }
-    else {
-       install_options => [{
-        '--enablerepo' => 'bristol'
-      }
-      ],
-    }
+  if $ganglia_cluster_name == 'DICE' {
+      install_options => [{ '--enablerepo' => 'epel' } ],
+  }
+  else {
+     install_options => [{ '--enablerepo' => 'bristol' } ],
+  }
 
   package { $ganglia_packages:
     ensure          => $version,
