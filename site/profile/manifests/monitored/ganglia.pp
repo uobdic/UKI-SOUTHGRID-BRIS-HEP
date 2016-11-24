@@ -1,8 +1,7 @@
 class profile::monitored::ganglia {
   $ganglia_servers       = hiera_array('profile::monitored::ganglia_servers', ['localhost' ])
   $ganglia_port          = hiera('profile::monitored::ganglia_port', 8650)
-  $ganglia_cluster_name  = hiera('profile::monitored::ganglia_cluster_name', 'unknown'
-  )
+  $ganglia_cluster_name  = hiera('profile::monitored::ganglia_cluster_name', 'unknown')
   $ganglia_use_multicast = hiera('profile::monitored::ganglia_use_multicast', false)
 
   if $ganglia_cluster_name == 'DICE' {
@@ -19,9 +18,8 @@ class profile::monitored::ganglia {
   package { $ganglia_packages:
      install_options => [{ '--enablerepo' => 'bristol' } ],
     ensure          => $version,
-}
   }
-
+  }
 
   if $ganglia_cluster_name == 'DICE' {
     $require_packages = [
@@ -33,15 +31,13 @@ class profile::monitored::ganglia {
       Package['ganglia-gmond']]
   }
 
+  if $ganglia_cluster_name == 'DICE' {
   file { '/etc/ganglia/gmond.conf':
     ensure  => 'present',
     content => template("${module_name}/gmond.conf.erb"),
     mode    => '0644',
     notify  => Service['gmond'],
 
-  }
-
-  if $ganglia_cluster_name == 'DICE' {
   file {'/etc/ganglia/conf.d/netstats.pyconf':
     ensure  => 'present',
     source  => "puppet:///modules/${module_name}/ganglia.netstats.pyconf.fixed",
