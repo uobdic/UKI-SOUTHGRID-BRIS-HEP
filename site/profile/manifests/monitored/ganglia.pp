@@ -43,7 +43,9 @@ class profile::monitored::ganglia {
 
   file {'/etc/ganglia/conf.d/netstats.pyconf':
     ensure  => 'present',
+  if $ganglia_cluster_name == 'DICE' {
     source  => "puppet:///modules/${module_name}/ganglia.netstats.pyconf.fixed",
+  }
     notify  => Service['gmond'],
   }
 
