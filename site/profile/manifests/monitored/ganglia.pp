@@ -6,7 +6,7 @@ class profile::monitored::ganglia {
 
   if $ganglia_cluster_name == 'DICE' {
   $ganglia_packages      = ['ganglia-gmond-python', 'ganglia', 'ganglia-gmond']
-  $version = '3.7.2-2.el6'
+  $version = '3.7.2-2'
   package { $ganglia_packages:
       install_options => [{ '--enablerepo' => 'epel' } ],
     ensure          => $version,
