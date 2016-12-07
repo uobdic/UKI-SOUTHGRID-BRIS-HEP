@@ -40,7 +40,7 @@ class profile::base {
   }
 
 
-  if $facts['node_info']['managed_network'] {
+  if hiera('node_info::managed_network', false) {
     include network::global
     include network::hiera
   }
