@@ -6,4 +6,3 @@ site::node_info:
 
 htcondor::number_of_cpus: 32
 htcondor::pool_create: true
-htcondor::install_repositories: true
