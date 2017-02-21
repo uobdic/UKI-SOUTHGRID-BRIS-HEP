@@ -1,5 +1,6 @@
+# manages the central logging behaviour of a machine (using rsyslog)
 class profile::monitored::central_log {
-  $central_log    = hiera_array('profile::monitored::central_log', [])
+  $central_log = lookup('profile::monitored::central_log', Array, 'first')
 
   $is_central_log = member($central_log, $::fqdn) or member($central_log,
   $::ipaddress)
