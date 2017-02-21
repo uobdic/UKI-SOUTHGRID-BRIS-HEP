@@ -6,14 +6,14 @@ class profile::firewall::pre {
   firewall { '000 accept all icmp':
     proto    => 'icmp',
     action   => 'accept',
-    provider   => ['iptables', 'ip6tables'],
+    provider => ['iptables', 'ip6tables'],
   }
 
   firewall { '001 accept all to lo interface':
     proto    => 'all',
     iniface  => 'lo',
     action   => 'accept',
-    provider   => ['iptables', 'ip6tables'],
+    provider => ['iptables', 'ip6tables'],
   }
 
   firewall { '002 reject local traffic not on loopback interface':
@@ -27,7 +27,32 @@ class profile::firewall::pre {
     proto    => 'all',
     state    => ['RELATED', 'ESTABLISHED'],
     action   => 'accept',
-    provider   => ['iptables', 'ip6tables'],
+    provider => ['iptables', 'ip6tables'],
+  }
+
+  firewallchain { 'FORWARD:filter:IPv4':
+      purge  => true,
+      ignore => [ 'docker' ],
+  }
+  firewallchain { 'DOCKER:filter:IPv4':
+    purge  => false,
+  }
+  firewallchain { 'DOCKER:nat:IPv4':
+    purge  => false,
+  }
+  firewallchain { 'POSTROUTING:nat:IPv4':
+    purge  => true,
+    ignore => [ 'docker', '172.17' ],
+  }
+  firewallchain { 'PREROUTING:nat:IPv4':
+    purge  => true,
+    ignore => [ 'DOCKER' ],
+  }
+
+  #ensure input rules are cleaned out
+  firewallchain { 'INPUT:filter:IPv4':
+    ensure => present,
+    purge  => true,
   }
 
 }
