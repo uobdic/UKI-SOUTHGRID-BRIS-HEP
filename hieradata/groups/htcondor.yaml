@@ -42,4 +42,4 @@ htcondor::pool_password: 'puppet:///modules/site_private/pool_password'
 htcondor::install_repositories: false
 # disabled condor calling home
 htcondor::enable_condor_reporting: false
-htcondor::condor_version: "latest"
+htcondor::condor_version: "8.4.11-1.el6"
