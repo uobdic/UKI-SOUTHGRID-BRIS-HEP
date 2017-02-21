@@ -37,18 +37,18 @@ class profile::users {
     create_resources('accounts::user', $users, $acc_defaults)
   }
 
-  if $::fqdn == 'soolin.dice.priv' {
-    create_resources('group', $groups, $defaults)
-    $soolin_defaults = {
-      'ensure'       => present,
-      'shell'        => $shell,
-      'password'     => '!!',
-      'managehome'   => false,
-      'create_group' => false,
-      'gid'          => 100,
-    }
-    # use puppetlabs/accounts
-    create_resources('accounts::user', $users, $soolin_defaults)
-  }
+  # if $::fqdn == 'soolin.dice.priv' {
+  #   create_resources('group', $groups, $defaults)
+  #   $soolin_defaults = {
+  #     'ensure'       => present,
+  #     'shell'        => $shell,
+  #     'password'     => '!!',
+  #     'managehome'   => false,
+  #     'create_group' => false,
+  #     'gid'          => 100,
+  #   }
+  #   # use puppetlabs/accounts
+  #   create_resources('accounts::user', $users, $soolin_defaults)
+  # }
 
 }
