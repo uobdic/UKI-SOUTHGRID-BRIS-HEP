@@ -1,3 +1,4 @@
+# Default iptables rules at the beginning of the file
 class profile::firewall::pre {
   Firewall {
     require => undef, }
@@ -7,6 +8,12 @@ class profile::firewall::pre {
     proto    => 'icmp',
     action   => 'accept',
     provider => ['iptables', 'ip6tables'],
+  }
+
+  firewall { '00001 accept all icmpv6':
+    proto    => 'ipv6-icmp',
+    action   => 'accept',
+    provider => 'ip6tables',
   }
 
   firewall { '001 accept all to lo interface':
