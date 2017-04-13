@@ -1,6 +1,6 @@
 # manages the central logging behaviour of a machine (using rsyslog)
 class profile::monitored::central_log {
-  $central_log = lookup('profile::monitored::central_log', Array, 'first')
+  $central_log = lookup('profile::monitored::central_log', Array, 'first', ['*.* @10.129.5.3:514'])
 
   $is_central_log = member($central_log, $::fqdn) or member($central_log,
   $::ipaddress)
