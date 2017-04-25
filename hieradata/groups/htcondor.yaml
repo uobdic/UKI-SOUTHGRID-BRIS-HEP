@@ -23,6 +23,7 @@ htcondor::workers:
   - '10.129.5.*'
   - '*.phy.bris.ac.uk'
   - '137.222.171.*'
+  - '2001:630:e4:2811:*'
 
 htcondor::uid_domain: 'phy.bris.ac.uk'
 htcondor::default_domain_name: 'phy.bris.ac.uk'
