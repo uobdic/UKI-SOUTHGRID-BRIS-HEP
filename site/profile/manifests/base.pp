@@ -39,9 +39,10 @@ class profile::base {
     ensure => 'absent',
   }
 
-
-  if $facts['node_info']['managed_network'] {
-    include network::global
-    include network::hiera
+  if !empty($facts['node_info']) {
+    if $facts['node_info']['managed_network'] {
+      include network::global
+      include network::hiera
+    }
   }
 }
