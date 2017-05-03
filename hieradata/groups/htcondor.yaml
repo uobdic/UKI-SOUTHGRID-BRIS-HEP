@@ -11,12 +11,11 @@ htcondor::managers:
 htcondor::schedulers:
   - lcgce01.phy.bris.ac.uk
   - lcgce02.phy.bris.ac.uk
-  - vm-astro.dice.priv
-  - vm-hep.dice.priv
-  - soolin.phy.bris.ac.uk
   - mensa.star.bris.ac.uk
   - hyperion.phy.bris.ac.uk
   - soolin.dice.priv
+  - sc00.dice.priv
+  - sc01.dice.priv
 
 htcondor::workers:
   - '*.dice.priv'
