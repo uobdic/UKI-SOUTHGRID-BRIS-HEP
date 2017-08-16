@@ -20,7 +20,7 @@ htcondor::accounting_groups:
     dynamic_quota: 0.01
     priority_factor: 10000.0
   cms:
-    dynamic_quota: 0.15
+    dynamic_quota: 0.25
     priority_factor: 10000.0
   dteam:
     dynamic_quota: 0.01
@@ -47,10 +47,10 @@ htcondor::accounting_groups:
     dynamic_quota: 0.01
     priority_factor: 1.0
   physics:
-    dynamic_quota: 0.8
+    dynamic_quota: 0.7
     priority_factor: 1000.0
   physics.hep:
-    dynamic_quota: 0.36
+    dynamic_quota: 0.26
     priority_factor: 1000.0
   physics.astro:
     dynamic_quota: 0.1
