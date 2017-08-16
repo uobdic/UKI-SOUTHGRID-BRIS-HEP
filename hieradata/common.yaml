@@ -45,9 +45,12 @@ site::site_info:
     - alice
     - atlas
     - cms
+    - dune
     - dteam
     - gridpp
     - lhcb
+    - lsst
+    - lz
     - ops
     - 'vo.southgrid.org'
 
