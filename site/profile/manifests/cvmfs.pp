@@ -32,4 +32,12 @@ class profile::cvmfs {
     ensure => present,
     source => "puppet:///modules/${module_name}/storage.xml",
   }
+
+  file { '/etc/cvmfs/keys/desy.de.pub' :
+    source => "puppet:///modules/${module_name}/etc/cvmfs/keys/desy.de.pub",
+  }
+
+  file { '/etc/cvmfs/keys/gridpp.ac.uk.pub' :
+    source => "puppet:///modules/${module_name}/etc/cvmfs/keys/gridpp.ac.uk",
+  }
 }
