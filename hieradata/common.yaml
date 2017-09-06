@@ -52,7 +52,7 @@ site::site_info:
     - lsst
     - lz
     - ops
-    - 'vo.southgrid.org'
+    - 'vo.southgrid.ac.uk'
 
 cvmfs::cvmfs_quota_limit: 30000
 cvmfs::cvmfs_http_proxy: 'http://lcgsq1.phy.bris.ac.uk:3128|http://lcgsq2.phy.bris.ac.uk:3128'
