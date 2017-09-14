@@ -73,4 +73,4 @@ mod 'htcondor_ce',
 
 # secondary control repo
 mod 'site_private',
-  :git => 'git@gitlab.isys.bris.ac.uk:pp-computing/site_private.git'
+  :git => 'git@git.services.bris.ac.uk:pp-computing/site_private.git'
