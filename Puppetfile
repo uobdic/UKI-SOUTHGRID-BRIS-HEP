@@ -40,7 +40,7 @@ mod 'mlocate',
 # HEP-Puppet
 mod 'htcondor',
   :git => 'https://github.com/kreczko/htcondor',
-  :ref => 'custom_attributes'
+  :ref => 'towards_2.0'
 mod 'arc_ce',
   :git => 'https://github.com/HEP-Puppet/arc_ce'
 
