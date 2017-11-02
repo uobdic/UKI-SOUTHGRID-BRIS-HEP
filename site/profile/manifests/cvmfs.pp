@@ -38,6 +38,6 @@ class profile::cvmfs {
   }
 
   file { '/etc/cvmfs/keys/gridpp.ac.uk.pub' :
-    source => "puppet:///modules/${module_name}/etc/cvmfs/keys/gridpp.ac.uk",
+    source => "puppet:///modules/${module_name}/etc/cvmfs/keys/gridpp.ac.uk.pub",
   }
 }
