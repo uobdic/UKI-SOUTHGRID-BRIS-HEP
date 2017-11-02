@@ -17,7 +17,7 @@ mod 'puppetlabs/tftp', :latest
 mod 'puppetlabs/xinetd', :latest
 
 # community modules
-mod 'Lavaburn/razor', :latest
+# mod 'Lavaburn/razor', :latest
 mod 'puppet/fetchcrl', :latest
 mod 'puppet/mcollective', :latest
 mod 'jhoblitt/mcelog', :latest
