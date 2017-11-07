@@ -39,8 +39,9 @@ mod 'mlocate',
 
 # HEP-Puppet
 mod 'htcondor',
-  :git => 'https://github.com/kreczko/htcondor',
-  :ref => 'towards_2.0'
+  :git => 'https://github.com/HEP-Puppet/htcondor',
+  :ref => 'v2.0.3'
+
 mod 'arc_ce',
   :git => 'https://github.com/HEP-Puppet/arc_ce'
 
