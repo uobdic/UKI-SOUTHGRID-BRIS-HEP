@@ -43,3 +43,5 @@ htcondor::install_repositories: false
 # disabled condor calling home
 htcondor::enable_condor_reporting: false
 htcondor::condor_version: "8.4.11-1.el6"
+
+htcondor::mount_under_scratch_dirs: []
