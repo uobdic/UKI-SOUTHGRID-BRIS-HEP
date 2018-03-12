@@ -135,10 +135,21 @@ class profile::dmlite::hdfs::headnode {
     xrootd_port    => 1094,
     cmsd_port      => 1213,
     local_port     => 11001,
+    direct         => true,
     namelib_prefix => "/dpm/${localdomain}/home/cms",
     namelib        => 'libXrdCmsTfc.so file:/etc/xrootd/storage.xml?protocol=direct',
     paths          => ['/store']
   }
+
+  $cmslocal_fed = {
+     name           => 'cmslocal',
+     fed_host       => 'xrootd-cms.infn.it',
+     xrootd_port    => 1094,
+     local_port     => 11011,
+     namelib_prefix => "/dpm/${localdomain}/home/cms",
+     namelib        => 'libXrdCmsTfc.so file:/etc/xrootd/storage.xml?protocol=direct',
+     paths          => [ '/store' ]
+ }
 
   class { 'dmlite::xrootd':
     nodetype             => ['head'],
@@ -148,7 +159,7 @@ class profile::dmlite::hdfs::headnode {
     enable_hdfs          => true,
     xrd_report           => 'xrootd.t2.ucsd.edu:9931,atl-prod05.slac.stanford.edu:9931 every 60s all sync',
     xrootd_monitor       => 'all flush 30s ident 5m fstat 60 lfn ops ssq xfr 5 window 5s dest fstat info user redir CMS-AAA-EU-COLLECTOR.cern.ch:9330 dest fstat info user redir atlas-fax-eu-collector.cern.ch:9330',
-    dpm_xrootd_fedredirs => { 'atlas' => $atlas_fed, 'cms' => $cms_fed },
+    dpm_xrootd_fedredirs => { 'atlas' => $atlas_fed, 'cms' => $cms_fed, 'cmslocal' => $cmslocal_fed },
   }
 
   # BDII
