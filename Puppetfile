@@ -12,6 +12,7 @@ mod 'puppetlabs/firewall', :latest
 mod 'puppetlabs/inifile', :latest
 mod 'puppetlabs/mysql', :latest
 mod 'puppetlabs/ntp', :latest
+mod 'puppet-selinux', '1.5.2'
 mod 'puppetlabs/stdlib', :latest
 mod 'puppetlabs/tftp', :latest
 mod 'puppetlabs/xinetd', :latest
@@ -40,7 +41,7 @@ mod 'mlocate',
 # HEP-Puppet
 mod 'htcondor',
   :git => 'https://github.com/HEP-Puppet/htcondor',
-  :ref => 'v2.0.3'
+  :ref => 'v2.0.4'
 
 mod 'arc_ce',
   :git => 'https://github.com/HEP-Puppet/arc_ce'
