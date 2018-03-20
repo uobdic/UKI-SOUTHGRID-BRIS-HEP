@@ -21,7 +21,7 @@ class profile::dmlite::vo_support {
     'vomss://lcg-voms2.cern.ch:8443/voms/alice?/alice'  => 'alice',
     'vomss://voms2.cern.ch:8443/voms/ops?/ops'          => 'ops',
     'vomss://lcg-voms2.cern.ch:8443/voms/ops?/ops'      => 'ops',
-    'vomss://voms.hellasgrid.gr:8443/voms/dteam?/dteam' => 'dteam',
+    'vomss://voms2.hellasgrid.gr:8443/voms/dteam?/dteam' => 'dteam',
     'vomss://voms.gridpp.ac.uk:8443/voms/gridpp?/gridpp' => 'gridpp',
     'vomss://voms02.gridpp.ac.uk:8443/voms/gridpp?/gridpp' => 'gridpp',
     'vomss://voms03.gridpp.ac.uk:8443/voms/gridpp?/gridpp' => 'gridpp',
