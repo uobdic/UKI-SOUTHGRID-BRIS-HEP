@@ -58,3 +58,12 @@ cvmfs::cvmfs_quota_limit: 30000
 cvmfs::cvmfs_http_proxy: 'http://lcgsq1.phy.bris.ac.uk:3128|http://lcgsq2.phy.bris.ac.uk:3128'
 cvmfs::cvmfs_server_url: 'http://cernvmfs.gridpp.rl.ac.uk:8000/opt/@org@;http://cvmfs-stratum-one.cern.ch:8000/opt/@org@; http://cvmfs.racf.bnl.gov:8000/opt/@org@'
 cvmfs::cvmfs_cache_base: '/condor/cvmfs'
+
+# default settings
+# global network config
+network::global::vlan: 'yes'
+network::global::gateway: 10.129.5.250
+# IPv6 networking is also steered at NIC level and in /etc/sysctl.conf
+# safe to enable here
+network::global::ipv6gateway: 2001:630:e4:2811::1
+network::global::ipv6networking: true
