@@ -19,7 +19,7 @@ class profile::firewall::post {
   }
 
   # after everything
-  firewall { '9997 Log once all DROPs are done':
+  firewall { '19997 Log once all DROPs are done':
     proto      => 'all',
     jump       => 'LOG',
     log_prefix => '[iptables]: ',
@@ -27,7 +27,7 @@ class profile::firewall::post {
     provider   => ['iptables', 'ip6tables'],
   }
 
-  firewall { '9998 Reject anything else - IPv6':
+  firewall { '19998 Reject anything else - IPv6':
     proto    => 'all',
     action   => 'reject',
     reject   => 'icmp6-adm-prohibited',
@@ -35,7 +35,7 @@ class profile::firewall::post {
     provider => 'ip6tables',
   }
 
-  firewall { '9998 Reject anything else':
+  firewall { '19998 Reject anything else':
     proto    => 'all',
     action   => 'reject',
     reject   => 'icmp-host-prohibited',
