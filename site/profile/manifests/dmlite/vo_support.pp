@@ -40,7 +40,8 @@ class profile::dmlite::vo_support {
     logfile      => '/var/log/lcgdm-mkgridmap.log',
     groupmap     => $groupmap,
     localmap     => {
-      'nobody' => 'nogroup'
+      'nobody'                                             => 'nogroup',
+      '/C=UK/O=eScience/OU=Bristol/L=IS/CN=lukasz kreczko' => 'root'
     }
     ,
   }
