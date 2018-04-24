@@ -12,3 +12,5 @@ profile::monitored::ganglia_use_multicast: true
 profile::monitored::central_log:
   - 'lcgui02.phy.bris.ac.uk:514;sysklogd'
   - 'smnat.hadoop.cluster:514;sysklogd'
+
+profile::users::shell: '/sbin/nologin'

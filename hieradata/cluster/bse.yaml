@@ -10,3 +10,5 @@ profile::monitored::ganglia_cluster_name: 'vivaldi'
 profile::monitored::central_log:
   - 'telemann.phy.bris.ac.uk:514;sysklogd'
   - 'lcgui02.phy.bris.ac.uk:514;sysklogd'
+
+profile::users::shell: '/sbin/nologin'
