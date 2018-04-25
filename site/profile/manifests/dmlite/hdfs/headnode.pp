@@ -132,7 +132,6 @@ class profile::dmlite::hdfs::headnode {
   $cms_fed   = {
     name           => 'fedredir_cms',
     fed_host       => 'xrootd-cms.infn.it',
-    xrootd_port    => 1094,
     cmsd_port      => 1213,
     local_port     => 11001,
     direct         => true,
