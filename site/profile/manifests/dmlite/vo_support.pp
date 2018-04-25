@@ -41,7 +41,6 @@ class profile::dmlite::vo_support {
     groupmap     => $groupmap,
     localmap     => {
       'nobody'                                             => 'nogroup',
-      '/C=UK/O=eScience/OU=Bristol/L=IS/CN=lukasz kreczko' => 'root'
     }
     ,
   }
