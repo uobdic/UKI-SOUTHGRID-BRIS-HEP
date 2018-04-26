@@ -3,7 +3,7 @@ profile::dmlite::gateways:
 #  - 'dice-io-37-00.acrc.bris.ac.uk'
 #  - 'dice-io-37-01.acrc.bris.ac.uk'
   - 'io-37-02.acrc.bris.ac.uk'
-  
+
 profile::dmlite::debug: false
 profile::dmlite::hdfs_namenode: default
 profile::dmlite::hdfs_port: 0
@@ -11,3 +11,4 @@ profile::dmlite::db_host: 'lcgse01.phy.bris.ac.uk'
 profile::dmlite::localdomain: 'phy.bris.ac.uk'
 dmlite::plugins::hdfs::params::java_home: /usr/java/latest
 dmlite::gridftp::enable_hdfs: true
+gridftp::params::control_idle_timeout: 7200
