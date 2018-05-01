@@ -39,6 +39,7 @@ mod 'mlocate',
   :git => 'git@github.com:kreczko/puppet-mlocate.git'
 
 mod 'treydock-singularity', '1.0.0'
+mod 'stahnma-epel', '1.3.0'
 
 # HEP-Puppet
 mod 'htcondor',
