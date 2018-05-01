@@ -61,3 +61,42 @@ profile::voenv::vo_environments:
   landslides:
     vo_sw_dir: /cvmfs/landslides.cern.ch
     voname: vo_landslides_mossaic_org
+
+singularity::package_ensure: present
+singularity::package_name: singularity
+singularity::manage_epel: false
+# singularity::config_path: /etc/singularity/singularity.conf
+# singularity::config_template: singularity/singularity.conf.erb
+singularity::allow_setuid: yes
+singularity::max_loop_devices: 256
+singularity::allow_pid_ns: yes
+singularity::config_passwd: yes
+singularity::config_group: yes
+singularity::config_resolv_conf: yes
+singularity::mount_proc: yes
+singularity::mount_sys: yes
+singularity::mount_dev: yes
+singularity::mount_devpts: yes
+singularity::mount_home: yes
+singularity::mount_tmp: yes
+singularity::mount_hostfs: no
+singularity::bind_paths:
+  - /etc/localtime
+  - /etc/hosts
+  - /cvmfs
+  - /hdfs
+  - /users
+  - /usersc
+  - /software
+  - /condor/condor
+  - /usr/libexec/condor
+singularity::user_bind_control: yes
+singularity::enable_overlay: try
+singularity::mount_slave: yes
+singularity::sessiondir_max_size: 16
+#singularity::limit_container_owners: undef
+#singularity::limit_container_paths: undef
+singularity::allow_containers:
+  squashfs: yes
+  extfs: yes
+  dir: yes

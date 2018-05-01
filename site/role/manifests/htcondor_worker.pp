@@ -33,4 +33,6 @@ class role::htcondor_worker {
     }
   }
 
+  class {'::singularity': }
+
 }

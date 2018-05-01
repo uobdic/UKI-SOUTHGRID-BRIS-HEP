@@ -38,6 +38,8 @@ mod 'account',
 mod 'mlocate',
   :git => 'git@github.com:kreczko/puppet-mlocate.git'
 
+mod 'treydock-singularity', '1.0.0'
+
 # HEP-Puppet
 mod 'htcondor',
   :git => 'https://github.com/HEP-Puppet/htcondor',
