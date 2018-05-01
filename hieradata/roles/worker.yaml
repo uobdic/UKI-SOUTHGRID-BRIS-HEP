@@ -63,7 +63,7 @@ profile::voenv::vo_environments:
     voname: vo_landslides_mossaic_org
 
 singularity::package_ensure: present
-singularity::package_name: singularity
+singularity::package_name: singularity-runtime
 singularity::manage_epel: false
 # singularity::config_path: /etc/singularity/singularity.conf
 # singularity::config_template: singularity/singularity.conf.erb
