@@ -27,8 +27,8 @@ class role::htcondor_worker {
 
   unless $start_jobs {
     file {'/etc/condor/config.d/999_off.config':
-      ensure => 'present',
-      content => 'START = FALSE',
+      ensure  => 'present',
+      content => 'START = !isUndefined(TARGET.MAGIC)',
       notify  => Exec['/usr/sbin/condor_reconfig'],
     }
   }
