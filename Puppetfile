@@ -44,7 +44,7 @@ mod 'stahnma-epel', '1.3.0'
 # HEP-Puppet
 mod 'htcondor',
   :git => 'https://github.com/HEP-Puppet/htcondor',
-  :ref => 'v2.0.4'
+  :ref => 'v2.0.7'
 
 mod 'arc_ce',
   :git => 'https://github.com/HEP-Puppet/arc_ce'
