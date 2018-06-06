@@ -31,8 +31,8 @@ singularity::mount_proc: 'yes'
 singularity::mount_sys: 'yes'
 singularity::mount_dev: 'yes'
 singularity::mount_devpts: 'yes'
-singularity::mount_home: 'no'
-singularity::mount_tmp: 'no'
+singularity::mount_home: 'yes'
+singularity::mount_tmp: 'yes'
 singularity::mount_hostfs: 'no'
 singularity::bind_paths:
   - /etc/localtime
