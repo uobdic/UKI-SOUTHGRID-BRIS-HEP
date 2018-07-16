@@ -63,8 +63,6 @@ class profile::dmlite::hdfs::gateway {
 
   class { 'dmlite::dav::config':
     enable_hdfs    => true,
-    dav_http_port  => 11180,
-    dav_https_port => 11443,
   }
 
   class { 'dmlite::dav::service':
