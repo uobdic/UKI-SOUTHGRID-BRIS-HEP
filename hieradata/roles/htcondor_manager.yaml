@@ -4,6 +4,7 @@ classes:
 
 htcondor::is_manager: true
 htcondor::use_anonymous_auth: true
+htcondor::enable_multicore: true
 
 htcondor::high_priority_groups:
   dteam: -10
