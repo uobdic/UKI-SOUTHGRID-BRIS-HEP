@@ -16,6 +16,11 @@ htcondor::is_worker: true
 htcondor::enable_cgroup: true
 htcondor::use_pid_namespaces: true
 
+htcondor::singularity_image_expr: 'TARGET.SingularityImage'
+htcondor::force_singularity_jobs: '!isUndefined(TARGET.SingularityImage)'
+htcondor::singularity_path: '/etc/condor/singularity_wrapper'
+
+
 singularity::package_ensure: present
 singularity::package_name: singularity-runtime
 singularity::manage_epel: false
