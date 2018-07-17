@@ -16,10 +16,19 @@ htcondor::is_worker: true
 htcondor::enable_cgroup: true
 htcondor::use_pid_namespaces: true
 
+htcondor::use_singularity: true
 htcondor::singularity_image_expr: 'TARGET.SingularityImage'
 htcondor::force_singularity_jobs: '!isUndefined(TARGET.SingularityImage)'
+htcondor::singularity_target_dir: '/srv'
+htcondor::starter_job_environment:
+  SINGULARITY_HOME: '/srv'
 htcondor::singularity_path: '/etc/condor/singularity_wrapper'
-
+htcondor::singularity_bind_paths:
+  - /hdfs
+  - /software
+  - /users
+  - /usersc
+  - /condor/condor
 
 singularity::package_ensure: present
 singularity::package_name: singularity-runtime
