@@ -35,4 +35,10 @@ class role::htcondor_worker {
 
   class {'::singularity': }
 
+  file {'/etc/condor/singularity_wrapper':
+    mode => '0755',
+    ensure => present,
+    source => "puppet:///modules/${module_name}/etc/condor/singularity_wrapper",
+  }
+
 }
