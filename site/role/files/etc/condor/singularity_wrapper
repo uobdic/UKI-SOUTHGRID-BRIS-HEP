@@ -18,5 +18,7 @@ export HOME
 
 # make sure SINGULARITY_HOME is set to a correct value (e.g a folder owned by the user)
 export SINGULARITY_HOME=$HOME
+export HOSTNAME=`hostname -f`
+
 echo "Executing singularity $1 --home $HOME ${@:2}"
 singularity $1 --home $HOME ${@:2}
