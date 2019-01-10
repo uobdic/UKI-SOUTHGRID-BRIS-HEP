@@ -25,6 +25,7 @@ htcondor::starter_job_environment:
 htcondor::singularity_path: '/etc/condor/singularity_wrapper'
 htcondor::singularity_bind_paths:
   - /hdfs
+  - /cvmfs
   - /software
   - /users
   - /usersc
