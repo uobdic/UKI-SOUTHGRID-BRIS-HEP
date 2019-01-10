@@ -47,4 +47,15 @@ class role::htcondor_worker {
     source => "puppet:///modules/${module_name}/etc/condor/config.d/60_docker.config",
   }
 
+  # SSSD for docker jobs
+  package{'sssd':
+    ensure => present,
+  }
+
+  service{'sssd':
+    ensure  => running,
+    enable  => true,
+    require => Package['sssd'],
+  }
+
 }
