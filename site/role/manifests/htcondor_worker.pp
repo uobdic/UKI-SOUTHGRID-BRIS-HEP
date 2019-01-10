@@ -48,14 +48,16 @@ class role::htcondor_worker {
   }
 
   # SSSD for docker jobs
-  package{'sssd':
-    ensure => present,
-  }
+  if $::facts['operatingsystemmajrelease'] == '7'{
+    package{'sssd':
+      ensure => present,
+    }
 
-  service{'sssd':
-    ensure  => running,
-    enable  => true,
-    require => Package['sssd'],
+    service{'sssd':
+      ensure  => running,
+      enable  => true,
+      require => Package['sssd'],
+    }
   }
 
 }
