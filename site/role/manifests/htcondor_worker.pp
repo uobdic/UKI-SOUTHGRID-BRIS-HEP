@@ -41,14 +41,20 @@ class role::htcondor_worker {
     source => "puppet:///modules/${module_name}/etc/condor/singularity_wrapper",
   }
 
-  file {'/etc/condor/config.d/60_docker.config':
-    ensure => present,
-    mode   => '0755',
-    source => "puppet:///modules/${module_name}/etc/condor/config.d/60_docker.config",
-  }
-
   # SSSD for docker jobs
   if $::facts['operatingsystemmajrelease'] == '7'{
+    file {'/etc/condor/config.d/60_docker.config':
+      ensure => present,
+      mode   => '0755',
+      source => "puppet:///modules/${module_name}/etc/condor/config.d/60_docker.config",
+    }
+
+    file {'/etc/rsyslog.d/00_docker.conf':
+      ensure => present,
+      mode   => '0755',
+      source => "puppet:///modules/${module_name}/etc/rsyslog.d/00_docker.conf",
+    }
+
     package{'sssd':
       ensure => present,
     }
