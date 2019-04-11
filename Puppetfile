@@ -31,9 +31,9 @@ mod 'crayfishx/firewalld', '3.1.8'
 mod 'razorsedge/network', :latest
 mod 'erwbgy/limits', :latest
 mod 'thias/tuned', :latest
-mod 'account',
-  :git => 'https://github.com/torrancew/puppet-account.git',
-  :ref => 'develop'
+#mod 'account',
+#  :git => 'https://github.com/torrancew/puppet-account.git',
+#  :ref => 'develop'
 
 # other
 mod 'mlocate',
