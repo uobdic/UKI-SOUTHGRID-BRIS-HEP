@@ -29,26 +29,12 @@ class profile::users {
     'password'     => '!!',
     'create_group' => false,
     'managehome'   => false,
-    'gid'          => 100,
+    'gid'          => '100',
+    'group'        => 'users',
   }
 
   unless 'soolin' in $::fqdn or 'lcgce' in $::fqdn {
     create_resources('group', $groups, $defaults)
     create_resources('accounts::user', $users, $acc_defaults)
   }
-
-  # if $::fqdn == 'soolin.dice.priv' {
-  #   create_resources('group', $groups, $defaults)
-  #   $soolin_defaults = {
-  #     'ensure'       => present,
-  #     'shell'        => $shell,
-  #     'password'     => '!!',
-  #     'managehome'   => false,
-  #     'create_group' => false,
-  #     'gid'          => 100,
-  #   }
-  #   # use puppetlabs/accounts
-  #   create_resources('accounts::user', $users, $soolin_defaults)
-  # }
-
 }
