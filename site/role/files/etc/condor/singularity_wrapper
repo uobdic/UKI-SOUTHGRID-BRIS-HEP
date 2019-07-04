@@ -1,4 +1,10 @@
 #!/bin/bash
+if [ "$1" == "--version" ]
+then
+  singularity --version
+  exit 0
+fi
+
 
 # user might not be set (e.g. when not using getenv in job config)
 USER=`whoami`
