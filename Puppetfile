@@ -23,6 +23,7 @@ mod 'puppetlabs/xinetd', :latest
 mod 'puppet/fetchcrl', :latest
 mod 'puppet/mcollective', :latest
 mod 'jhoblitt/mcelog', :latest
+mod 'jhoblitt/ipmi', '2.3.0'
 mod 'saz/memcached', :latest
 mod 'crayfishx/firewalld', '3.1.8'
 # voxpupuli, see https://wikis.bris.ac.uk/display/BristolT2/Puppet+modules#Puppetmodules-Network
