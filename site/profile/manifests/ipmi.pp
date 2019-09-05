@@ -11,6 +11,7 @@ class profile::ipmi() {
   gateway => '192.168.1.1',
   }->exec{'Set VLAN':
     command => 'ipmitool lan print 1',
+    path    => ['/usr/bin', '/usr/sbin',],
   }
 
 }
