@@ -13,8 +13,9 @@ class profile::ipmi() {
       netmask => '255.255.255.0',
       gateway => '10.129.13.250',
     }->exec{'set VLAN':
-      command => 'ipmitool lan set 1 vlan id 715',
-      path    => ['/usr/bin', '/usr/sbin',],
+      command     => 'ipmitool lan set 1 vlan id 715',
+      path        => ['/usr/bin', '/usr/sbin',],
+      refreshonly => true,
     }
   }
 
