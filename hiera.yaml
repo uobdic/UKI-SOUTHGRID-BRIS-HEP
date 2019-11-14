@@ -1,27 +1,34 @@
 ---
-:backends:
-  - eyaml
-  - yaml
+version: 5
 
-:hierarchy:
-  - "modules/site_private/hieradata/nodes/%{::fqdn}"
-  - "modules/site_private/hieradata/firewall/%{::node_info.firewall}"
-  - "modules/site_private/hieradata/users/%{::node_info.users}"
-  - "hieradata/virtual/%{::is_virtual}"
-  - "hieradata/cluster/%{::node_info.cluster}"
-  - "hieradata/generation/%{::node_info.generation}"
-  - "hieradata/groups/%{::node_info.group}"
-  - "hieradata/roles/%{::node_info.role}"
-  - modules/site_private/hieradata/common
-  - modules/site_private/hieradata/secrets
-  - hieradata/common
+defaults:
+  datadir: hieradata
+  data_hash: yaml_data
 
-:yaml:
-  :datadir: "/etc/puppetlabs/code/environments/%{::environment}"
-
-:eyaml:
-  :datadir: "/etc/puppetlabs/code/environments/%{::environment}"
-  :pkcs7_private_key: /etc/puppetlabs/puppet/secure/keys/private_key.pkcs7.pem
-  :pkcs7_public_key:  /etc/puppetlabs/puppet/secure/keys/public_key.pkcs7.pem
-
-:merge_behavior: deeper
+hierarchy:
+  - name: "Top level private site settings"
+    datadir: modules/site_private/hieradata
+    paths:
+      - "nodes/%{::fqdn}.yaml"
+      - "firewall/%{::node_info.firewall}.yaml"
+      - "users/%{::node_info.users}.yaml"
+  - name: "Top level public site settings"
+    paths:
+      - "virtual/%{::is_virtual}.yaml"
+      - "cluster/%{::node_info.cluster}.yaml"
+      - "generation/%{::node_info.generation}.yaml"
+      - "groups/%{::node_info.group}.yaml"
+      - "roles/%{::node_info.role}.yaml"
+  - name: "Common private site settings"
+    datadir: modules/site_private/hieradata
+    paths:
+      - common.yaml
+  - name: 'Secrets'
+    datadir: modules/site_private/hieradata
+    path: secrets.eyaml
+    lookup_key: eyaml_lookup_key
+    options:
+      pkcs7_private_key: /etc/puppetlabs/puppet/secure/keys/private_key.pkcs7.pem
+      pkcs7_public_key:  /etc/puppetlabs/puppet/secure/keys/public_key.pkcs7.pem
+  - name: "Common public site settings"
+    path: common.yaml
