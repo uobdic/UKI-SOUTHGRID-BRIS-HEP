@@ -1,7 +1,7 @@
 #
 class site::basic {
-  $node_info = hiera_hash('site_info::node_info', undef)
-  $site_info = hiera_hash('site::site_info', undef)
+  $node_info = lookup('site_info::node_info', Hash, deep, {} )
+  $site_info = lookup('site::site_info', Hash, deep, {} )
 
   if $node_info {
     file { [
