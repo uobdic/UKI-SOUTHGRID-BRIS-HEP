@@ -2,9 +2,9 @@
 class profile::ipmi() {
   include ipmi
 
-  $network_ip = lookup('profile::ipmi::network_ip', '0.0.0.0')
-  $ipmi_user = lookup('ipmi::user::user', '')
-  $ipmi_pw = lookup('ipmi::user::password', '')
+  $network_ip = lookup('profile::ipmi::network_ip', undef, undef, '0.0.0.0')
+  $ipmi_user = lookup('ipmi::user::user', undef, undef, '')
+  $ipmi_pw = lookup('ipmi::user::password', undef, undef, '')
 
   unless $network_ip == '0.0.0.0'{
     ipmi::network { 'lan1':
