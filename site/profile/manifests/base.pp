@@ -2,8 +2,8 @@
 class profile::base {
   class { '::ntp': }
 
-  $packages_to_install = hiera_array('packages_to_install', [])
-  $packages_to_remove  = hiera_array('packages_to_remove', [])
+  $packages_to_install = lookup('packages_to_install', Array[String], 'unique', [])
+  $packages_to_remove  = lookup('packages_to_remove', Array[String], 'unique', [])
 
   package { $packages_to_install: ensure => 'present', }
 
@@ -32,6 +32,7 @@ class profile::base {
       '/h10',
       '/h11',
       '/h12',
+      '/grid',
       ],
   }
   # cleanup after bad mlocate module (it is OK now, but first time was bad)

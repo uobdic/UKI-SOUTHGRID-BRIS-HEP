@@ -1,6 +1,6 @@
 class profile::cvmfs {
   $cvmfs_mounts     = $::site_info['cvmfs_mounts']
-  $cvmfs_server_url = hiera('cvmfs::cvmfs_server_url')
+  $cvmfs_server_url = lookup('cvmfs::cvmfs_server_url')
 
   include cvmfs
 

@@ -1,6 +1,6 @@
 class profile::htcondor_ce {
-  $uid_domain    = hiera('htcondor::uid_domain', $::domain)
-  $managers      = hiera('htcondor::managers', [])
+  $uid_domain    = lookup('htcondor::uid_domain', undef, undef, $::domain)
+  $managers      = lookup('htcondor::managers', Array[String], 'unique', [])
   $argus_server  = $::site_info['argus_server']
   $argus_port    = $::site_info['argus_port']
   $supported_vos = $::site_info['supported_vos']

@@ -1,9 +1,9 @@
 #
 class profile::monitored::ganglia {
-  $ganglia_servers       = hiera_array('profile::monitored::ganglia_servers', ['localhost' ])
-  $ganglia_port          = hiera('profile::monitored::ganglia_port', 8650)
-  $ganglia_cluster_name  = hiera('profile::monitored::ganglia_cluster_name', 'unknown')
-  $ganglia_use_multicast = hiera('profile::monitored::ganglia_use_multicast', false)
+  $ganglia_servers       = lookup('profile::monitored::ganglia_servers', Array[String], 'unique', ['localhost'])
+  $ganglia_port          = lookup('profile::monitored::ganglia_port', undef, undef, 8650)
+  $ganglia_cluster_name  = lookup('profile::monitored::ganglia_cluster_name', undef, undef, 'unknown')
+  $ganglia_use_multicast = lookup('profile::monitored::ganglia_use_multicast', undef, undef, false)
 
   if $ganglia_cluster_name == 'unknown' {
 

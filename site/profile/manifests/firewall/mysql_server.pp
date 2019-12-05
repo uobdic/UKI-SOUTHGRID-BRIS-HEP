@@ -1,3 +1,4 @@
+# firewall settings for mysql server
 class profile::firewall::mysql_server {
   firewall { '950 allow mysql':
     state    => 'NEW',
