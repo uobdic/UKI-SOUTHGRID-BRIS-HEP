@@ -3,9 +3,9 @@ class site::basic {
   $node_info = lookup('site::node_info', Hash, deep, {} )
   $site_info = lookup('site::site_info', Hash, deep, {} )
 
-  notify {'site::basic':
-    message => "Applying site_info (${site_info}) and node_info (${node_info})"
-  }
+  # notify {'site::basic':
+  #   message => "Applying site_info (${site_info}) and node_info (${node_info})"
+  # }
 
   if $node_info or $site_info {
     file { [
