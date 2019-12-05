@@ -1,7 +1,7 @@
 class profile::voenv (
 ) {
   $default_se      = $::site_info['storage_element']
-  $vo_environments = lookup('profile::voenv::vo_environments', Hash, 'deep', undef)
+  $vo_environments = lookup('profile::voenv::vo_environments', Hash, 'deep', {})
 
   $defaults        = {
     'vo_default_se' => $default_se,
