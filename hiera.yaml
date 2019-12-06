@@ -25,7 +25,9 @@ hierarchy:
       - common.yaml
   - name: 'Secrets'
     datadir: modules/site_private/hieradata
-    path: secrets.eyaml
+    paths:
+      - secrets.eyaml
+      - "nodes/%{::trusted.certname}.eyaml"
     lookup_key: eyaml_lookup_key
     options:
       pkcs7_private_key: /etc/puppetlabs/puppet/secure/keys/private_key.pkcs7.pem
