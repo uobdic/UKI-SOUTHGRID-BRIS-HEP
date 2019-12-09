@@ -29,7 +29,10 @@ mod 'crayfishx/firewalld', '3.1.8'
 # voxpupuli, see https://wikis.bris.ac.uk/display/BristolT2/Puppet+modules#Puppetmodules-Network
 #mod 'adrien/network', :latest
 # recommended by NetComms
-mod 'razorsedge/network', :latest
+mod 'razorsedge/network',
+  :git => 'https://github.com/m4rx0/puppet-network.git',
+  :ref => 'feature/puppet-6'
+
 mod 'erwbgy/limits', :latest
 mod 'thias/tuned', :latest
 #mod 'account',

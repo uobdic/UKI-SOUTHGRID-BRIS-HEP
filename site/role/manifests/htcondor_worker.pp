@@ -1,7 +1,7 @@
 class role::htcondor_worker {
-  $custom_machine_attributes = hiera_hash('htcondor::custom_machine_attributes',{})
-  $custom_job_attributes     = hiera_hash('htcondor::custom_job_attributes', {})
-  $start_jobs                = hiera('htcondor::start_jobs', true)
+  $custom_machine_attributes = lookup('htcondor::custom_machine_attributes', Hash, deep, {})
+  $custom_job_attributes     = lookup('htcondor::custom_job_attributes', Hash, deep, {})
+  $start_jobs                = lookup('htcondor::start_jobs', undef, undef, true)
 
   $site_machine_attributes   = {
     'CLUSTER'                 => $::node_info['cluster'],

@@ -9,7 +9,7 @@ hierarchy:
   - name: "Top level private site settings"
     datadir: modules/site_private/hieradata
     paths:
-      - "nodes/%{::fqdn}.yaml"
+      - "nodes/%{::trusted.certname}.yaml"
       - "firewall/%{::node_info.firewall}.yaml"
       - "users/%{::node_info.users}.yaml"
   - name: "Top level public site settings"
@@ -25,10 +25,13 @@ hierarchy:
       - common.yaml
   - name: 'Secrets'
     datadir: modules/site_private/hieradata
-    path: secrets.eyaml
+    paths:
+      - secrets.eyaml
+      - "nodes/%{::trusted.certname}.eyaml"
     lookup_key: eyaml_lookup_key
     options:
       pkcs7_private_key: /etc/puppetlabs/puppet/secure/keys/private_key.pkcs7.pem
-      pkcs7_public_key:  /etc/puppetlabs/puppet/secure/keys/public_key.pkcs7.pem
+      pkcs7_public_key: /etc/puppetlabs/puppet/secure/keys/public_key.pkcs7.pem
   - name: "Common public site settings"
+    datadir: hieradata
     path: common.yaml

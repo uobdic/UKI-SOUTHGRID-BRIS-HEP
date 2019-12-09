@@ -2,10 +2,10 @@
 #  Firewall profile
 #
 class profile::firewall {
-  $accept          = hiera_hash('profile::firewall::accept', {})
-  $accept_v6       = hiera_hash('profile::firewall6::accept', {})
-  $drop            = hiera_hash('profile::firewall::drop', {})
-  $drop_v6         = hiera_hash('profile::firewall6::drop', {})
+  $accept          = lookup('profile::firewall::accept', Hash, 'deep', {})
+  $accept_v6       = lookup('profile::firewall6::accept', Hash, 'deep', {})
+  $drop            = lookup('profile::firewall::drop', Hash, 'deep', {})
+  $drop_v6         = lookup('profile::firewall6::drop', Hash, 'deep', {})
   include profile::firewall::setup
 
   $accept_defaults = {

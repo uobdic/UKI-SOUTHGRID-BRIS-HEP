@@ -5,7 +5,7 @@ class profile::mysql_server (
   $remote_db_pass = undef,) {
   include profile::firewall::mysql_server
 
-  $mysql_root_pass  = hiera('profile::mysql_server::mysql_root_pass')
+  $mysql_root_pass  = lookup('profile::mysql_server::mysql_root_pass')
 
   # adding perf tunings
   $override_options = {

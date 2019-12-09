@@ -1,16 +1,16 @@
 #
 class profile::dmlite::hdfs::gateway {
-  $headnode_fqdn    = hiera('profile::dmlite::headnode')
-  $db_user          = hiera('profile::dmlite::mysql_dpm_user')
-  $db_pass          = hiera('profile::dmlite::mysql_dpm_pass')
-  $db_host          = hiera('profile::dmlite::db_host')
-  $token_password   = hiera('profile::dmlite::token_password')
-  $xrootd_sharedkey = hiera('profile::dmlite::xrootd_sharedkey')
-  $debug            = hiera('profile::dmlite::debug')
-  $hdfs_namenode    = hiera('profile::dmlite::hdfs_namenode')
-  $hdfs_port        = hiera('profile::dmlite::hdfs_port')
-  $localdomain      = hiera('profile::dmlite::localdomain')
-  $java_home        = hiera('dmlite::plugins::hdfs::params::java_home')
+  $headnode_fqdn    = lookup('profile::dmlite::headnode')
+  $db_user          = lookup('profile::dmlite::mysql_dpm_user')
+  $db_pass          = lookup('profile::dmlite::mysql_dpm_pass')
+  $db_host          = lookup('profile::dmlite::db_host')
+  $token_password   = lookup('profile::dmlite::token_password')
+  $xrootd_sharedkey = lookup('profile::dmlite::xrootd_sharedkey')
+  $debug            = lookup('profile::dmlite::debug')
+  $hdfs_namenode    = lookup('profile::dmlite::hdfs_namenode')
+  $hdfs_port        = lookup('profile::dmlite::hdfs_port')
+  $localdomain      = lookup('profile::dmlite::localdomain')
+  $java_home        = lookup('dmlite::plugins::hdfs::params::java_home')
 
   $supported_vos    = $::site_info['supported_vos']
   $hdfs_tmp_folder  = '/dmlite/tmp'

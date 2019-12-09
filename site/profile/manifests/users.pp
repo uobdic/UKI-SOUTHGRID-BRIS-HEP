@@ -1,8 +1,7 @@
+# puppet class to create local users
 class profile::users {
-  $empty_hash = {
-  }
-  $groups     = hiera_hash('profile::users::groups', $empty_hash)
-  $users      = hiera_hash('profile::users::users', $empty_hash)
+  $groups     = lookup('profile::users::groups', Hash, 'deep', {})
+  $users      = lookup('profile::users::users', Hash, 'deep', {})
 
   if empty($groups) {
     notice('No profile::users::groups specified')
@@ -11,12 +10,12 @@ class profile::users {
   if empty($users) {
     notice('No profile::users::users specified')
   }
-  $node_info = hiera_hash('site::node_info')
+  $node_info = lookup('site::node_info', Hash)
 
   if ($node_info['role'] == 'hdfs_namenode') {
-    $shell = hiera('profile::users::shell', '/sbin/nologin')
+    $shell = lookup('profile::users::shell', undef, undef, '/sbin/nologin')
   } else {
-    $shell = hiera('profile::users::shell', '/bin/bash')
+    $shell = lookup('profile::users::shell', undef, undef, '/bin/bash')
   }
 
   $defaults     = {
