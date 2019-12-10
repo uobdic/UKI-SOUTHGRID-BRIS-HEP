@@ -7,7 +7,7 @@ class profile::voenv (
     'vo_default_se' => $default_se,
   }
 
-  if $vo_environments {
+  if !empty($vo_environments) {
     create_resources('vosupport::voenv', $vo_environments, $defaults)
 
     class { 'vosupport::vo_environment': voenvdefaults => $vo_environments, }
