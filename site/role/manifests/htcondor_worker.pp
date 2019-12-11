@@ -33,6 +33,12 @@ class role::htcondor_worker {
     }
   }
 
+  file {'/etc/condor/config.d/888_ipv6_off.config':
+      ensure  => 'present',
+      content => 'ENABLE_IPV6 = FALSE',
+      notify  => Exec['/usr/sbin/condor_reconfig'],
+  }
+
   class {'::singularity': }
 
   file {'/etc/condor/singularity_wrapper':
@@ -45,13 +51,13 @@ class role::htcondor_worker {
   if $::facts['operatingsystemmajrelease'] == '7'{
     file {'/etc/condor/config.d/60_docker.config':
       ensure => present,
-      mode   => '0755',
+      mode   => '0644',
       source => "puppet:///modules/${module_name}/etc/condor/config.d/60_docker.config",
     }
 
     file {'/etc/rsyslog.d/00_docker.conf':
       ensure => present,
-      mode   => '0755',
+      mode   => '0644',
       source => "puppet:///modules/${module_name}/etc/rsyslog.d/00_docker.conf",
     }
 
