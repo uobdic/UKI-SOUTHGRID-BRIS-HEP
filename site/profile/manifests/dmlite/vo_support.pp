@@ -3,7 +3,7 @@ class profile::dmlite::vo_support {
   $supported_vos = $::site_info['supported_vos']
 
   # for the moment use this safe list instead of $supported_vos
-  $vo_array      = ['atlas', 'cms', 'dteam', 'gridpp', 'ops', 'lhcb', 'alice', 'lsst', 'lz', 'vo_southgrid_ac_uk',]
+  $vo_array      = ['atlas', 'cms', 'dteam', 'gridpp', 'ops', 'lhcb', 'alice', 'lsst', 'vo_southgrid_ac_uk',]
   $vos           = prefix($vo_array, 'voms::')
 
   class { $vos: }
