@@ -20,7 +20,7 @@ class profile::dmlite::vo_support {
       {
         server => 'voms.hep.wisc.edu',
         port   => '15003',
-        dn     => '/DC=org/DC=incommon/C=US/ST=WI/L=Madison/O=University of Wisconsin-Madison/OU=OCIS/CN=voms.hep.wisc.edu',
+        dn     => '/DC=org/DC=incommon/C=US/ST=Wisconsin/L=Madison/O=University of Wisconsin-Madison/OU=OCIS/CN=voms.hep.wisc.edu',
         ca_dn  => '/C=US/O=Internet2/OU=InCommon/CN=InCommon IGTF Server CA',
       }
     ]
