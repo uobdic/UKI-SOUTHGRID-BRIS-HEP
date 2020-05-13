@@ -4,4 +4,3 @@ classes:
   - 'role::hdfs_namenode'
 
 profile::users::shell: '/sbin/nologin'
-site::node_info::users: htcondor
