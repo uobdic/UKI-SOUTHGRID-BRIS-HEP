@@ -45,6 +45,7 @@ mod 'mlocate',
 
 mod 'treydock-singularity', '1.0.0'
 mod 'stahnma-epel', '1.3.0'
+mod 'benformosa-linux_disable_ipv6', '0.1.1'
 
 # HEP-Puppet
 mod 'htcondor',
