@@ -80,7 +80,7 @@ mod 'argus',
 # CERN OPS fork
 mod 'htcondor_ce',
   :git => 'https://github.com/kreczko/puppet-htcondor_ce',
-  :ref => 'htcondor-workshop-adjustments'
+  :ref => 'kreczko-accounting'
 
 # secondary control repo
 mod 'site_private',
