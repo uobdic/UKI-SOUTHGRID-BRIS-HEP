@@ -1,9 +1,14 @@
 class profile::firewall::default_rules {
-  firewall { '100 SSH from CSE':
-    proto  => 'tcp',
-    action => 'accept',
-    dport  => 22,
-    source => '92.234.12.153/16',
+  firewall { '100 DROP UoB crash-probes WAS 100 accept SSH from CSE':
+    proto  => 'all',
+    action => 'drop',
+    source => '10.17.0.0/16',
+  }
+  
+  firewall { '100 DROP UoB crash-probes':
+     proto => 'all',
+     action => 'drop',
+     source => '10.18.0.0/15',
   }
 
   firewall { '101 trust WIFI 1':
