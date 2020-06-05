@@ -12,7 +12,8 @@ classes:
 #   - gcc-gfortran
 #   - git
 
-site::node_info::firewall: worker_node
+site::node_info:
+  firewall: worker_node
 
 htcondor::is_worker: true
 htcondor::enable_cgroup: true
