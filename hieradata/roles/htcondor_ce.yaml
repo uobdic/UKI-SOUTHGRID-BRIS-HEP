@@ -18,4 +18,4 @@ htcondor_ce::benchmark_result: '09.99-HEP-SPEC06'
 htcondor_ce::execution_env_cores: 8
 htcondor_ce::election_type: 'leader'
 htcondor_ce::election_hosts: 'lcgce02.phy.bris.ac.uk'
-htcondor_ce::apel_scaling_attr: MachineAttrACCOUNTING_SCALE_FACTOR0
+htcondor_ce::apel_scaling_attr: ACCOUNTING_SCALE_FACTOR
