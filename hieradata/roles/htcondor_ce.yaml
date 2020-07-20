@@ -14,6 +14,7 @@ htcondor_ce::manage_service: true
 htcondor_ce::gsi_backend: 'argus'
 htcondor_ce::argus_resourceid: 'http://authz-interop.org/xacml/resource/resource-type/arc'
 htcondor_ce::install_bdii: true
+htcondor_ce::install_apel: true
 htcondor_ce::benchmark_result: '09.99-HEP-SPEC06'
 htcondor_ce::execution_env_cores: 8
 htcondor_ce::election_type: 'leader'
