@@ -6,13 +6,9 @@ class profile::hdfs_gateway(
   String $mount_device,
   String $mount_options = 'defaults',
   String $path          = '/opt',
-  Boolean $fuse_mount   = true,
+  Boolean $mount_hdfs   = true,
   Boolean $install_java = true,
 ) {
-  notify {'profile::hdfs_gateway::info':
-    message => "Will install HDFS version ${version} from ${source}. Install java: ${install_java}; mount /hdfs: ${fuse_mount}"
-  }
-
   if($install_java){
     file {'/etc/yum.repos.d/hdfs_repo.repo':
       ensure => present,
@@ -36,7 +32,9 @@ class profile::hdfs_gateway(
     require => File['/usr/local/bin/hdfs_setup'],
   }
 
-  if($fuse_mount){
+  # TODO: mount still needs work, getting
+  # change from 'unmounted' to 'mounted' failed: Got a nil value for should
+  if($mount_hdfs){
     mount{'/hdfs':
       ensure  => 'mounted',
       device  => $mount_device,
