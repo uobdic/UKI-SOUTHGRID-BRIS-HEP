@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+INSTALL_PATH=<%= @path %>
+INSTALL_SOURCE=<%= @source %>
+VERSION=<%= @version %>
+REL_INSTALL_PATH="${INSTALL_PATH:1}"
+
+mkdir -p /etc/hadoop ${INSTALL_PATH} /hdfs
+
+if [ -d "${INSTALL_PATH}/${VERSION}" ]
+then
+  exit 0;
+fi
+
+scp -o stricthostkeychecking=no ${INSTALL_SOURCE}:${INSTALL_PATH}/${VERSION}.tar.gz /tmp/.
+scp -r -o stricthostkeychecking=no ${INSTALL_SOURCE}:/etc/hadoop/conf /etc/hadoop/.
+
+tar xf /tmp/${VERSION}.tar.gz
+pushd ${REL_INSTALL_PATH}
+mv ${VERSION} ${INSTALL_PATH}/.
+popd
+
+# update symlink
+if [ -f "${INSTALL_PATH}/CDH" ]
+then
+  rm -f "${INSTALL_PATH}/CDH"
+fi
+ln -s ${INSTALL_PATH}/${VERSION} ${INSTALL_PATH}/CDH
+
+# update command paths
+rm -f /usr/bin/hadoop /usr/bin/hadoop-0.20 /usr/bin/hadoop-fuse-dfs /usr/bin/hdfs
+
+ln -s /opt/cloudera/parcels/CDH/bin/hadoop /usr/bin/hadoop
+ln -s /opt/cloudera/parcels/CDH/bin/hadoop-fuse-dfs /usr/bin/hadoop-fuse-dfs
+ln -s /opt/cloudera/parcels/CDH/bin/hdfs /usr/bin/hdfs
