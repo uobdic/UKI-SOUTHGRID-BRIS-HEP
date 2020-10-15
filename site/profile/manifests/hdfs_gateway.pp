@@ -41,9 +41,9 @@ class profile::hdfs_gateway(
       device  => $mount_device,
       fstype  => 'fuse',
       options => $mount_options,
-      atboot  => 0,
-      pass    => 0,
-      require => Exec['hdfs_setup'],
+      atboot  => false,
+      pass    => false,
+      require => [Exec['hdfs_setup']]
     }
   }
 }
