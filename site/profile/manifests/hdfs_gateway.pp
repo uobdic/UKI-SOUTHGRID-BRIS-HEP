@@ -30,20 +30,20 @@ class profile::hdfs_gateway(
   }
 
   exec {'hdfs_setup':
-    creates  => "${path}/${version}/bin/hdfs",
-    path     => ['/usr/bin', '/usr/sbin', '/usr/local/bin'],
-    requires => File['/usr/local/bin/hdfs_setup'],
+    creates => "${path}/${version}/bin/hdfs",
+    path    => ['/usr/bin', '/usr/sbin', '/usr/local/bin'],
+    require => File['/usr/local/bin/hdfs_setup'],
   }
 
   if($fuse_mount){
     mount{'/hdfs':
-      ensure   => 'mounted',
-      device   => $mount_device,
-      fstype   => 'fuse',
-      options  => $mount_options,
-      atboot   => 0,
-      pass     => 0,
-      requires => Exec['hdfs_setup'],
+      ensure  => 'mounted',
+      device  => $mount_device,
+      fstype  => 'fuse',
+      options => $mount_options,
+      atboot  => 0,
+      pass    => 0,
+      require => Exec['hdfs_setup'],
     }
   }
 }
