@@ -44,7 +44,8 @@ class profile::hdfs_gateway(
       options => $mount_options,
       atboot  => false,
       pass    => false,
-      require => [Exec['hdfs_setup']]
+      require => [Exec['hdfs_setup']],
+      target  => '/etc/fstab',
     }
   }
 }
