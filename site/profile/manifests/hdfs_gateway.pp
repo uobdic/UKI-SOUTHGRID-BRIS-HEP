@@ -1,8 +1,9 @@
 # Class for HDFS software deployment without Cloudera Manager
 class profile::hdfs_gateway(
-  String $source        = '',
-  String $version       = '',
-  String $mount_device  = 'hadoop-fuse-dfs#dfs://namenode',
+  String $source,
+  String $version,
+  String $repo_file,
+  String $mount_device,
   String $mount_options = 'defaults',
   String $path          = '/opt',
   Boolean $fuse_mount   = true,
@@ -15,7 +16,7 @@ class profile::hdfs_gateway(
   if($install_java){
     file {'/etc/yum.repos.d/hdfs_repo.repo':
       ensure => present,
-      source => 'https://stacki.dice.priv/install/carts/site-customization/files/etc/yum.repos.d/hdfs_repo.repo',
+      source => $repo_file,
     }
     package{'oracle-j2sdk1.8.x86_64':
       ensure          => present,
