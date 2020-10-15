@@ -4,9 +4,9 @@ class profile::hdfs_gateway(
   String $version,
   String $mount_device,
   String $mount_options,
-  String $path = '/opt',
-  Bool $fuse_mount = true,
-  Bool $install_java = true,
+  String $path          = '/opt',
+  Boolean $fuse_mount   = true,
+  Boolean $install_java = true,
 ) {
   notify {'profile::hdfs_gateway::info':
     message => "Will install HDFS version ${version} from ${source}. Install java: ${install_java}; mount /hdfs: ${fuse_mount}"
