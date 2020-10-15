@@ -1,9 +1,9 @@
 # Class for HDFS software deployment without Cloudera Manager
 class profile::hdfs_gateway(
-  String $source,
-  String $version,
-  String $mount_device,
-  String $mount_options,
+  String $source        = '',
+  String $version       = '',
+  String $mount_device  = 'hadoop-fuse-dfs#dfs://namenode',
+  String $mount_options = 'defaults',
   String $path          = '/opt',
   Boolean $fuse_mount   = true,
   Boolean $install_java = true,
