@@ -11,6 +11,12 @@ class profile::firewall::default_rules {
      source => '10.18.0.0/15',
   }
 
+  firewall { '101 trust SEIS subnet':
+    proto  => 'all',
+    action => 'accept',
+    source => '172.16.0.0/16',
+  }
+
   firewall { '101 trust WIFI 1':
     proto  => 'all',
     action => 'accept',
@@ -21,6 +27,12 @@ class profile::firewall::default_rules {
     proto  => 'all',
     action => 'accept',
     source => '172.23.0.0/16',
+  }
+
+  firewall { '101 trust 5TA wired ntwk':
+    proto  => 'all',
+    action => 'accept',
+    source => '172.28.0.0/16',
   }
 
   firewall { '102 Trust UoB network':
