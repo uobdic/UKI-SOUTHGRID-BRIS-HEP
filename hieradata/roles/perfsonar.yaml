@@ -1,3 +1,5 @@
 ---
 classes:
-  - ::perfsonar
+  - "::perfsonar"
+
+network::global::nozeroconf: "yes"
