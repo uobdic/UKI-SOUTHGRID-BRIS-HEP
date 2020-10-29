@@ -90,3 +90,4 @@ mod 'puppet-cron', '2.0.0'
 
 # perfsonar
 mod 'treydock-perfsonar', '0.6.1'
+mod 'jamtur01/httpauth', '>= 0.0.5 <1.0.0'
