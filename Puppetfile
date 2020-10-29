@@ -87,3 +87,6 @@ mod 'site_private',
   :git => 'git@git.services.bris.ac.uk:pp-computing/site_private.git'
 
 mod 'puppet-cron', '2.0.0'
+
+# perfsonar
+mod 'treydock-perfsonar', '0.6.1'
