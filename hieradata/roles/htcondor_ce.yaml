@@ -41,6 +41,8 @@ htcondor_ce::job_routes:
     Requirements: '(x509UserProxyVOName == "dune");'
   dice_gridpp_centos7:
     Requirements: '(x509UserProxyVOName == "gridpp");'
+  dice_ilc_centos7:
+    Requirements: '(x509UserProxyVOName == "ilc");'
   dice_lhcb_centos7:
     Requirements: '(x509UserProxyVOName == "lhcb");'
   dice_lsst_centos7:
@@ -49,9 +51,7 @@ htcondor_ce::job_routes:
     Requirements: '(x509UserProxyVOName == "lz");'
   dice_ops_centos7:
     Requirements: '(x509UserProxyVOName == "ops");'
-  dice_ilc_centos7:
-    Requirements: '(x509UserProxyVOName == "ilc");'
   dice_mu3e_centos7:
     Requirements: '(x509UserProxyVOName == "mu3e");'
   dice_other_centos7:
-    Requirements: '(x509UserProxyVOName =!= "atlas") && (x509UserProxyVOName =!= "cms") && (x509UserProxyVOName =!= "dune") && (x509UserProxyVOName =!= "mu3e");'
+    Requirements: '(x509UserProxyVOName =!= "atlas") && (x509UserProxyVOName =!= "cms") && (x509UserProxyVOName =!= "dune") && (x509UserProxyVOName =!= "gridpp") && (x509UserProxyVOName =!= "ilc") && (x509UserProxyVOName =!= "lhcb") && (x509UserProxyVOName =!= "lsst") && (x509UserProxyVOName =!= "lz") && (x509UserProxyVOName =!= "ops") && (x509UserProxyVOName =!= "mu3e");'
