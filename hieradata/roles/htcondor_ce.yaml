@@ -12,7 +12,7 @@ htcondor_ce::lrms_version: present
 htcondor_ce::gsi_regex: '^\/DC\=ch\/DC\=cern\/OU\=computers\/CN\=(host\/)?([A-Za-z0-9.\-]*)$'
 htcondor_ce::manage_service: true
 htcondor_ce::gsi_backend: 'argus'
-htcondor_ce::hostDN: "/C=UK/O=eScience/OU=Bristol/L=IS/CN=lcgce02.phy.bris.ac.uk"
+htcondor_ce::host_dn: "/C=UK/O=eScience/OU=Bristol/L=IS/CN=lcgce02.phy.bris.ac.uk"
 htcondor_ce::argus_resourceid: 'http://authz-interop.org/xacml/resource/resource-type/arc'
 htcondor_ce::install_bdii: true
 htcondor_ce::install_apel: true
