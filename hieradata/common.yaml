@@ -51,6 +51,7 @@ site::site_info:
     - lhcb
     - lsst
     - lz
+    - 'mu3e.org'
     - ops
     - 'vo.southgrid.ac.uk'
 
