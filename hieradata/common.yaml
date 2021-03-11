@@ -48,6 +48,7 @@ site::site_info:
     - dune
     - dteam
     - gridpp
+    - ilc
     - lhcb
     - lsst
     - lz
