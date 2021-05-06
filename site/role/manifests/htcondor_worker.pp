@@ -27,7 +27,12 @@ class role::htcondor_worker {
     custom_job_attributes     => $merged_job_attributes,
   }
 
-  unless $start_jobs {
+  if $start_jobs {
+    file {'/etc/condor/config.d/999_off.config':
+      ensure  => 'absent',
+      notify  => Exec['/usr/sbin/condor_reconfig'],
+    }
+  } else {
     file {'/etc/condor/config.d/999_off.config':
       ensure  => 'present',
       content => 'START = !isUndefined(TARGET.MAGIC)',
