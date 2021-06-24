@@ -56,6 +56,16 @@ class role::htcondor_worker {
 
   class {'::singularity': }
 
+  file { '/etc/singularity':
+    ensure => 'directory',
+  }
+
+  file { '/usr/bin/singularity':
+    ensure => 'link',
+    target => '/cvmfs/oasis.opensciencegrid.org/mis/singularity/bin/singularity',
+  }
+
+
   file {'/etc/condor/singularity_wrapper':
     ensure => present,
     mode   => '0755',

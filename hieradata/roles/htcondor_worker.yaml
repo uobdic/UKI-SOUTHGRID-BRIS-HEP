@@ -35,7 +35,7 @@ htcondor::singularity_bind_paths:
   - /condor/condor
   - /opt
 
-singularity::package_ensure: present
+singularity::package_ensure: absent
 singularity::package_name: singularity-runtime
 singularity::manage_epel: false
 # singularity::config_path: /etc/singularity/singularity.conf
