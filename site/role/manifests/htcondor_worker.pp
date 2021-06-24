@@ -61,8 +61,7 @@ class role::htcondor_worker {
   }
 
   file { '/usr/bin/singularity':
-    ensure => 'link',
-    target => '/cvmfs/oasis.opensciencegrid.org/mis/singularity/bin/singularity',
+    ensure => 'absent',
   }
 
 
@@ -70,6 +69,11 @@ class role::htcondor_worker {
     ensure => present,
     mode   => '0755',
     source => "puppet:///modules/${module_name}/etc/condor/singularity_wrapper",
+  }
+
+  file {'/etc/profile.d/00_grid.sh':
+    ensure => present,
+    source => "puppet:///modules/${module_name}/etc/profile.d/00_grid.sh",
   }
 
   # SSSD for docker jobs
