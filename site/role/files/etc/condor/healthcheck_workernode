@@ -111,7 +111,7 @@ def check_memory():
 
 def _report_and_exit(msg, status):
     print("NODE_IS_HEALTHY =", status)
-    print("NODE_STATUS =", msg)
+    print("NODE_STATUS = \"{0}\"".format(msg))
 
     exit_code = int(not status)  # 0 if OK, 1 if not
     sys.exit(exit_code)
