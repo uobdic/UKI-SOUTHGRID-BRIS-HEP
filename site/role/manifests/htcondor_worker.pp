@@ -2,7 +2,6 @@ class role::htcondor_worker {
   $custom_machine_attributes = lookup('htcondor::custom_machine_attributes', Hash, deep, {})
   $custom_job_attributes     = lookup('htcondor::custom_job_attributes', Hash, deep, {})
   $start_jobs                = lookup('htcondor::start_jobs', undef, undef, true)
-  $no_ce01_jobs                = lookup('htcondor::no_ce01_jobs', undef, undef, false)
 
 
   $site_machine_attributes   = {
@@ -36,14 +35,6 @@ class role::htcondor_worker {
     file {'/etc/condor/config.d/999_off.config':
       ensure  => 'present',
       content => 'START = !isUndefined(TARGET.MAGIC)',
-      notify  => Exec['/usr/sbin/condor_reconfig'],
-    }
-  }
-
-  if $no_ce01_jobs {
-    file {'/etc/condor/config.d/990_no_ce01_jobs.config':
-      ensure  => 'present',
-      content => 'START = NordugridQueue =!= "gridAMD"',
       notify  => Exec['/usr/sbin/condor_reconfig'],
     }
   }
