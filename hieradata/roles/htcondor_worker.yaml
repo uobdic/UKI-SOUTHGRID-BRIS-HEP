@@ -22,7 +22,7 @@ htcondor::use_pid_namespaces: true
 htcondor::enable_healthcheck: true
 htcondor::healthcheck_path: /etc/condor/healthcheck_workernode
 htcondor::healthcheck_period: "10m"
-htcondor::healthcheck_script: "puppet:///modules/site/role/etc/condor/healthcheck_workernode"
+htcondor::healthcheck_script: "puppet:///modules/role/etc/condor/healthcheck_workernode"
 
 htcondor::use_singularity: true
 htcondor::singularity_image_expr: 'TARGET.SingularityImage'
