@@ -19,6 +19,10 @@ htcondor::is_worker: true
 htcondor::enable_cgroup: true
 htcondor::use_pid_namespaces: true
 
+htcondor::enable_healthcheck: true
+htcondor::healthcheck_path: /etc/condor/healthcheck_workernode
+htcondor::healthcheck_period: "10m"
+
 htcondor::use_singularity: true
 htcondor::singularity_image_expr: 'TARGET.SingularityImage'
 htcondor::force_singularity_jobs: '!isUndefined(TARGET.SingularityImage)'

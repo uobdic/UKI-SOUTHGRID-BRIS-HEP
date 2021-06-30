@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+from __future__ import print_function
+import logging
+import os
+import sys
+
+
+LOG_FILE = "/var/log/condor/healthcheck_workernode.log"
+SINGULARITY_CONFIG = "/etc/singularity/singularity.conf"
+logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG)
+
+
+def _singularity_bind_paths(config_path):
+    bind_paths = []
+    with open(config_path, "r") as f:
+        for line in f.readlines():
+            if line.startswith('bind path'):
+                path = line.split('=')[-1]
+                path = path.strip()
+                bind_paths.append(path)
+    return bind_paths
+
+
+def _check_path(path):
+    is_good = os.path.exists(path)
+    if os.path.isdir(path):
+        number_of_files = len(os.listdir(path))
+        # no empty directories allowed
+        is_good = is_good and number_of_files > 0
+    return is_good
+
+
+def check_singularity_bind_paths():
+    global SINGULARITY_CONFIG
+    singularity_bind_paths = _singularity_bind_paths(SINGULARITY_CONFIG)
+    check_paths = []
+    for path in singularity_bind_paths:
+        is_good = _check_path(path)
+        check_paths.append(is_good)
+        if not is_good:
+            logging.error("Path %s is not good", path)
+    return all(check_paths)
+
+
+def _report_and_exit(msg, status):
+    print("NODE_IS_HEALTHY =", status)
+    print("NODE_STATUS =", msg)
+
+    exit_code = int(not status)  # 0 if OK, 1 if not
+    sys.exit(exit_code)
+
+
+def main():
+    health_msg = "All OK"
+    health_status = True
+
+    singularity_checks = check_singularity_bind_paths()
+    if not singularity_checks:
+        health_msg = "Not all singularity bind paths are OK."
+        health_status = False
+
+    _report_and_exit(health_msg, health_status)
+
+
+if __name__ == "__main__":
+    main()
