@@ -71,11 +71,11 @@ class role::htcondor_worker {
     source => "puppet:///modules/${module_name}/etc/condor/singularity_wrapper",
   }
 
-  file {'/etc/condor/healthcheck_workernode':
-    ensure => present,
-    mode   => '0755',
-    source => "puppet:///modules/${module_name}/etc/condor/healthcheck_workernode",
-  }
+  # file {'/etc/condor/healthcheck_workernode':
+  #   ensure => present,
+  #   mode   => '0755',
+  #   source => "puppet:///modules/${module_name}/etc/condor/healthcheck_workernode",
+  # }
 
   file {'/etc/profile.d/00_grid.sh':
     ensure => present,
