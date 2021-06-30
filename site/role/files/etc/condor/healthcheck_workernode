@@ -3,6 +3,7 @@ from __future__ import division, print_function
 import logging
 import multiprocessing
 import os
+import subprocess
 import sys
 
 
@@ -45,7 +46,21 @@ def check_singularity_bind_paths():
 
 
 def check_unprivileged_namespaces():
-    return True
+    command = [
+        "/cvmfs/oasis.opensciencegrid.org/mis/singularity/bin/singularity",
+        "exec", "--contain", "--ipc", "--pid", "--bind", "/cvmfs",
+        "/cvmfs/singularity.opensciencegrid.org/opensciencegrid/osgvo-el7:latest",
+        "ps", "-ef"
+    ]
+    process = subprocess.Popen(
+        command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate()
+    return_code = process.returncode
+    is_good = return_code == 0
+    if not is_good:
+        logging.error("Cannot execute singularity: \n %s \n %s",
+                      stdout, stderr)
+    return is_good
 
 
 def check_load():
