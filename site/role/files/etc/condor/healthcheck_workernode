@@ -7,15 +7,29 @@ import subprocess
 import sys
 
 
+
 LOG_FILE = "/var/log/condor/healthcheck_workernode.log"
 SINGULARITY_CONFIG = "/etc/singularity/singularity.conf"
-logging.basicConfig(
-    filename=LOG_FILE,
-    level=logging.DEBUG,
-    format="%(asctime)s | [%(levelname)s] %(message)s",
+
+logger = logging.getLogger(__file__)
+logger.setLevel(logging.DEBUG)
+formatter = logging.Formatter(
+    '%(asctime)s | [%(levelname)s] %(message)s',
     datefmt="%Y/%m/%d %H:%M:%S"
 )
 
+condor_log = logging.FileHandler(LOG_FILE)
+condor_log.setLevel(logging.DEBUG)
+condor_log.setFormatter(formatter)
+logger.addHandler(condor_log)
+
+syslog = logging.handlers.SysLogHandler(
+    address='/dev/log',
+    facility=logging.handlers.SysLogHandler.LOG_DAEMON,
+)
+syslog.setLevel(logging.ERROR)
+syslog.setFormatter(formatter)
+logger.addHandler(syslog)
 
 def _singularity_bind_paths(config_path):
     bind_paths = []
@@ -38,15 +52,15 @@ def _check_path(path):
 
 
 def check_singularity_bind_paths():
-    global SINGULARITY_CONFIG
+    global SINGULARITY_CONFIG, logger
     singularity_bind_paths = _singularity_bind_paths(SINGULARITY_CONFIG)
     check_paths = []
     for path in singularity_bind_paths:
         is_good = _check_path(path)
         check_paths.append(is_good)
-        logging.debug("Path %s passes tests: %s", path, is_good)
+        logger.debug("Path %s passes tests: %s", path, is_good)
         if not is_good:
-            logging.error("Path %s is not good", path)
+            logger.error("Path %s is not good", path)
     return all(check_paths)
 
 
@@ -63,7 +77,7 @@ def check_unprivileged_namespaces():
     return_code = process.returncode
     is_good = return_code == 0
     if not is_good:
-        logging.error("Cannot execute singularity: \n %s \n %s",
+        logger.error("Cannot execute singularity: \n %s \n %s",
                       stdout, stderr)
     return is_good
 
@@ -72,10 +86,9 @@ def check_load():
     cpu_count = multiprocessing.cpu_count()
     load = sum(os.getloadavg()) / 3
     is_good = cpu_count > load
-    logging.debug("Checking System load (%f) and CPU count (%d)",
-                  load, cpu_count)
+    logger.debug("Checking System load (%f) and CPU count (%d)", load, cpu_count)
     if not is_good:
-        logging.warning(
+        logger.error(
             "System load (%f) is higher than CPU count (%d)", load, cpu_count)
     return cpu_count > load
 
@@ -108,7 +121,7 @@ def check_memory():
 
     is_good = mem_free_GB > 0.1  # at least 100 MB free
     if not is_good:
-        logging.warning(
+        logger.warning(
             "Only %f out of %f GB of RAM left", mem_free_GB, mem_total_GB)
 
     return is_good
