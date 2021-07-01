@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 from __future__ import division, print_function
 import logging
+import logging.handlers
 import multiprocessing
 import os
+import pwd
 import subprocess
 import sys
-
 
 
 LOG_FILE = "/var/log/condor/healthcheck_workernode.log"
@@ -31,6 +32,7 @@ syslog.setLevel(logging.ERROR)
 syslog.setFormatter(formatter)
 logger.addHandler(syslog)
 
+
 def _singularity_bind_paths(config_path):
     bind_paths = []
     with open(config_path, "r") as f:
@@ -42,8 +44,50 @@ def _singularity_bind_paths(config_path):
     return bind_paths
 
 
+def _check_cvmfs():
+    paths = [
+        'cms.cern.ch',
+        'grid.cern.ch',
+        # 'lhcb.cern.ch',
+        'lz.opensciencegrid.org',
+        'oasis.opensciencegrid.org',
+        'sft.cern.ch',
+        'singularity.opensciencegrid.org'
+    ]
+    results = []
+    for path in paths:
+        full_path = os.path.join('/cvmfs', path)
+        exists = os.path.exists(full_path)
+        if not exists:
+            logger.error('Cannot access %s', full_path)
+        logger.debug('Path %s passes tests: %s', full_path, exists)
+        results.append(exists)
+    return all(results)
+
+
+def _check_condor_workdir():
+    path = '/condor/condor'
+    exists = os.path.exists(path)
+    if not exists:
+        logger.error('Path %s does not exist!', path)
+    owner = pwd.getpwuid(os.stat(path).st_uid).pw_name
+    correct_owner = owner == 'condor'
+    if not correct_owner:
+        logger.error('Path %s should be owned by "condor" but is owned by "%s"', path, owner)
+    return exists and correct_owner
+
+
+path_exceptions = {
+    '/cvmfs': _check_cvmfs,
+    '/condor/condor': _check_condor_workdir,
+}
+
+
 def _check_path(path):
     is_good = os.path.exists(path)
+    if path in path_exceptions:
+        return path_exceptions[path]()
+
     if os.path.isdir(path):
         number_of_files = len(os.listdir(path))
         # no empty directories allowed
@@ -78,7 +122,7 @@ def check_unprivileged_namespaces():
     is_good = return_code == 0
     if not is_good:
         logger.error("Cannot execute singularity: \n %s \n %s",
-                      stdout, stderr)
+                     stdout, stderr)
     return is_good
 
 
