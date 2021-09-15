@@ -1,31 +1,31 @@
-class profile::firewall::xrootdse {
-  firewall { '950 allow xrootd':
+class profile::firewall::xrootd_gateway {
+  firewall { '940 allow xrootd':
     state    => 'NEW',
     proto    => 'tcp',
     dport    => '1094',
     action   => 'accept',
   }
-  firewall { '951 allow xrootd':
+  firewall { '941 allow xrootd':
     state    => 'NEW',
     proto    => 'tcp',
-    dport    => '114',
+    dport    => '1194',
     action   => 'accept',
   }
-  firewall { '960 allow https':
+  firewall { '940 allow https':
     state    => 'NEW',
     proto    => 'tcp',
     dport    => '443',
     action   => 'accept',
   }
   # IPv6
-  firewall { '950 allow xrootd':
+  firewall { '960 allow xrootd':
     state    => 'NEW',
     proto    => 'tcp',
     dport    => '1094',
     action   => 'accept',
     provider => 'ip6tables',
   }
-  firewall { '951 allow xrootd':
+  firewall { '961 allow xrootd':
     state    => 'NEW',
     proto    => 'tcp',
     dport    => '1194',
