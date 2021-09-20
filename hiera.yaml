@@ -12,6 +12,7 @@ hierarchy:
       - "nodes/%{::trusted.certname}.yaml"
       - "firewall/%{::node_info.firewall}.yaml"
       - "users/%{::node_info.users}.yaml"
+      - "users/%{::node_info.service_accounts}.yaml"
   - name: "Top level public site settings"
     paths:
       - "virtual/%{::is_virtual}.yaml"

@@ -71,4 +71,4 @@ network::global::ipv6gateway: 2001:630:e4:2811::1
 network::global::ipv6networking: true
 
 site::node_info:
-  users: common
+  service_accounts: service_accounts
