@@ -69,3 +69,6 @@ network::global::gateway: 10.129.5.250
 # safe to enable here
 network::global::ipv6gateway: 2001:630:e4:2811::1
 network::global::ipv6networking: true
+
+site::node_info:
+  users: common
