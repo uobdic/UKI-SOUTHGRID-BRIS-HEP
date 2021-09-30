@@ -29,7 +29,7 @@ class profile::dmlite::hdfs::headnode {
   }
 
   include profile::firewall::dmlite_headnode
-  include profile::dmlite::vo_support
+  # include profile::dmlite::vo_support
 
   #
   # DPM and DPNS daemon configuration.

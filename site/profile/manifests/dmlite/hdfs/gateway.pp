@@ -17,7 +17,7 @@ class profile::dmlite::hdfs::gateway {
   $hdfs_replication = 2
 
   include profile::firewall::dmlite_gateway
-  include profile::dmlite::vo_support
+  # include profile::dmlite::vo_support
 
   # lcgdm configuration.
   #
