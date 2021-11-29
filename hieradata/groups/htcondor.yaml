@@ -16,6 +16,8 @@ htcondor::schedulers:
   - soolin.dice.priv
   - sc00.dice.priv
   - sc01.dice.priv
+  - hm00.dice.priv
+  - hm01.dice.priv
 
 htcondor::workers:
   - '*.dice.priv'
