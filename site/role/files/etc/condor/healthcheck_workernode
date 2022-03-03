@@ -24,6 +24,7 @@ condor_log.setLevel(logging.DEBUG)
 condor_log.setFormatter(formatter)
 logger.addHandler(condor_log)
 
+# TODO: rotate once a week, keep 52 backups
 syslog = logging.handlers.SysLogHandler(
     address='/dev/log',
     facility=logging.handlers.SysLogHandler.LOG_DAEMON,
@@ -84,6 +85,7 @@ path_exceptions = {
 
 
 def _check_path(path):
+    # TODO: should be set to false if it times out
     is_good = os.path.exists(path)
     if path in path_exceptions:
         return path_exceptions[path]()
