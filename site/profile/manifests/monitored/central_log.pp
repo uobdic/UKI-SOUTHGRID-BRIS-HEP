@@ -7,15 +7,18 @@ class profile::monitored::central_log {
 
   unless $is_central_log {
     file { '/etc/rsyslog.d/central.conf':
+      ensure => 'absent',
+    }
+    file { '/etc/rsyslog.d/01_central.conf':
       ensure  => 'present',
-      content => template("${module_name}/central.conf.erb"),
+      content => template("${module_name}/etc/rsyslog.d/01_central.conf.erb"),
       mode    => '0644',
       notify  => Service['rsyslog'],
     }
 
     file { '/etc/rsyslog.conf':
       ensure => 'present',
-      source => "puppet:///modules/${module_name}/rsyslog.conf",
+      source => "puppet:///modules/${module_name}/etc/rsyslog.conf",
       mode   => '0644',
       notify => Service['rsyslog'],
     }
