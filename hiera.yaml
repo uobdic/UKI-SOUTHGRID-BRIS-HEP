@@ -16,13 +16,13 @@ hierarchy:
   - name: "Top level public site settings"
     paths:
       - "virtual/%{::is_virtual}.yaml"
-      - "cluster/%{::node_info.cluster}.yaml"
       - "generation/%{::node_info.generation}.yaml"
       - "groups/%{::node_info.group}.yaml"
       - "roles/%{::node_info.role}.yaml"
   - name: "Common private site settings"
     datadir: modules/site_private/hieradata
     paths:
+      - "cluster/%{::node_info.cluster}.yaml"
       - common.yaml
   - name: 'Secrets'
     datadir: modules/site_private/hieradata
