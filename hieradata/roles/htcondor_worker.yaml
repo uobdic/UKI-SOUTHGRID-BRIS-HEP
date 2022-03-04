@@ -6,12 +6,6 @@ classes:
   - 'profile::voenv'
   - profile::cgroups
 
-# packages_to_install:
-#   - HEP_OSlibs_SL6
-#   - cmake
-#   - gcc-gfortran
-#   - git
-
 site::node_info:
   firewall: worker_node
 
