@@ -5,7 +5,11 @@ class profile::base {
   $packages_to_install = lookup('profile::default::packages_to_install', Array[String], 'unique', [])
   $packages_to_remove  = lookup('profile::default::packages_to_remove', Array[String], 'unique', [])
 
+  # to be used for packages that need to be added to specific nodes/profiles/roles
+  $extra_packages_to_install = lookup('profile::extra::packages_to_install', Array[String], 'deep', [])
+
   package { $packages_to_install: ensure => 'present', }
+  package { $extra_packages_to_install: ensure => 'present', }
 
   package { $packages_to_remove: ensure => 'absent', }
 
