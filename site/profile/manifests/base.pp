@@ -2,8 +2,8 @@
 class profile::base {
   class { '::ntp': }
 
-  $packages_to_install = lookup('packages_to_install', Array[String], 'unique', [])
-  $packages_to_remove  = lookup('packages_to_remove', Array[String], 'unique', [])
+  $packages_to_install = lookup('profile::default::packages_to_install', Array[String], 'unique', [])
+  $packages_to_remove  = lookup('profile::default::packages_to_remove', Array[String], 'unique', [])
 
   package { $packages_to_install: ensure => 'present', }
 
