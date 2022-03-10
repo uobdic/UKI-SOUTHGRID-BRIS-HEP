@@ -35,6 +35,7 @@ mod 'razorsedge/network',
 
 mod 'erwbgy/limits', :latest
 mod 'thias/tuned', :latest
+mod 'puppet-rsyslog', '5.2.0'
 #mod 'account',
 #  :git => 'https://github.com/torrancew/puppet-account.git',
 #  :ref => 'develop'
