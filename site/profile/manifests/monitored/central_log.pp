@@ -6,30 +6,15 @@ class profile::monitored::central_log {
   $::ipaddress)
 
   unless $is_central_log {
-    # include rsyslog::config
-    # remove obsolete config
-    file { '/etc/rsyslog.d/central.conf':
+    # remove obsolete configs
+    file { [
+              '/etc/rsyslog.d/central.conf',
+              '/etc/rsyslog.d/00_docker.conf',
+              '/etc/rsyslog.d/10_local.conf',
+              '/etc/rsyslog.d/20_dice.conf',
+              '/etc/rsyslog.d/99_it_services.conf'
+          ]:
       ensure => 'absent',
-    }
-
-    # local logging
-    file { '/etc/rsyslog.d/10_local.conf':
-      ensure => 'absent',
-    }
-
-    # remote DICE logging
-    unless empty($central_log)
-    {
-      file { '/etc/rsyslog.d/20_dice.conf':
-        ensure => 'absent',
-      }
-    }
-
-    # remote IT logging
-    unless empty($it_services_log) {
-      file { '/etc/rsyslog.d/99_it_services.conf':
-        ensure  => 'absent',
-      }
     }
 
     file { '/etc/rsyslog.conf':
