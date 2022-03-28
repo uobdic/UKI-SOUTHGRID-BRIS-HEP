@@ -14,38 +14,29 @@ class profile::monitored::central_log {
 
     # local logging
     file { '/etc/rsyslog.d/10_local.conf':
-      ensure => 'present',
-      source => "puppet:///modules/${module_name}/etc/rsyslog.d/10_local.conf",
-      mode   => '0644',
-      notify => Service['rsyslog'],
+      ensure => 'absent',
     }
 
     # remote DICE logging
     unless empty($central_log)
     {
       file { '/etc/rsyslog.d/20_dice.conf':
-        ensure  => 'present',
-        content => template("${module_name}/etc/rsyslog.d/20_dice.conf.erb"),
-        mode    => '0644',
-        notify  => Service['rsyslog'],
+        ensure => 'absent',
       }
     }
 
     # remote IT logging
     unless empty($it_services_log) {
       file { '/etc/rsyslog.d/99_it_services.conf':
-        ensure  => 'present',
-        content => template("${module_name}/etc/rsyslog.d/99_it_services.conf.erb"),
-        mode    => '0644',
-        notify  => Service['rsyslog'],
+        ensure  => 'absent',
       }
     }
 
     file { '/etc/rsyslog.conf':
-      ensure => 'present',
-      source => "puppet:///modules/${module_name}/etc/rsyslog.conf",
-      mode   => '0644',
-      notify => Service['rsyslog'],
+      ensure  => 'present',
+      content => template("${module_name}/etc/rsyslog.conf.erb"),
+      mode    => '0644',
+      notify  => Service['rsyslog'],
     }
   }
 

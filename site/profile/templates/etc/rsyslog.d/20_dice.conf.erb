@@ -7,9 +7,9 @@ $template sysklogd,"<%%PRI%>%TIMESTAMP% %syslogtag%%msg%"
 <% end %>
 
 # The authpriv file has restricted access.
-if ( $syslogfacility-text == "auth" or $syslogfacility-text == "authpriv" ) then {
+<%# if ( $syslogfacility-text == "auth" or $syslogfacility-text == "authpriv" ) then {
     action(type="omfile" file="/var/log/secure")
-}
+} %>
 
 # Log anything (except mail) of level info or higher.
 # Don't log private authentication messages!
