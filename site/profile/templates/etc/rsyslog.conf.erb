@@ -33,6 +33,12 @@ $IncludeConfig /etc/rsyslog.d/*.conf
 
 #### RULES ####
 
+:msg, contains, "docker0: port" stop
+
+:msg, contains, "containerd" stop
+
+:msg, contains, "veth" stop
+
 # Log all kernel messages to the console.
 # Logging much else clutters up the screen.
 #kern.*                                                 /dev/console
