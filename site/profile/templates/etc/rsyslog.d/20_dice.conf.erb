@@ -1,15 +1,7 @@
-$WorkDirectory /var/lib/rsyslog    # where to place spool files
-$ActionQueueFileName queue      # unique name prefix for spool files
-$ActionQueueMaxDiskSpace 0.05g     # spool space limit (use as much as possible)
-$ActionQueueSaveOnShutdown on   # save messages to disk on shutdown
-$ActionQueueType LinkedList     # run asynchronously
-$ActionResumeRetryCount -1      # infinety retries if host is down
-# Using specified format for default logging format:
-$ActionFileDefaultTemplate RSYSLOG_FileFormat
-
-# Central sysloging configuration
-<% if @it_services_log -%>
-<% @it_services_log.each do |c| -%>
+$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
+$template sysklogd,"<%%PRI%>%TIMESTAMP% %syslogtag%%msg%"
+<% if @central_log -%>
+<% @central_log.each do |c| -%>
 *.* @<%= c %>
 <% end %>
 <% end %>
