@@ -13,6 +13,7 @@ mod 'puppetlabs/firewall', :latest
 mod 'puppetlabs/inifile', :latest
 mod 'puppetlabs/mysql', :latest
 mod 'puppetlabs/ntp', :latest
+mod 'puppet-chrony', '2.3.0'
 mod 'puppet-selinux', '1.5.2'
 mod 'puppetlabs/stdlib', :latest
 mod 'puppetlabs/tftp', :latest

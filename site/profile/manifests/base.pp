@@ -1,6 +1,14 @@
 # the base profile should include component modules that will be on all nodes
 class profile::base {
-  class { '::ntp': }
+  if $::facts['os']['release']['major'] == '8' {
+    # RHEL 8
+    class { '::chrony':
+      servers => $ntp::servers,
+    }
+  } else {
+    # RHEL 7
+    class { '::ntp': }
+  }
 
   $packages_to_install = lookup('profile::default::packages_to_install', Array[String], 'unique', [])
   $packages_to_remove  = lookup('profile::default::packages_to_remove', Array[String], 'unique', [])
