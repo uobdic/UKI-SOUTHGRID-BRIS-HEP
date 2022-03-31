@@ -2,8 +2,9 @@
 class profile::base {
   if $::facts['os']['release']['major'] == '8' {
     # RHEL 8
+    $chrony_servers = lookup('ntp::servers', Array, 'first', [])
     class { '::chrony':
-      servers => $ntp::servers,
+      servers => $chrony_servers,
     }
   } else {
     # RHEL 7
