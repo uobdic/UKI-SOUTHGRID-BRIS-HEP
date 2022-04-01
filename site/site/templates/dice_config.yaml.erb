@@ -1,11 +1,8 @@
 ---
 <% if @dice -%>
-<% if @dice.key?('hdfs') -%>
-hdfs:
-<% info = @dice['hdfs'].to_yaml.split("\n") -%>
+<% info = @dice.to_yaml.split("\n") -%>
 <% info.drop(1).each do |line| -%>
-  <%= line %>
-<% end -%>
+<%= line %>
 <% end -%>
 <% end -%>
 
