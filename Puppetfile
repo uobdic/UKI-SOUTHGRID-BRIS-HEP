@@ -31,8 +31,8 @@ mod 'crayfishx/firewalld', '3.1.8'
 #mod 'adrien/network', :latest
 # recommended by NetComms
 mod 'razorsedge/network',
-  :git => 'https://github.com/m4rx0/puppet-network.git',
-  :ref => 'feature/puppet-6'
+  :git => 'https://github.com/uobdic/puppet-network.git',
+  :ref => 'feature/centos8'
 
 mod 'erwbgy/limits', :latest
 mod 'thias/tuned', :latest
