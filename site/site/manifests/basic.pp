@@ -2,7 +2,11 @@
 class site::basic {
   $node_info = lookup('site::node_info', Hash, deep, {} )
   $site_info = lookup('site::site_info', Hash, deep, {} )
+  # TODO: all DICE parts will be in a separate puppet module
   $dice = lookup('dice', Hash, deep, {} )
+  $dice_computing_grid = lookup('dice::computing_grid', Hash, deep, {} )
+  $dice_storage = lookup('dice::storage', Hash, deep, {} )
+  $dice_glossary = lookup('dice::glossary', Hash, deep, {} )
 
   # notify {'site::basic':
   #   message => "Applying site_info (${site_info}) and node_info (${node_info})"
