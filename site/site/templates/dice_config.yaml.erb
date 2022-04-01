@@ -1,0 +1,29 @@
+---
+<% if @dice -%>
+<% if @dice.key?('hdfs') -%>
+hdfs:
+<% info = @dice['hdfs'].to_yaml.split("\n") -%>
+<% info.drop(1).each do |line| -%>
+  <%= line %>
+<% end -%>
+<% end -%>
+<% end -%>
+
+<% if @site_info -%>
+site_info:
+<% info = @site_info.to_yaml.split("\n") -%>
+<% info.drop(1).each do |line| -%>
+  <%= line %>
+<% end -%>
+<% end %>
+
+<% if @node_info -%>
+node_info:
+<% info = @node_info.to_yaml.split("\n") -%>
+<% info.drop(1).each do |line| -%>
+  <%= line %>
+<% end -%>
+<% if @accounting_scale_factor -%>
+  accounting_scale_factor: <%=@accounting_scale_factor -%>
+<% end -%>
+<% end %>
