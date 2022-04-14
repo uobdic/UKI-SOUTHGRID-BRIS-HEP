@@ -1,5 +1,5 @@
 class profile::cvmfs {
-  $cvmfs_mounts     = $::site_info['cvmfs_mounts']
+  $cvmfs_mounts     = lookup('profile::cvmfs::mounts', Hash, deep, $::site_info['cvmfs_mounts'])
   $cvmfs_server_url = lookup('cvmfs::cvmfs_server_url')
 
   include cvmfs
