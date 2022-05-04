@@ -81,7 +81,7 @@ mod 'argus',
 # CERN OPS fork
 mod 'htcondor_ce',
   :git => 'https://github.com/kreczko/puppet-htcondor_ce',
-  :ref => 'kreczko-accounting'
+  :ref => 'CE_5.X_branch'
 
 # secondary control repo
 mod 'site_private',
