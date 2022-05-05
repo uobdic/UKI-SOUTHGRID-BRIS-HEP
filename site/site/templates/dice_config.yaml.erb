@@ -22,14 +22,6 @@ storage:
 <% end -%>
 <% end -%>
 
-<% if @dice_glossary -%>
-glossary:
-<% info = @dice_glossary.to_yaml.split("\n") -%>
-<% info.drop(1).each do |line| -%>
-  <%= line %>
-<% end -%>
-<% end -%>
-
 <% if @site_info -%>
 site_info:
 <% info = @site_info.to_yaml.split("\n") -%>
