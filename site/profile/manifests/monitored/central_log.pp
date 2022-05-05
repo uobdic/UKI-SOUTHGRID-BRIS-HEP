@@ -6,31 +6,22 @@ class profile::monitored::central_log {
   $::ipaddress)
 
   unless $is_central_log {
-    file { '/etc/rsyslog.d/central.conf':
+    # remove obsolete configs
+    file { [
+              '/etc/rsyslog.d/central.conf',
+              '/etc/rsyslog.d/00_docker.conf',
+              '/etc/rsyslog.d/10_local.conf',
+              '/etc/rsyslog.d/20_dice.conf',
+              '/etc/rsyslog.d/99_it_services.conf'
+          ]:
       ensure => 'absent',
     }
 
-    file { '/etc/rsyslog.d/01_dice.conf':
+    file { '/etc/rsyslog.conf':
       ensure  => 'present',
-      content => template("${module_name}/etc/rsyslog.d/01_dice.conf.erb"),
+      content => template("${module_name}/etc/rsyslog.conf.erb"),
       mode    => '0644',
       notify  => Service['rsyslog'],
-    }
-
-    unless empty($it_services_log) {
-      file { '/etc/rsyslog.d/99_it_services.conf':
-        ensure  => 'present',
-        content => template("${module_name}/etc/rsyslog.d/99_it_services.conf.erb"),
-        mode    => '0644',
-        notify  => Service['rsyslog'],
-      }
-    }
-
-    file { '/etc/rsyslog.conf':
-      ensure => 'present',
-      source => "puppet:///modules/${module_name}/etc/rsyslog.conf",
-      mode   => '0644',
-      notify => Service['rsyslog'],
     }
   }
 

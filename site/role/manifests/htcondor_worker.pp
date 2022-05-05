@@ -28,8 +28,8 @@ class role::htcondor_worker {
 
   if $start_jobs {
     file {'/etc/condor/config.d/999_off.config':
-      ensure  => 'absent',
-      notify  => Exec['/usr/sbin/condor_reconfig'],
+      ensure => 'absent',
+      notify => Exec['/usr/sbin/condor_reconfig'],
     }
   } else {
     file {'/etc/condor/config.d/999_off.config':
@@ -79,12 +79,6 @@ class role::htcondor_worker {
       ensure => present,
       mode   => '0644',
       source => "puppet:///modules/${module_name}/etc/condor/config.d/60_docker.config",
-    }
-
-    file {'/etc/rsyslog.d/00_docker.conf':
-      ensure => present,
-      mode   => '0644',
-      source => "puppet:///modules/${module_name}/etc/rsyslog.d/00_docker.conf",
     }
 
     package{'sssd':
