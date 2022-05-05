@@ -17,8 +17,14 @@ class profile::base {
   # to be used for packages that need to be added to specific nodes/profiles/roles
   $extra_packages_to_install = lookup('profile::extra::packages_to_install', Array[String], 'deep', [])
 
-  package { $packages_to_install: ensure => 'present', }
-  package { $extra_packages_to_install: ensure => 'present', }
+  package { $packages_to_install:
+    ensure          => 'present',
+    install_options => '--enablerepo=epel',
+  }
+  package { $extra_packages_to_install:
+    ensure          => 'present',
+    install_options => '--enablerepo=epel',
+  }
 
   package { $packages_to_remove: ensure => 'absent', }
 
