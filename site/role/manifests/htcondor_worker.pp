@@ -85,10 +85,17 @@ class role::htcondor_worker {
       ensure => present,
     }
 
+    file{'/etc/sssd/sssd.conf':
+      ensure  => present,
+      mode    => '0644',
+      source  => "puppet:///modules/${module_name}/etc/sssd/sssd.conf",
+      require => Package['sssd'],
+    }
+
     service{'sssd':
       ensure  => running,
       enable  => true,
-      require => Package['sssd'],
+      require => [Package['sssd'], File['/etc/sssd/sssd.conf']],
     }
   }
 
