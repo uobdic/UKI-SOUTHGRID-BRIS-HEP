@@ -6,6 +6,12 @@ class profile::monitored::central_log {
   $::ipaddress)
 
   unless $is_central_log {
+    file {'/etc/rsyslog.d':
+      ensure => 'directory',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
+    }
     # remove obsolete configs
     file { [
               '/etc/rsyslog.d/central.conf',

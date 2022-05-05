@@ -5,11 +5,16 @@ class profile::monitored::ganglia {
   $ganglia_cluster_name  = lookup('profile::monitored::ganglia_cluster_name', undef, undef, 'unknown')
   $ganglia_use_multicast = lookup('profile::monitored::ganglia_use_multicast', undef, undef, false)
 
+  if $::facts['os']['release']['major'] == '8' {
+    $ganglia_python_package = 'python3-ganglia-gmond'
+  } else {
+    $ganglia_python_package = 'ganglia-gmond-python'
+  }
   if $ganglia_cluster_name == 'unknown' {
 
   }
   elsif $ganglia_cluster_name == 'DICE' {
-    $ganglia_packages      = ['ganglia-gmond-python', 'ganglia', 'ganglia-gmond']
+    $ganglia_packages      = [$ganglia_python_package, 'ganglia', 'ganglia-gmond']
     $version = 'installed'
     package { $ganglia_packages:
       ensure          => $version,
