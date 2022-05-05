@@ -6,6 +6,3 @@ site::node_info:
 
 # this node has HT enabled and we only want to use the number of real cores
 htcondor::number_of_cpus: 12
-
-classes:
-  - cbsensor
