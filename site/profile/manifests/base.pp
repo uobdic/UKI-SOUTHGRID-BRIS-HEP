@@ -11,6 +11,11 @@ class profile::base {
     class { '::ntp': }
   }
 
+  $disable_cbsensor = lookup('profile::base::disable_cbsensor', Boolean, false)
+  unless $disable_cbsensor {
+    class { '::cbsensor': }
+  }
+
   $packages_to_install = lookup('profile::default::packages_to_install', Array[String], 'unique', [])
   $packages_to_remove  = lookup('profile::default::packages_to_remove', Array[String], 'unique', [])
 

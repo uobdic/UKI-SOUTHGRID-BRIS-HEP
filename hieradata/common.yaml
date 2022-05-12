@@ -4,7 +4,6 @@ classes:
  - site::basic
  - 'profile::base'
  - 'profile::monitored'
- - cbsensor
 # - 'profile::firewall::setup'
 
 ntp::enable: true
