@@ -11,7 +11,7 @@ class profile::base {
     class { '::ntp': }
   }
 
-  $disable_cbsensor = lookup('profile::base::disable_cbsensor', Boolean, false)
+  $disable_cbsensor = lookup('profile::base::disable_cbsensor', Boolean, undef, false)
   unless $disable_cbsensor {
     class { '::cbsensor': }
   }
