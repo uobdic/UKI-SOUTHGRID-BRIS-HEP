@@ -34,14 +34,6 @@ class profile::firewall::pre {
     provider => 'ip6tables',
   }
 
-  firewall { '0002 reject local traffic not on loopback interface':
-    iniface     => '! lo',
-    proto       => 'all',
-    destination => '127.0.0.1/8',
-    action      => 'reject',
-    provider    => 'ip6tables',
-  }
-
   firewall { '0003 accept related established rules':
     proto    => 'all',
     state    => ['RELATED', 'ESTABLISHED'],
