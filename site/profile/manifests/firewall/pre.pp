@@ -34,6 +34,13 @@ class profile::firewall::pre {
     provider => 'ip6tables',
   }
 
+  firewall { '003 accept related established rules':
+    proto    => 'all',
+    state    => ['RELATED', 'ESTABLISHED'],
+    action   => 'accept',
+  }
+
+
   firewall { '0003 accept related established rules':
     proto    => 'all',
     state    => ['RELATED', 'ESTABLISHED'],
