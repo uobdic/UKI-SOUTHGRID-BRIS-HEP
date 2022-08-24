@@ -43,7 +43,7 @@ mod 'puppet-rsyslog', '5.2.0'
 
 # other
 mod 'mlocate',
-  :git => 'git@github.com:kreczko/puppet-mlocate.git'
+  :git => 'https://github.com/kreczko/puppet-mlocate.git'
 
 mod 'treydock-singularity', '1.0.0'
 mod 'stahnma-epel', '1.3.0'
