@@ -99,3 +99,5 @@ mod 'cbsensor',
   :git => 'git@gitlab.services.bris.ac.uk:services-operations-public/cbsensor.git',
   :tag => '3.1.0'
 
+# Docker services
+mod 'puppetlabs-docker', '5.0.0'
