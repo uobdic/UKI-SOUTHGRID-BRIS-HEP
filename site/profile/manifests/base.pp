@@ -1,7 +1,7 @@
 # the base profile should include component modules that will be on all nodes
 class profile::base {
-  if $::facts['os']['release']['major'] == '8' {
-    # RHEL 8
+  if member(['8', '9'], $::facts['os']['release']['major']) {
+    # RHEL 8 or 9
     $chrony_servers = lookup('ntp::servers', Array, 'first', [])
     class { '::chrony':
       servers => $chrony_servers,
