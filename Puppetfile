@@ -14,7 +14,7 @@ mod 'puppetlabs/inifile', :latest
 mod 'puppetlabs/mysql', :latest
 mod 'puppetlabs/ntp', :latest
 mod 'puppet-chrony', '2.3.0'
-mod 'puppet-selinux', '1.5.2'
+mod 'puppet/selinux', '3.3.1'
 mod 'puppetlabs/stdlib', :latest
 mod 'puppetlabs/tftp', :latest
 mod 'puppetlabs/xinetd', :latest
@@ -94,10 +94,36 @@ mod 'puppet-cron', '2.0.0'
 mod 'treydock-perfsonar', '0.6.1'
 mod 'jamtur01/httpauth', '0.0.6'
 
-# IT services
+# Docker services
+mod 'puppetlabs-docker', '5.0.0'
+
+## modules supported by UoB puppet-control
+# Cybersec
 mod 'cbsensor',
   :git => 'git@gitlab.services.bris.ac.uk:services-operations-public/cbsensor.git',
   :tag => '3.1.0'
+mod 'saz/sudo', '7.0.2' # newer version than in puppet-control
+mod 'saz/ssh', '9.0.0' # newer version than in puppet-control
+# Veeam backups
+mod 'SOP/veeam_restore_client',
+        :git    => 'https://gitlab.services.bris.ac.uk/services-operations-public/veeam_restore_client.git',
+        :tag    => '1.4.2'
 
-# Docker services
-mod 'puppetlabs-docker', '5.0.0'
+# mod 'puppetlabs-sshkeys_core', '2.3.0' # might be needed
+
+# to be enabled in part 2
+# mod 'SC/raidtools',
+#         :git    => 'https://gitlab.services.bris.ac.uk/sc-public/puppet-raidtools.git',
+#         :tag    => '0.2.0'
+
+# Local classifier module which uses hostname info where it can, plus hiera data
+# mod 'SOP/uob_classification',
+#         :git    => 'https://gitlab.services.bris.ac.uk/services-operations-public/uob_classification.git',
+#         :tag    => '4.0.0'
+
+# Forked camptocamp/dell until Dell API v5 work merged (https://github.com/camptocamp/puppet-dell/pull/87)
+# (Mirrored from github legooolas/puppet-dell repo)
+# mod 'SC/dell',
+#         :git    => 'https://gitlab.services.bris.ac.uk/sc-public/puppet-dell.git',
+#         :tag    => '1.2.2'
+
