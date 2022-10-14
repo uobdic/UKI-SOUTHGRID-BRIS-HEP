@@ -72,3 +72,5 @@ network::global::ipv6networking: true
 
 site::node_info:
   service_accounts: service_accounts
+
+cbsensor::version: "v7"
