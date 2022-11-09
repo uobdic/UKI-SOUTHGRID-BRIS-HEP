@@ -8,9 +8,10 @@ classes:
 
 ntp::enable: true
 ntp::servers:
-  - 137.222.8.25
-  - 137.222.8.26
-  - 137.222.9.26
+  - 137.222.36.2
+  - 137.222.36.3
+  - 137.222.1.46
+  - 137.222.180.8
 ntp::restrict:
   - "default nomodify notrap noquery"
   - "127.0.0.1"
