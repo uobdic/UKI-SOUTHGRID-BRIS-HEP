@@ -58,4 +58,11 @@ class profile::firewall::default_rules {
     action      => 'drop',
     destination => '224.0.0.1',
   }
+  
+  firewall { '400 allow Veeam restore help ports 2500-3300 137.222.9.43':
+    proto       => 'tcp',
+    action      => 'accept',
+    destination => '137.222.9.43/32',
+    dport       => '2500-3300',
+  }
 }
