@@ -65,4 +65,60 @@ class profile::firewall::default_rules {
     destination => '137.222.9.43/32',
     dport       => '2500-3300',
   }
+  
+   firewall { '400 allow Veeam restore help ports 2500-3300 172.26.5.15':
+    proto       => 'tcp',
+    action      => 'accept',
+    destination => '172.26.5.15/32',
+    dport       => '2500-3300',
+  }
+
+   firewall { '400 allow Veeam restore help ports 2500-3300 172.26.5.37':
+    proto       => 'tcp',
+    action      => 'accept',
+    destination => '172.26.5.37/32',
+    dport       => '2500-3300',
+  }
+  
+   firewall { '400 allow Veeam restore help ports 2500-3300 172.26.7.8':
+    proto       => 'tcp',
+    action      => 'accept',
+    destination => '172.26.7.8/32',
+    dport       => '2500-3300',
+  }
+  
+   firewall { '400 allow Veeam restore help ports 2500-3300 172.26.7.24':
+    proto       => 'tcp',
+    action      => 'accept',
+    destination => '172.26.7.24/32',
+    dport       => '2500-3300',
+  } 
+  
+ firewall { '400 allow Veeam restore help ports 2500-3300 172.27.5.16':
+    proto       => 'tcp',
+    action      => 'accept',
+    destination => '172.27.5.16/32',
+    dport       => '2500-3300',
+  } 
+ 
+  firewall { '400 allow Veeam restore help ports 2500-3300 172.27.5.18':
+    proto       => 'tcp',
+    action      => 'accept',
+    destination => '172.27.5.18/32',
+    dport       => '2500-3300',
+  } 
+  
+   firewall { '400 allow Veeam restore help ports 2500-3300 172.27.5.22':
+    proto       => 'tcp',
+    action      => 'accept',
+    destination => '172.27.5.22/32',
+    dport       => '2500-3300',
+  }   
+  
+   firewall { '400 allow Veeam restore help ports 2500-3300 172.27.7.2':
+    proto       => 'tcp',
+    action      => 'accept',
+    destination => '172.27.7.2/32',
+    dport       => '2500-3300',
+  }     
 }
