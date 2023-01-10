@@ -1,21 +1,16 @@
+# Firewall configuration for a DMLite Gateway
 class profile::firewall::xrootd_gateway {
   firewall { '940 allow xrootd':
-    state    => 'NEW',
-    proto    => 'tcp',
-    dport    => '1094',
-    action   => 'accept',
+    state  => 'NEW',
+    proto  => 'tcp',
+    dport  => '1094',
+    action => 'accept',
   }
   firewall { '941 allow xrootd':
-    state    => 'NEW',
-    proto    => 'tcp',
-    dport    => '1194',
-    action   => 'accept',
-  }
-  firewall { '940 allow https':
-    state    => 'NEW',
-    proto    => 'tcp',
-    dport    => '443',
-    action   => 'accept',
+    state  => 'NEW',
+    proto  => 'tcp',
+    dport  => '1194',
+    action => 'accept',
   }
   # IPv6
   firewall { '960 allow xrootd':
@@ -29,13 +24,6 @@ class profile::firewall::xrootd_gateway {
     state    => 'NEW',
     proto    => 'tcp',
     dport    => '1194',
-    action   => 'accept',
-    provider => 'ip6tables',
-  }
-  firewall { '960 allow https':
-    state    => 'NEW',
-    proto    => 'tcp',
-    dport    => '443',
     action   => 'accept',
     provider => 'ip6tables',
   }
