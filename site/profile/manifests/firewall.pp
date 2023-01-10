@@ -18,10 +18,12 @@ class profile::firewall {
 
   $drop_defaults   = {
     'action' => 'drop',
+    'proto' => 'all',
   }
   $drop_defaults_v6   = {
     'action' => 'drop',
     'provider' => 'ip6tables',
+    'proto' => 'all',
   }
 
   create_resources('firewall', $accept, $accept_defaults)
