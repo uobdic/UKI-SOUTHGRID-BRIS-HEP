@@ -9,7 +9,7 @@ mod 'puppetlabs-accounts', '5.0.0'
 mod 'puppetlabs/activemq', :latest
 mod 'puppetlabs/concat', :latest
 mod 'puppetlabs/dhcp', :latest
-mod 'puppetlabs/firewall', :latest
+mod 'puppetlabs-firewall', '3.6.0'
 mod 'puppetlabs/inifile', :latest
 mod 'puppetlabs/mysql', :latest
 mod 'puppetlabs/ntp', :latest
