@@ -1,3 +1,4 @@
+# firewall rules at the end of the chain
 class profile::firewall::post {
   # after pre, before custom rules
   firewall { '199 Reject anything else - IPv6':
@@ -42,5 +43,4 @@ class profile::firewall::post {
     before   => undef,
     provider => 'iptables',
   }
-
 }

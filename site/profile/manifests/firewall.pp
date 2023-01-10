@@ -13,7 +13,7 @@ class profile::firewall {
   }
   $accept_defaults_v6 = {
     'action' => 'accept',
-    'provider' => 'ip6tables'
+    'provider' => 'ip6tables',
   }
 
   $drop_defaults   = {
@@ -21,7 +21,7 @@ class profile::firewall {
   }
   $drop_defaults_v6   = {
     'action' => 'drop',
-    'provider' => 'ip6tables'
+    'provider' => 'ip6tables',
   }
 
   create_resources('firewall', $accept, $accept_defaults)
@@ -29,5 +29,4 @@ class profile::firewall {
 
   create_resources('firewall', $accept_v6, $accept_defaults_v6)
   create_resources('firewall', $drop_v6, $drop_defaults_v6)
-
 }
