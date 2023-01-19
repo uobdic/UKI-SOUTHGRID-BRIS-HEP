@@ -6,7 +6,6 @@ mod 'puppetlabs/apache', :latest
 #   :git => 'https://github.com/kreczko/puppetlabs-accounts.git',
 #   :ref => 'fixing-uid-and-gid'
 mod 'puppetlabs-accounts', '5.0.0'
-mod 'puppetlabs/activemq', :latest
 mod 'puppetlabs/concat', :latest
 mod 'puppetlabs/dhcp', :latest
 mod 'puppetlabs-firewall', '3.6.0'
@@ -22,7 +21,6 @@ mod 'puppetlabs/xinetd', :latest
 # community modules
 # mod 'Lavaburn/razor', :latest
 mod 'puppet/fetchcrl', :latest
-mod 'puppet/mcollective', :latest
 mod 'jhoblitt/mcelog', :latest
 mod 'jhoblitt/ipmi', '2.3.0'
 mod 'saz/memcached', :latest
@@ -75,8 +73,6 @@ mod 'CERNOps/cvmfs', :latest
 mod 'vosupport',
   :git => 'https://github.com/HEP-Puppet/puppet-vosupport',
   :ref => 'development'
-mod 'glexecwn',
-  :git => 'https://github.com/HEP-Puppet/puppet-glexecwn'
 mod 'argus',
   :git => 'https://github.com/cernops/puppet-argus'
 # CERN OPS fork
@@ -104,3 +100,7 @@ mod 'puppetlabs-docker', '5.0.0'
 
 mod 'puppet-archive', '6.1.1'
 mod 'puppet-prometheus', '12.4.0'
+mod 'puppet-systemd', '3.10.0'
+mod 'saz-sudo', '7.0.2'
+mod 'puppetlabs-reboot', '4.3.0'
+mod 'puppetlabs-apt', '8.5.0'
