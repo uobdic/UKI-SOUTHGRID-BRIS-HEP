@@ -44,6 +44,9 @@ mod 'mlocate',
   :git => 'https://github.com/kreczko/puppet-mlocate.git'
 
 mod 'treydock-singularity', '5.5.0'
+mod 'treydock-golang', '2.3.0'
+mod 'puppetlabs-yumrepo_core', '1.1.0'
+
 mod 'puppet-epel', '4.1.0'
 mod 'benformosa-linux_disable_ipv6', '0.1.1'
 
