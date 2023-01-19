@@ -101,3 +101,5 @@ mod 'cbsensor',
 
 # Docker services
 mod 'puppetlabs-docker', '5.0.0'
+
+mod 'puppet-prometheus', '12.4.0'

@@ -6,8 +6,10 @@ class profile::monitored {
     include ::profile::monitored::ganglia
   }
 
-  # next-gen monitoring
-  include ::profile::monitored::prometheus
+  if $next_gen_monitoring {
+    # next-gen monitoring
+    include ::profile::monitored::prometheus
+  }
 
   # smartd
   include ::profile::monitored::smartd
