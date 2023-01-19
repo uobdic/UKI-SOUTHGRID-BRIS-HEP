@@ -107,3 +107,8 @@ mod 'puppet-systemd', '3.10.0'
 mod 'saz-sudo', '7.0.2'
 mod 'puppetlabs-reboot', '4.3.0'
 mod 'puppetlabs-apt', '8.5.0'
+
+# Veeam
+mod 'veeam_restore_client',
+  :git => 'https://gitlab.services.bris.ac.uk/services-operations-public/veeam_restore_client.git',
+  :ref => '1.5.1'
