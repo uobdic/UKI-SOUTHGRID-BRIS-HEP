@@ -6,7 +6,7 @@ site::node_info:
 # common parameters
 htcondor::managers:
   - htc00.dice.priv
-  - htc01.dice.priv
+#  - htc01.dice.priv
 
 htcondor::schedulers:
   - lcgce01.phy.bris.ac.uk
