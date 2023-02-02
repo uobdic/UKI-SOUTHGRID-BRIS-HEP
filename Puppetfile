@@ -13,10 +13,11 @@ mod 'puppetlabs/inifile', :latest
 mod 'puppetlabs/mysql', :latest
 mod 'puppetlabs/ntp', :latest
 mod 'puppet-chrony', '2.3.0'
-mod 'puppet-selinux', '1.5.2'
+mod 'puppet-selinux', '3.4.1'
 mod 'puppetlabs/stdlib', :latest
 mod 'puppetlabs/tftp', :latest
 mod 'puppetlabs/xinetd', :latest
+mod 'puppetlabs-motd', '6.3.0'
 
 # community modules
 # mod 'Lavaburn/razor', :latest
@@ -24,7 +25,7 @@ mod 'puppet/fetchcrl', :latest
 mod 'jhoblitt/mcelog', :latest
 mod 'jhoblitt/ipmi', '2.3.0'
 mod 'saz/memcached', :latest
-mod 'crayfishx/firewalld', '3.1.8'
+mod 'puppet-firewalld', '4.5.1'
 # voxpupuli, see https://wikis.bris.ac.uk/display/BristolT2/Puppet+modules#Puppetmodules-Network
 #mod 'adrien/network', :latest
 # recommended by NetComms
@@ -102,9 +103,9 @@ mod 'cbsensor',
 mod 'puppetlabs-docker', '5.0.0'
 
 mod 'puppet-archive', '6.1.1'
-mod 'puppet-prometheus', '12.4.0'
 mod 'puppet-systemd', '3.10.0'
-mod 'saz-sudo', '7.0.2'
+mod 'saz-sudo', '7.0.2' # newer version than in puppet-control
+mod 'saz/ssh', '9.0.0' # newer version than in puppet-control
 mod 'puppetlabs-reboot', '4.3.0'
 mod 'puppetlabs-apt', '8.5.0'
 
@@ -112,3 +113,24 @@ mod 'puppetlabs-apt', '8.5.0'
 mod 'veeam_restore_client',
   :git => 'https://gitlab.services.bris.ac.uk/services-operations-public/veeam_restore_client.git',
   :ref => '1.5.1'
+
+# NFS
+mod 'derdanne-nfs', '2.1.10'
+
+# autofs
+mod 'puppet-autofs', '7.0.0'
+
+# sync with Zone D puppet
+mod 'puppet-augeasproviders_core', '3.2.0'
+mod 'puppet-augeasproviders_pam', '3.0.1'
+mod 'puppet-augeasproviders_shellvar', '5.0.0'
+mod 'thias-sysctl', '1.0.7'
+
+
+# new-gen infrastructure
+mod 'puppetlabs-docker', '6.0.2'
+mod 'puppetlabs-kubernetes', '7.1.0'
+mod 'puppet-prometheus', '12.4.0'
+mod 'maeq-thanos', '1.4.0'
+mod 'puppet-grafana', '11.1.0'
+mod 'puppetlabs-postgresql', '8.2.1'
