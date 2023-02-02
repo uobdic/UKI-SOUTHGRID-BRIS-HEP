@@ -5,16 +5,23 @@ class profile::monitored::ganglia {
   $ganglia_cluster_name  = lookup('profile::monitored::ganglia_cluster_name', undef, undef, 'unknown')
   $ganglia_use_multicast = lookup('profile::monitored::ganglia_use_multicast', undef, undef, false)
 
-  if $::facts['os']['release']['major'] == '8' {
-    $ganglia_python_package = 'python3-ganglia-gmond'
-  } else {
-    $ganglia_python_package = 'ganglia-gmond-python'
+  case $::facts['os']['release']['major'] {
+    '7': {
+      $ganglia_packages = ['ganglia-gmond-python', 'ganglia', 'ganglia-gmond']
+    }
+    /^(8|9)$/: {
+      $ganglia_packages = ['python3-ganglia-gmond', 'ganglia', 'ganglia-gmond']
+    }
+    default: {
+      fail('OS is not supported. Only RHEL (and derivatives) 7, 8 and 9 are')
+    }
+
   }
+
   if $ganglia_cluster_name == 'unknown' {
 
   }
   elsif $ganglia_cluster_name == 'DICE' {
-    $ganglia_packages      = [$ganglia_python_package, 'ganglia', 'ganglia-gmond']
     $version = 'installed'
     package { $ganglia_packages:
       ensure          => $version,
@@ -37,9 +44,8 @@ class profile::monitored::ganglia {
     }
   }
   else {
-    $ganglia_packages      = ['ganglia-gmond']
     $version =  '3.0.7-1'
-    package { $ganglia_packages:
+    package { ['ganglia-gmond']:
       ensure          => $version,
       install_options => [{ '--enablerepo' => 'bristol' } ],
     }
