@@ -1,13 +1,9 @@
 forge 'http://forge.puppetlabs.com'
 
 # Puppetlabs modules
-mod 'puppetlabs/apache', :latest
-# mod 'puppetlabs/accounts',
-#   :git => 'https://github.com/kreczko/puppetlabs-accounts.git',
-#   :ref => 'fixing-uid-and-gid'
-mod 'puppetlabs-accounts', '5.0.0'
-mod 'puppetlabs/concat', :latest
-mod 'puppetlabs/dhcp', :latest
+mod 'puppetlabs-accounts', '7.3.1'
+mod 'puppetlabs-concat', '7.3.0'
+mod 'puppet-dhcp', '5.0.1'
 mod 'puppetlabs-firewall', '3.6.0'
 mod 'puppetlabs/inifile', :latest
 mod 'puppetlabs/mysql', :latest
@@ -98,9 +94,6 @@ mod 'jamtur01/httpauth', '0.0.6'
 mod 'cbsensor',
   :git => 'git@gitlab.services.bris.ac.uk:services-operations-public/cbsensor.git',
   :tag => '3.2.0'
-
-# Docker services
-mod 'puppetlabs-docker', '5.0.0'
 
 mod 'puppet-archive', '6.1.1'
 mod 'puppet-systemd', '3.10.0'
