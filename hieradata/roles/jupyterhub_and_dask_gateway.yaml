@@ -1,0 +1,4 @@
+---
+classes:
+  - profile::dask_gateway
+  - profile::jupyterhub
