@@ -31,7 +31,7 @@ site::site_info:
     grid.cern.ch:
       cvmfs_quota_limit: 1000
     config-egi.egi.eu:
-      cvmfs_quota_limit: 1000  
+      cvmfs_quota_limit: 1000
     atlas.cern.ch:
       cvmfs_quota_limit: 10000
     cms.cern.ch:
@@ -50,14 +50,17 @@ site::site_info:
     - cms
     - dune
     - dteam
+    - 'eucliduk.net'
     - gridpp
     - ilc
     - lhcb
     - lsst
     - lz
     - 'mu3e.org'
+    - 'na62.vo.gridpp.ac.uk'
     - ops
     - 'vo.southgrid.ac.uk'
+    - wlcg
 
 cvmfs::cvmfs_quota_limit: 10000
 cvmfs::cvmfs_http_proxy: 'http://lcgsq1.phy.bris.ac.uk:3128|http://lcgsq2.phy.bris.ac.uk:3128'
