@@ -34,9 +34,12 @@ class profile::base {
   package { $packages_to_remove: ensure => 'absent', }
 
   class { '::mlocate':
-    update_command   => '/etc/cron.daily/mlocate.cron',
-    extra_prunefs    => ['gpfs',],
-    extra_prunepaths => [
+    period            => 'daily',
+    prunenames        => ['.git', 'CVS', '.hg', '.svn'],
+    prune_bind_mounts => true,
+    prunepaths        => [
+      '/afs', '/media', '/net', '/sfs', '/tmp', '/udev', '/var/cache/ccache',
+      '/var/spool/cups', '/var/spool/squid', '/var/tmp',
       '/condor',
       '/dmlite',
       '/dpm',
@@ -61,10 +64,15 @@ class profile::base {
       '/var/spool/arc',
       '/var/cache/cvmfs2',
       ],
-  }
-  # cleanup after bad mlocate module (it is OK now, but first time was bad)
-  file{['/etc/cron.d/mlocate.cron', '/usr/local/bin/mlocate.cron']:
-    ensure => 'absent',
+    prunefs            => [
+      '9p', 'afs', 'anon_inodefs', 'auto', 'autofs', 'bdev', 'binfmt_misc',
+     'cgroup', 'cifs', 'coda', 'configfs', 'cpuset', 'debugfs', 'devpts',
+     'ecryptfs', 'exofs', 'fuse', 'fusectl', 'gfs', 'gfs2', 'hugetlbfs',
+     'inotifyfs', 'iso9660', 'jffs2', 'lustre', 'mqueue', 'ncpfs', 'nfs',
+     'nfs4', 'nfsd', 'pipefs', 'proc', 'ramfs', 'rootfs', 'rpc_pipefs',
+     'securityfs', 'selinuxfs', 'sfs', 'sockfs', 'sysfs', 'tmpfs', 'ubifs',
+     'udf', 'usbfs',
+    ],
   }
 
   if !empty($facts['node_info']) {
