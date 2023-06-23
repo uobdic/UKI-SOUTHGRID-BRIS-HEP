@@ -38,8 +38,8 @@ class profile::base {
     prunenames        => ['.git', 'CVS', '.hg', '.svn'],
     prune_bind_mounts => true,
     prunepaths        => [
-      '/afs', '/media', '/net', '/sfs', '/tmp', '/udev', '/var/cache/ccache',
-      '/var/spool/cups', '/var/spool/squid', '/var/tmp',
+      '/afs', '/media', '/mnt', '/net', '/sfs', '/tmp', '/udev', '/var/cache/ccache',
+      '/var/spool/cups', '/var/spool/squid', '/var/tmp', '/var/lib/yum/yumdb', '/var/lib/dnf/yumdb', '/var/lib/ceph',
       '/condor',
       '/dmlite',
       '/dpm',
@@ -63,6 +63,7 @@ class profile::base {
       '/hdfs',
       '/var/spool/arc',
       '/var/cache/cvmfs2',
+      '/cephfs',
       ],
     prunefs            => [
       '9p', 'afs', 'anon_inodefs', 'auto', 'autofs', 'bdev', 'binfmt_misc',
@@ -72,6 +73,7 @@ class profile::base {
      'nfs4', 'nfsd', 'pipefs', 'proc', 'ramfs', 'rootfs', 'rpc_pipefs',
      'securityfs', 'selinuxfs', 'sfs', 'sockfs', 'sysfs', 'tmpfs', 'ubifs',
      'udf', 'usbfs',
+     'ceph', 'fuse.ceph',
     ],
   }
 
