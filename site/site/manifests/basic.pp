@@ -1,5 +1,7 @@
 #
 class site::basic {
+  include stdlib
+
   $node_info = lookup('site::node_info', Hash, deep, {} )
   $site_info = lookup('site::site_info', Hash, deep, {} )
   # TODO: all DICE parts will be in a separate puppet module
