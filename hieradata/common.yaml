@@ -37,7 +37,7 @@ site::site_info:
     atlas.cern.ch:
       cvmfs_quota_limit: 10000
     cms.cern.ch:
-      cvmfs_quota_limit: 20000
+      cvmfs_quota_limit: 100000
       cvmfs_env_variables:
         CMS_LOCAL_SITE: T2_UK_SGrid_Bristol
     lhcb.cern.ch:
