@@ -68,7 +68,7 @@ mod 'xrootd',
 # CERN OPS
 mod 'bdii',
   :git => 'https://github.com/cernops/puppet-bdii.git'
-mod 'CERNOps/cvmfs', :latest
+mod 'puppet-cvmfs', '9.0.0'
 mod 'vosupport',
   :git => 'https://github.com/HEP-Puppet/puppet-vosupport',
   :ref => 'development'
