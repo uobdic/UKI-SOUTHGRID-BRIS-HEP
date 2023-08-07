@@ -64,17 +64,20 @@ mod 'lcgdm/gridftp', :latest
 mod 'lcgdm/lcgdm', :latest
 mod 'lcgdm/voms', :latest
 mod 'xrootd',
-  :git => 'https://github.com/cern-it-sdc-id/puppet-xrootd.git'
+  :git => 'https://github.com/cern-it-sdc-id/puppet-xrootd.git',
+  :ref => 'master'
 
 # CERN OPS
 mod 'bdii',
-  :git => 'https://github.com/cernops/puppet-bdii.git'
+  :git => 'https://github.com/cernops/puppet-bdii.git',
+  :ref => 'master'
 mod 'puppet-cvmfs', '9.0.0'
 mod 'vosupport',
   :git => 'https://github.com/HEP-Puppet/puppet-vosupport',
   :ref => 'development'
 mod 'argus',
-  :git => 'https://github.com/cernops/puppet-argus'
+  :git => 'https://github.com/cernops/puppet-argus',
+  :ref => 'master'
 # CERN OPS fork
 mod 'htcondor_ce',
   :git => 'https://github.com/kreczko/puppet-htcondor_ce',
@@ -82,7 +85,8 @@ mod 'htcondor_ce',
 
 # secondary control repo
 mod 'site_private',
-  :git => 'git@gitlab.services.bris.ac.uk:pp-computing/site_private.git'
+  :git => 'git@gitlab.services.bris.ac.uk:pp-computing/site_private.git',
+  :ref => 'master'
 
 mod 'puppet-cron', '2.0.0'
 
