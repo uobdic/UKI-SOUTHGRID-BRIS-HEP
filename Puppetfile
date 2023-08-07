@@ -52,7 +52,8 @@ mod 'htcondor',
   :ref => 'v2.1.0'
 
 mod 'arc_ce',
-  :git => 'https://github.com/HEP-Puppet/arc_ce'
+  :git => 'https://github.com/HEP-Puppet/arc_ce',
+  :ref => 'master'
 
 # CERN IT
 #mod 'dmlite',
