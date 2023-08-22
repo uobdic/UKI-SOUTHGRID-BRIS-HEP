@@ -1,19 +1,19 @@
 forge 'http://forge.puppetlabs.com'
 
 # Puppetlabs modules
-mod 'puppetlabs-accounts', '7.3.1'
-mod 'puppetlabs-concat', '7.3.0'
+mod 'puppetlabs-accounts', '8.1.0'
+mod 'puppetlabs-concat', '9.0.0'
 mod 'puppet-dhcp', '5.0.1'
-mod 'puppetlabs-firewall', '3.6.0'
+mod 'puppetlabs-firewall', '6.0.0'
 mod 'puppetlabs/inifile', :latest
 mod 'puppetlabs/mysql', :latest
 mod 'puppetlabs/ntp', :latest
-mod 'puppet-chrony', '2.3.0'
-mod 'puppet-selinux', '3.4.1'
-mod 'puppetlabs-stdlib', '8.6.0'
+mod 'puppet-chrony', '3.0.0'
+mod 'puppet-selinux', '4.0.0'
+mod 'puppetlabs-stdlib', :latest
 mod 'puppetlabs/tftp', :latest
 mod 'puppetlabs/xinetd', :latest
-mod 'puppetlabs-motd', '6.3.0'
+mod 'puppetlabs-motd', :latest
 
 # community modules
 # mod 'Lavaburn/razor', :latest
@@ -23,15 +23,16 @@ mod 'jhoblitt/ipmi', '2.3.0'
 mod 'saz/memcached', :latest
 mod 'puppet-firewalld', '4.5.1'
 # voxpupuli, see https://wikis.bris.ac.uk/display/BristolT2/Puppet+modules#Puppetmodules-Network
-#mod 'adrien/network', :latest
+# mod 'puppet-network', '1.1.0'
 # recommended by NetComms
 mod 'razorsedge/network',
   :git => 'https://github.com/uobdic/puppet-network.git',
   :ref => 'feature/centos8'
 
+
 mod 'erwbgy/limits', :latest
 mod 'thias/tuned', :latest
-mod 'puppet-rsyslog', '5.2.0'
+mod 'puppet-rsyslog', '7.0.1'
 #mod 'account',
 #  :git => 'https://github.com/torrancew/puppet-account.git',
 #  :ref => 'develop'
@@ -40,38 +41,23 @@ mod 'puppet-rsyslog', '5.2.0'
 mod 'puppet-mlocate', '2.1.0'
 
 mod 'treydock-singularity', '5.5.0'
+mod 'treydock-apptainer', '2.0.0'
 mod 'treydock-golang', '2.3.0'
 mod 'puppetlabs-yumrepo_core', '1.1.0'
 
-mod 'puppet-epel', '4.1.0'
-mod 'benformosa-linux_disable_ipv6', '0.1.1'
+mod 'puppet-epel', '5.0.0'
+mod 'benformosa-linux_disable_ipv6', '1.1.0'
 
 # HEP-Puppet
 mod 'htcondor',
   :git => 'https://github.com/HEP-Puppet/htcondor',
   :ref => 'v2.1.0'
 
-mod 'arc_ce',
-  :git => 'https://github.com/HEP-Puppet/arc_ce',
-  :ref => 'master'
-
-# CERN IT
-#mod 'dmlite',
-#  :git => 'https://github.com/kreczko/puppet-dmlite.git',
-#  :ref => 'java-home'
-mod 'lcgdm/dmlite', '0.6.0'
-mod 'lcgdm/gridftp', :latest
-mod 'lcgdm/lcgdm', :latest
-mod 'lcgdm/voms', :latest
-mod 'xrootd',
-  :git => 'https://github.com/cern-it-sdc-id/puppet-xrootd.git',
-  :ref => 'master'
-
 # CERN OPS
 mod 'bdii',
   :git => 'https://github.com/cernops/puppet-bdii.git',
   :ref => 'master'
-mod 'puppet-cvmfs', '9.0.0'
+mod 'puppet-cvmfs', '10.0.0'
 mod 'vosupport',
   :git => 'https://github.com/HEP-Puppet/puppet-vosupport',
   :ref => 'development'
@@ -88,7 +74,7 @@ mod 'site_private',
   :git => 'git@gitlab.services.bris.ac.uk:pp-computing/site_private.git',
   :ref => 'master'
 
-mod 'puppet-cron', '2.0.0'
+mod 'puppet-cron', '4.1.0'
 
 # perfsonar
 mod 'treydock-perfsonar', '2.0.0'
@@ -99,8 +85,8 @@ mod 'cbsensor',
   :git => 'git@gitlab.services.bris.ac.uk:services-operations-public/cbsensor.git',
   :tag => '3.2.0'
 
-mod 'puppet-archive', '6.1.1'
-mod 'puppet-systemd', '3.10.0'
+mod 'puppet-archive', '7.0.0'
+mod 'puppet-systemd', '5.2.0'
 mod 'saz-sudo', '7.0.2' # newer version than in puppet-control
 mod 'saz/ssh', '9.0.0' # newer version than in puppet-control
 mod 'puppetlabs-reboot', '4.3.0'
@@ -118,16 +104,16 @@ mod 'derdanne-nfs', '2.1.10'
 mod 'puppet-autofs', '7.0.0'
 
 # sync with Zone D puppet
-mod 'puppet-augeasproviders_core', '3.2.0'
-mod 'puppet-augeasproviders_pam', '3.0.1'
-mod 'puppet-augeasproviders_shellvar', '5.0.0'
+mod 'puppet-augeasproviders_core', '4.0.1'
+mod 'puppet-augeasproviders_pam', '4.0.0'
+mod 'puppet-augeasproviders_shellvar', '6.0.0'
 mod 'thias-sysctl', '1.0.7'
 
 
 # new-gen infrastructure
-mod 'puppetlabs-docker', '6.0.2'
-mod 'puppetlabs-kubernetes', '7.1.0'
-mod 'puppet-prometheus', '12.4.0'
-mod 'maeq-thanos', '1.4.0'
-mod 'puppet-grafana', '11.1.0'
-mod 'puppetlabs-postgresql', '8.2.1'
+mod 'puppetlabs-docker', '9.1.0'
+mod 'puppetlabs-kubernetes', '8.0.0'
+mod 'puppet-prometheus', '13.3.0'
+mod 'maeq-thanos', '1.5.1'
+mod 'puppet-grafana', '13.0.0'
+mod 'puppetlabs-postgresql', '9.1.0'
