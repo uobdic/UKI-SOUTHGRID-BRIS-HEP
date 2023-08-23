@@ -96,8 +96,9 @@ mod 'jamtur01/httpauth', '0.0.6'
 
 # IT services
 mod 'cbsensor',
-  :git => 'git@gitlab.services.bris.ac.uk:services-operations-public/cbsensor.git',
-  :tag => '3.2.1'
+   :git => 'https://gitlab.services.bristol.ac.uk/services-operations-public/cbsensor.git',
+   :ref => '53df11bc10a229d9ba81e343b0327890c2a13a10'
+
 
 mod 'puppet-archive', '6.1.1'
 mod 'puppet-systemd', '3.10.0'
