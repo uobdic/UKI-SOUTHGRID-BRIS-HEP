@@ -8,6 +8,7 @@ class profile::firewall {
   # otherwise use firewalld
   if $firewall_type == 'iptables' or ! $firewall_type =~ /^firewalld/ {
     # use iptables
+    notice("Using iptables (firewall_type = ${firewall_type})")
     $accept          = lookup('profile::firewall::accept', Hash, 'deep', {})
     $accept_v6       = lookup('profile::firewall6::accept', Hash, 'deep', {})
     $drop            = lookup('profile::firewall::drop', Hash, 'deep', {})
@@ -37,6 +38,7 @@ class profile::firewall {
     create_resources('firewall', $accept_v6, $accept_defaults_v6)
     create_resources('firewall', $drop_v6, $drop_defaults_v6)
   } else {
+    notice("Using firewalld (firewall_type = ${firewall_type})")
     include profile::firewalld::setup
   }
 }
