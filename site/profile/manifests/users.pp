@@ -12,7 +12,7 @@ class profile::users {
   }
   $node_info = lookup('site::node_info', Hash)
 
-  if ($node_info['role'] == 'hdfs_namenode') {
+  if ($node_info['role'] == 'hdfs_namenode' or $::fqdn == 'sts.dice.priv') {
     $shell = lookup('profile::users::shell', undef, undef, '/sbin/nologin')
   } else {
     $shell = lookup('profile::users::shell', undef, undef, '/bin/bash')
@@ -35,5 +35,15 @@ class profile::users {
   unless 'soolin' in $::fqdn or 'lcgce' in $::fqdn {
     create_resources('group', $groups, $defaults)
     create_resources('accounts::user', $users, $acc_defaults)
+  }
+  if $::fqdn == 'sts.dice.priv' {
+    $users.each |$key, $value| {
+      file { ["/exports/users/${key}", "/exports/software/${key}", "/exports/scratch/${key}"]:
+        ensure => directory,
+        owner  => $key,
+        group  => $acc_defaults['group'],
+        mode   => '0700',
+      }
+    }
   }
 }
