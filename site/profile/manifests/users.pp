@@ -38,11 +38,13 @@ class profile::users {
   }
   if $::fqdn == 'sts.dice.priv' {
     $users.each |$key, $value| {
-      file { ["/exports/users/${key}", "/exports/software/${key}", "/exports/scratch/${key}"]:
-        ensure => directory,
-        owner  => $key,
-        group  => $acc_defaults['group'],
-        mode   => '0700',
+      unless $value['ensure'] == 'absent' {
+        file { ["/exports/users/${key}", "/exports/software/${key}", "/exports/scratch/${key}"]:
+          ensure => directory,
+          owner  => $key,
+          group  => $acc_defaults['group'],
+          mode   => '0700',
+        }
       }
     }
   }
