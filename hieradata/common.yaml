@@ -32,8 +32,6 @@ site::site_info:
   cvmfs_mounts:
     grid.cern.ch:
       cvmfs_quota_limit: 1000
-    config-egi.egi.eu:
-      cvmfs_quota_limit: 1000
     atlas.cern.ch:
       cvmfs_quota_limit: 10000
     cms.cern.ch:
