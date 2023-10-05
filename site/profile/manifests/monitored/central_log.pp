@@ -5,11 +5,6 @@ class profile::monitored::central_log {
 
   $is_central_log = member($central_log, "${facts['networking']['fqdn']}:514") or member($central_log, "${facts['networking']['ip']}:514")
 
-  notify { 'rsyslog':
-    message  => "Running on \$fqdn ${facts['networking']['fqdn']} with \$is_central_log ${is_central_log} defined",
-    loglevel => 'debug',
-  }
-
   unless $is_central_log {
     file { '/etc/rsyslog.d':
       ensure => 'directory',
