@@ -5,7 +5,6 @@ class profile::monitored::smartd {
     $custom_config_machines = ['soolin.dice.priv', 'dice-vm-37-00.acrc.bris.ac.uk', 'vm-37-02.acrc.bris.ac.uk', 'vm03.phy.bris.ac.uk']
 
     if member($custom_config_machines, $::fqdn) {
-      notify { 'smartmontools': message => "smartmontools config for ${::fqdn}", }
       file { '/etc/smartmontools/smartd.conf':
         source  => "puppet:///modules/${module_name}/smart.d/${::fqdn}.conf",
         mode    => '0644',
