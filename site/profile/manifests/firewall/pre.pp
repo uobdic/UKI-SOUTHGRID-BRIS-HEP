@@ -3,6 +3,36 @@ class profile::firewall::pre {
   Firewall {
   require => undef, }
 
+  # avoid purging docker
+  firewallchain { 'FORWARD:filter:IPv4':
+    purge  => true,
+    ignore => [ '[^"]*(?i:docker)[^"]*', 'br-' ],
+  }
+  firewallchain { 'OUTPUT:filter:IPv4':
+    purge  => true,
+    ignore => [ '[^"]*(?i:docker)[^"]*' ],
+  }
+  firewallchain { 'DOCKER:filter:IPv4':
+    purge  => false,
+  }
+  firewallchain { 'DOCKER:nat:IPv4':
+    purge  => false,
+  }
+  firewallchain { 'POSTROUTING:nat:IPv4':
+    purge  => true,
+    ignore => [ '[^"]*(?i:docker)[^"]*', '172.' ],
+  }
+  firewallchain { 'PREROUTING:nat:IPv4':
+    purge  => true,
+    ignore => [ '[^"]*(?i:docker)[^"]*' ],
+  }
+
+  # Ensure input rules are cleaned out
+  firewallchain { 'INPUT:filter:IPv4':
+    ensure => present,
+    purge  => true,
+  }
+
   # Default firewall rules
   firewall { '000 accept all icmp':
     proto  => 'icmp',
@@ -64,11 +94,5 @@ class profile::firewall::pre {
   firewallchain { 'PREROUTING:nat:IPv4':
     purge  => true,
     ignore => ['DOCKER'],
-  }
-
-  #ensure input rules are cleaned out
-  firewallchain { 'INPUT:filter:IPv4':
-    ensure => present,
-    purge  => true,
   }
 }
