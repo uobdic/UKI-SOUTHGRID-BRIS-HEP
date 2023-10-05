@@ -76,23 +76,4 @@ class profile::firewall::pre {
     action   => 'accept',
     provider => 'ip6tables',
   }
-
-  firewallchain { 'FORWARD:filter:IPv4':
-    purge  => true,
-    ignore => ['docker'],
-  }
-  firewallchain { 'DOCKER:filter:IPv4':
-    purge  => false,
-  }
-  firewallchain { 'DOCKER:nat:IPv4':
-    purge  => false,
-  }
-  firewallchain { 'POSTROUTING:nat:IPv4':
-    purge  => true,
-    ignore => ['docker', '172.17'],
-  }
-  firewallchain { 'PREROUTING:nat:IPv4':
-    purge  => true,
-    ignore => ['DOCKER'],
-  }
 }
