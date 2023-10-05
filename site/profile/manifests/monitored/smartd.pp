@@ -28,4 +28,8 @@ class profile::monitored::smartd {
       require => [Package['smartmontools'],],
     }
   }
+  if $facts['is_virtual'] {
+    package { 'smartmontools': ensure => 'absent' }
+    file { '/etc/smartmontools/smartd.conf': ensure => 'absent' }
+  }
 }
