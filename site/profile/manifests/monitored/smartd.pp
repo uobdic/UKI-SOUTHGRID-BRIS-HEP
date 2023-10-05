@@ -30,6 +30,6 @@ class profile::monitored::smartd {
   }
   if $facts['is_virtual'] {
     package { 'smartmontools': ensure => 'absent' }
-    file { '/etc/smartmontools/smartd.conf': ensure => 'absent' }
+    file { '/etc/smartmontools': ensure => 'absent', recurse => true, force => true }
   }
 }
