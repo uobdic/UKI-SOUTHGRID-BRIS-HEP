@@ -71,7 +71,7 @@ mod 'xrootd',
 mod 'bdii',
   :git => 'https://github.com/cernops/puppet-bdii.git',
   :ref => 'master'
-mod 'puppet-cvmfs', '9.0.0'
+mod 'puppet-cvmfs', '10.1.0'
 mod 'vosupport',
   :git => 'https://github.com/HEP-Puppet/puppet-vosupport',
   :ref => 'development'
