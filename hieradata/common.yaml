@@ -64,7 +64,7 @@ site::site_info:
 
 cvmfs::cvmfs_quota_limit: 10000
 cvmfs::cvmfs_http_proxy: 'http://lcgsq1.phy.bris.ac.uk:3128|http://lcgsq2.phy.bris.ac.uk:3128'
-cvmfs::cvmfs_server_url: 'http://cernvmfs.gridpp.rl.ac.uk:8000/opt/@org@;http://cvmfs-stratum-one.cern.ch:8000/opt/@org@; http://cvmfs.racf.bnl.gov:8000/opt/@org@'
+cvmfs::cvmfs_server_url: 'http://cvmfs-egi.gridpp.rl.ac.uk:8000/cvmfs/@fqrn@;http://cvmfs01.nikhef.nl:8000/cvmfs/@fqrn@'
 cvmfs::cvmfs_cache_base: '/condor/cvmfs'
 
 # default settings
