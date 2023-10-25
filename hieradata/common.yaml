@@ -4,6 +4,7 @@ classes:
  - site::basic
  - 'profile::base'
  - 'profile::monitored'
+ - profile::users::admin
 # - 'profile::firewall::setup'
 
 profile::monitored::next_gen_monitoring: true
