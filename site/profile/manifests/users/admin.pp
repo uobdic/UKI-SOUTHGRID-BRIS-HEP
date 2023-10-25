@@ -4,7 +4,7 @@ class profile::users::admin {
   class { 'sudo': }
   # collect all users with sudo access
   $site_admins = hiera_array('site::admins', [])
-  $node_admins = hiera_array('site::node_info::admins', [])
+  $node_admins = $facts['node_info']['admins']
   $sudoers = unique($site_admins + $node_admins)
   # create sudoers config for each user
   $sudoers.each |$user| {
