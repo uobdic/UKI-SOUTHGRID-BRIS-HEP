@@ -4,16 +4,7 @@ class profile::users::admin {
   class { 'sudo': }
   # collect all users with sudo access
   $site_admins = hiera_array('site::admins', [])
-  if $facts['node_info']['admins'] == undef {
-    fail('node_info.admins is not defined')
-  }
-  # Check if 'node_info' is defined and has 'admins' key
-  if $facts['node_info'] and $facts['node_info']['admins'] {
-    $node_admins = $facts['node_info']['admins']
-  } else {
-    # Default to an empty list if not defined
-    $node_admins = []
-  }
+  $node_admins = get($facts['node_info'], 'admins', [])
 
   $sudoers = unique($site_admins + $node_admins)
   # create sudoers config for each user
