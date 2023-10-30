@@ -3,9 +3,17 @@ class profile::users::admin {
   # purge sudo config and sudoers.d
   class { 'sudo': }
   # collect all users with sudo access
-  $site_admins = hiera_array('site::admins', [])
-  $node_admins = $facts['node_info']['admins'] or []
-  $sudoers = unique($site_admins + $node_admins)
+  Array[String] $site_admins = hiera_array('site::admins', [])
+  if $facts['node_info']['admins'] == undef {
+    fail('node_info.admins is not defined')
+  }
+  if has_key($facts['node_info'], 'admins') {
+    Array[String] $node_admins = $facts['node_info']['admins']
+  }
+  else {
+    Array[String] $node_admins = []
+  }
+  Array[String] $sudoers = unique($site_admins + $node_admins)
   # create sudoers config for each user
   $sudoers.each |$user| {
     sudo::conf { $user:
