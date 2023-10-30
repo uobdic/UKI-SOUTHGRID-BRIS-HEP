@@ -7,7 +7,14 @@ class profile::users::admin {
   if $facts['node_info']['admins'] == undef {
     fail('node_info.admins is not defined')
   }
-  $node_admins = get($facts['node_info'], 'admins', [])
+  # Check if 'node_info' is defined and has 'admins' key
+  if $facts['node_info'] and $facts['node_info']['admins'] {
+    $node_admins = $facts['node_info']['admins']
+  } else {
+    # Default to an empty list if not defined
+    $node_admins = []
+  }
+
   $sudoers = unique($site_admins + $node_admins)
   # create sudoers config for each user
   $sudoers.each |$user| {
