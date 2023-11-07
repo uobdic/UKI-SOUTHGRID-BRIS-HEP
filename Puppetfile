@@ -10,7 +10,7 @@ mod 'puppetlabs/mysql', :latest
 mod 'puppetlabs/ntp', :latest
 mod 'puppet-chrony', '2.3.0'
 mod 'puppet-selinux', '3.4.1'
-mod 'puppetlabs-stdlib', '8.6.0'
+mod 'puppetlabs-stdlib', :latest
 mod 'puppetlabs/tftp', :latest
 mod 'puppetlabs/xinetd', :latest
 mod 'puppetlabs-motd', '6.3.0'
