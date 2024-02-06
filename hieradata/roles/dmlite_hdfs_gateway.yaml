@@ -1,6 +1,0 @@
----
-classes:
-  - profile::dmlite::hdfs::gateway
-
-gridftp::params::log_level: WARN
-dmlite::gridftp::log_level: WARN

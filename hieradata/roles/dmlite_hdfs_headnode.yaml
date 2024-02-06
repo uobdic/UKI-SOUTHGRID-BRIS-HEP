@@ -1,5 +1,0 @@
----
-classes:
-  - profile::dmlite::hdfs::headnode
-
-gridftp::params::connections_max: 400
