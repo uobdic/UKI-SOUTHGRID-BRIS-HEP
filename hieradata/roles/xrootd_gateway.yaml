@@ -1,4 +1,16 @@
 ---
 classes:
+  - firewalld
   - profile::xrootd::gateway
-  - profile::firewalld::xrootd_gateway
+
+
+firewalld::custom_services:
+  puppet:
+    short: 'xrootd'
+    description: 'Allow access to XRootD service on port 1094'
+    ports:
+      - port: 1094
+        protocol: 'tcp'
+    module: 'nf_conntrack_netbios_ns'
+    ipv4_destination: '127.0.0.1'
+    ipv6_destination: '::1'
