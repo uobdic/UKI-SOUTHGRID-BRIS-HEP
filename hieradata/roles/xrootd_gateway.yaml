@@ -5,7 +5,7 @@ classes:
 
 
 firewalld::custom_services:
-  puppet:
+  xrootd:
     short: 'xrootd'
     description: 'Allow access to XRootD service on port 1094'
     ports:
