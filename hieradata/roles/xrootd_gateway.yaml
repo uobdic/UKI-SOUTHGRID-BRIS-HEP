@@ -7,9 +7,15 @@ classes:
 firewalld::custom_services:
   xrootd:
     short: 'xrootd'
-    description: 'Allow access to XRootD service on port 1094'
+    description: 'XRootD service on port 1094'
     ports:
       - port: 1094
         protocol: 'tcp'
     ipv4_destination: '127.0.0.1'
     ipv6_destination: '::1'
+
+firewalld::services:
+  "Allow access to XRootD service on port 1094":
+    service: xrootd
+    zone: public
+    ensure: present
