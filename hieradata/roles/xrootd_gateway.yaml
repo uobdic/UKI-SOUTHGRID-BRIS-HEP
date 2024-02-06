@@ -23,7 +23,6 @@ firewalld::custom_services:
     ipv6_destination: '::1'
 
 
-
 firewalld::services:
   "Allow access to XRootD service on port 1094":
     service: xrootd
@@ -33,3 +32,16 @@ firewalld::services:
     service: "dice-api"
     zone: public
     ensure: present
+
+# since services are not working:
+firewalld::ports:
+  "Open port 1094 for xrootd":
+    ensure: present
+    zone: public
+    port: 1094
+    protocol: 'tcp'
+  "Open port 4935 for dice-api":
+    ensure: present
+    zone: public
+    port: 4935
+    protocol: 'tcp'
