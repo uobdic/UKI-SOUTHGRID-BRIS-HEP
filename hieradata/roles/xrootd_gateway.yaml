@@ -1,4 +1,4 @@
 ---
 classes:
   - profile::xrootd::gateway
-  - profile::firewall::xrootd_gateway
+  - profile::firewalld::xrootd_gateway
