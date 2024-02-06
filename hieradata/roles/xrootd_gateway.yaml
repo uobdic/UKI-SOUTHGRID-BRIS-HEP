@@ -13,9 +13,23 @@ firewalld::custom_services:
         protocol: 'tcp'
     ipv4_destination: '127.0.0.1'
     ipv6_destination: '::1'
+  "dice-api":
+    short: 'dice-api'
+    description: 'DICE API service on port 4935'
+    ports:
+      - port: 4935
+        protocol: 'tcp'
+    ipv4_destination: '127.0.0.1'
+    ipv6_destination: '::1'
+
+
 
 firewalld::services:
   "Allow access to XRootD service on port 1094":
     service: xrootd
+    zone: public
+    ensure: present
+  "Allow access to DICE API on port 4935":
+    service: "dice-api"
     zone: public
     ensure: present
