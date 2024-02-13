@@ -1,57 +1,40 @@
 # Class for configuring firewalld
+# Takes rules in the form of
+# profile::firewalld::accepts:
+#  'allow ssh from XXX':
+#    family: 'ipv4'
+#    source: 'XXX'
+#    protocol: 'tcp'
+# profile::firewalld::drops:
+#  'drop ssh from YYY':
+#    family: 'ipv6'
+#    source: 'YYY'
+#    protocol: 'all'
 class profile::firewalld {
   include firewalld
 
-  $accept          = lookup('profile::firewall::accept', Hash, 'deep', {})
-  $accept_v6       = lookup('profile::firewall6::accept', Hash, 'deep', {})
-  $drop            = lookup('profile::firewall::drop', Hash, 'deep', {})
-  $drop_v6         = lookup('profile::firewall6::drop', Hash, 'deep', {})
+  $accept = lookup('profile::firewalld::accepts', Hash, 'deep', {})
+  $drop   = lookup('profile::firewalld::drops', Hash, 'deep', {})
 
-  # transform the accept and drop hashes into rich rules
-  # rules are of the form:
-  # comment: {"source": "<ip range>", "proto": <protocol>}
-
-  accept.each | String $comment, Hash $rule | {
+  $accept.each | String $comment, Hash $rule | {
     firewalld_rich_rule { $comment:
       ensure   => present,
       zone     => 'public',
-      family   => 'ipv4',
+      family   => $rule['family'],
       action   => 'accept',
       source   => $rule['source'],
-      protocol => $rule['proto'],
+      protocol => $rule['protocol'],
     }
   }
 
-  accept_v6.each | String $comment, Hash $rule | {
+  $drop.each | String $comment, Hash $rule | {
     firewalld_rich_rule { $comment:
       ensure   => present,
       zone     => 'public',
-      family   => 'ipv6',
-      action   => 'accept',
-      source   => $rule['source'],
-      protocol => $rule['proto'],
-    }
-  }
-
-  drop.each | String $comment, Hash $rule | {
-    firewalld_rich_rule { $comment:
-      ensure   => present,
-      zone     => 'public',
-      family   => 'ipv4',
+      family   => $rule['family'],
       action   => 'drop',
       source   => $rule['source'],
-      protocol => $rule['proto'],
-    }
-  }
-
-  drop_v6.each | String $comment, Hash $rule | {
-    firewalld_rich_rule { $comment:
-      ensure   => present,
-      zone     => 'public',
-      family   => 'ipv6',
-      action   => 'drop',
-      source   => $rule['source'],
-      protocol => $rule['proto'],
+      protocol => $rule['protocol'],
     }
   }
 }
