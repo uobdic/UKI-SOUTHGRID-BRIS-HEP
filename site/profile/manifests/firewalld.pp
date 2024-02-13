@@ -16,25 +16,19 @@ class profile::firewalld {
   $accept = lookup('profile::firewalld::accepts', Hash, 'deep', {})
   $drop   = lookup('profile::firewalld::drops', Hash, 'deep', {})
 
-  $accept.each | String $comment, Hash $rule | {
-    firewalld_rich_rule { $comment:
-      ensure   => present,
-      zone     => 'public',
-      family   => $rule['family'],
-      action   => 'accept',
-      source   => $rule['source'],
-      protocol => $rule['protocol'],
-    }
+  $accept_defaults = {
+    'ensure'   => present,
+    'zone'   => 'public',
+    'action'   => 'accept',
+    'protocol' => 'all',
   }
+  create_resources('firewalld_rich_rule', $accept, $accept_defaults)
 
-  $drop.each | String $comment, Hash $rule | {
-    firewalld_rich_rule { $comment:
-      ensure   => present,
-      zone     => 'public',
-      family   => $rule['family'],
-      action   => 'drop',
-      source   => $rule['source'],
-      protocol => $rule['protocol'],
-    }
+  $drop_defaults = {
+    'ensure'   => present,
+    'zone'   => 'public',
+    'action'   => 'drop',
+    'protocol' => 'all',
   }
+  create_resources('firewalld_rich_rule', $drop, $drop_defaults)
 }
