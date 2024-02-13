@@ -10,6 +10,7 @@ hierarchy:
     datadir: modules/site_private/hieradata
     paths:
       - "nodes/%{::trusted.certname}.yaml"
+      - "firewall/defaults.yaml"
       - "firewall/%{::node_info.firewall}.yaml"
       - "users/%{::node_info.users}.yaml"
       - "users/%{::node_info.service_accounts}.yaml"
