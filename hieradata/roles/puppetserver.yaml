@@ -1,4 +1,0 @@
----
-classes:
-  - profile::networker
-  - profile::puppetserver
