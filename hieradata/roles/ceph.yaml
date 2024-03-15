@@ -1,0 +1,3 @@
+
+
+profile::users::shell: '/sbin/nologin'

@@ -1,0 +1,5 @@
+---
+classes:
+  - podman
+
+profile::users::shell: '/sbin/nologin'
