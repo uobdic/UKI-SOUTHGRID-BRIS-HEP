@@ -3,17 +3,25 @@ class profile::base {
   if member(['8', '9'], $::facts['os']['release']['major']) {
     # RHEL 8 or 9
     $chrony_servers = lookup('ntp::servers', Array, 'first', [])
-    class { '::chrony':
+    class { 'chrony':
       servers => $chrony_servers,
     }
   } else {
     # RHEL 7
-    class { '::ntp': }
+    class { 'ntp': }
+  }
+
+  # we like automatic updates (except for kernel and on VM hosts)
+  $automatic_updates = lookup('profile::base::automatic_updates', Boolean, undef, true)
+  if $automatic_updates {
+    class { 'yum_cron':
+      apply_updates => true,
+    }
   }
 
   $disable_cbsensor = lookup('profile::base::disable_cbsensor', Boolean, undef, false)
   unless $disable_cbsensor {
-    class { '::cbsensor': }
+    class { 'cbsensor': }
   }
 
   $packages_to_install = lookup('profile::default::packages_to_install', Array[String], 'unique', [])
@@ -33,7 +41,7 @@ class profile::base {
 
   package { $packages_to_remove: ensure => 'absent', }
 
-  class { '::mlocate':
+  class { 'mlocate':
     period            => 'daily',
     prunenames        => ['.git', 'CVS', '.hg', '.svn'],
     prune_bind_mounts => true,
