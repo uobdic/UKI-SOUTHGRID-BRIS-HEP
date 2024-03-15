@@ -7,6 +7,10 @@ classes:
  - profile::users::admin
 # - 'profile::firewall::setup'
 
+packages:
+  - kernel-devel
+  - nano
+
 profile::monitored::next_gen_monitoring: true
 
 ntp::enable: true
