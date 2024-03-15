@@ -1,0 +1,5 @@
+---
+classes:
+  - podman
+
+site::node_info:add_prometheus: false

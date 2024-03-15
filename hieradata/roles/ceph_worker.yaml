@@ -2,4 +2,6 @@
 classes:
   - podman
 
+site::node_info:add_prometheus: false
+
 profile::users::shell: '/sbin/nologin'
