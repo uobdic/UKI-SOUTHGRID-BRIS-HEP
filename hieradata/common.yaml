@@ -79,6 +79,5 @@ network::global::ipv6networking: true
 
 site::node_info:
   service_accounts: service_accounts
-  add_prometheus: true
 
 cbsensor::version: "v7"
