@@ -133,3 +133,7 @@ mod 'maeq-thanos', '1.4.0'
 mod 'puppet-grafana', '11.1.0'
 mod 'puppetlabs-postgresql', '8.2.1'
 mod 'southalc-podman', '0.6.7'
+mod 'southalc-types', '0.3.5'
+
+# Rocky 9 stuff
+mod 'treydock-yum_cron', '7.1.0'
