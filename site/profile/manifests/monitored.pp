@@ -1,6 +1,7 @@
 # just a simpele profile to summarise all monitoring
 class profile::monitored {
-  if $facts['node_info']['add_prometheus'] == undef or $facts['node_info']['add_prometheus'] != false {
+  $add_prometheus = lookup('profile::monitored::add_prometheus', Boolean, undef, true)
+  if $add_prometheus {
     # some nodes already have prometheus due to their services
     include profile::monitored::prometheus
   }

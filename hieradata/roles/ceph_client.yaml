@@ -2,4 +2,4 @@
 classes:
   - podman
 
-site::node_info:add_prometheus: false
+profile::monitored::add_prometheus: false
