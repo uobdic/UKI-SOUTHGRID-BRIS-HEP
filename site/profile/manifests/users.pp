@@ -12,7 +12,7 @@ class profile::users {
   }
   $node_info = lookup('site::node_info', Hash)
 
-  if ($node_info['role'] == 'hdfs_namenode' or $::fqdn == 'sts.dice.priv') {
+  if ($node_info['role'] == 'hdfs_namenode' or $::fqdn == 'sts.dice.priv' or $fqdn == 'sc01.dice.priv') {
     $shell = lookup('profile::users::shell', undef, undef, '/sbin/nologin')
   } else {
     $shell = lookup('profile::users::shell', undef, undef, '/bin/bash')
