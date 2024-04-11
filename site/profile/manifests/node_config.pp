@@ -1,5 +1,5 @@
 # node config
-class node_config {
+class profile::node_config {
   include stdlib
 
   $node_info = lookup('site::node_info', Hash, deep, {})
