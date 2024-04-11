@@ -32,7 +32,7 @@ if $hostgroup {
 }
 $sorted_path_array = reverse($tmp_final_path_array)
 
-include profile::node_config
+include site::node_config
 
 # alternatively nodes can be set up using role manifests (see below)
 # at some point we have to decide for one or the other
