@@ -19,6 +19,19 @@ File { backup => false }
 # this allows to specify roles in hiera
 hiera_include('classes')
 
+# Foreman hostgroups
+
+if $hostgroup {
+  $tmp_groups = split($hostgroup, '/')
+  $tmp_path_array = $tmp_groups.map |Integer $index, String $group| {
+    $tmp_groups[0, $index + 1]
+  }
+  $tmp_final_path_array = $tmp_path_array.map |Array $paths| {
+    join($paths, '/')
+  }
+}
+$sorted_path_array = reverse($tmp_final_path_array)
+
 # alternatively nodes can be set up using role manifests (see below)
 # at some point we have to decide for one or the other
 
