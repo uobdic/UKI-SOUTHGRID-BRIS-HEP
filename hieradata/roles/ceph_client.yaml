@@ -1,5 +1,3 @@
 ---
 classes:
   - podman
-
-profile::monitored::add_prometheus: false
