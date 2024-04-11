@@ -11,8 +11,6 @@ packages:
   - kernel-devel
   - nano
 
-profile::monitored::next_gen_monitoring: true
-
 ntp::enable: true
 ntp::servers:
   - 137.222.36.2
