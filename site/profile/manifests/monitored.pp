@@ -1,7 +1,17 @@
-# just a simpele profile to summarise all monitoring
-class profile::monitored {
-  $add_prometheus = lookup('profile::monitored::add_prometheus', Boolean, undef, true)
-  if $add_prometheus {
+# @summary just a simpele profile to summarise all monitoring
+#
+# @param use_prometheus [Boolean] Whether to use Prometheus for monitoring.
+# @param use_smartd [Boolean] Whether to enable SMARTd
+# @param use_central_logging [Boolean] Whether to enable central logging
+# @param use_process_accounting [Boolean] Whether to use psacct
+#
+class profile::monitored (
+  Boolean $use_prometheus = true,
+  Boolean $use_smartd = true,
+  Boolean $use_central_logging = true,
+  Boolean $use_process_accounting = true,
+) {
+  if $use_prometheus {
     # some nodes already have prometheus due to their services
     include profile::monitored::prometheus
   }
@@ -11,11 +21,17 @@ class profile::monitored {
   }
 
   # smartd
-  include profile::monitored::smartd
+  if $use_smartd {
+    include profile::monitored::smartd
+  }
 
   # central log
-  include profile::monitored::central_log
+  if $use_central_logging {
+    include profile::monitored::central_log
+  }
 
   # psacct
-  include profile::monitored::psacct
+  if $use_process_accounting {
+    include profile::monitored::psacct
+  }
 }
