@@ -11,13 +11,13 @@ class profile::monitored (
   Boolean $use_central_logging = true,
   Boolean $use_process_accounting = true,
 ) {
+  notify {
+    "Settings for monitoring: prometheus=${use_prometheus}, smartd=${use_smartd},\
+     central_logging=${use_central_logging}, psacct=${use_process_accounting}":
+  }
   if $use_prometheus {
     # some nodes already have prometheus due to their services
     include profile::monitored::prometheus
-  }
-  else {
-    notify { 'Requested to skip prometheus install - skipping.':
-    }
   }
 
   # smartd
