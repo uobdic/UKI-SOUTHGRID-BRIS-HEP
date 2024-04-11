@@ -5,6 +5,10 @@ class profile::monitored {
     # some nodes already have prometheus due to their services
     include profile::monitored::prometheus
   }
+  else {
+    notify { 'Requested to skip prometheus install - skipping.':
+    }
+  }
 
   # smartd
   include profile::monitored::smartd
