@@ -17,7 +17,9 @@ class profile::monitored (
   }
   if $use_prometheus {
     # some nodes already have prometheus due to their services
-    include profile::monitored::prometheus
+    unless $hostgroup =~ /ceph_condor/ {
+      include profile::monitored::prometheus
+    }
   }
 
   # smartd
