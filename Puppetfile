@@ -2,7 +2,7 @@ forge 'http://forge.puppetlabs.com'
 
 # Puppetlabs modules
 mod 'puppetlabs-accounts', '8.1.1'
-mod 'puppetlabs-concat', '9.0.0'
+mod 'puppetlabs-concat', '9.0.2'
 mod 'puppetlabs-firewall', '8.0.1'
 mod 'puppetlabs/inifile', :latest
 mod 'puppetlabs/ntp', :latest
@@ -14,18 +14,18 @@ mod 'puppetlabs/xinetd', :latest
 mod 'puppetlabs-motd', '7.1.0'
 
 # community modules
-# mod 'Lavaburn/razor', :latest
 mod 'puppet/fetchcrl', :latest
 mod 'jhoblitt/mcelog', :latest
 mod 'jhoblitt-ipmi', '5.3.1'
 mod 'saz/memcached', :latest
 mod 'puppet-firewalld', '5.0.0'
+mod 'puppet-network', '2.2.0'
 # voxpupuli, see https://wikis.bris.ac.uk/display/BristolT2/Puppet+modules#Puppetmodules-Network
 #mod 'adrien/network', :latest
 # recommended by NetComms
-mod 'razorsedge/network',
-  :git => 'https://github.com/uobdic/puppet-network.git',
-  :ref => 'feature/centos8'
+# mod 'razorsedge/network',
+#   :git => 'https://github.com/uobdic/puppet-network.git',
+#   :ref => 'feature/centos8'
 
 mod 'erwbgy/limits', :latest
 mod 'thias/tuned', :latest
@@ -35,7 +35,10 @@ mod 'puppet-rsyslog', '7.1.0'
 #  :ref => 'develop'
 
 # other
-mod 'puppet-mlocate', '2.1.0'
+# mod 'puppet-mlocate', '2.1.0'
+mod 'puppet-mlocate',
+  :git => 'https://github.com/voxpupuli/puppet-mlocate',
+  :ref => '1523cf1773d5fec39a6e96ad2a0edf1a28b2ceb5'
 
 mod 'treydock-singularity', '5.5.0'
 mod 'treydock-apptainer', '2.0.0'
