@@ -106,7 +106,7 @@ mod 'puppetlabs-apt', '8.5.0'
 # Veeam
 mod 'veeam_restore_client',
   :git => 'https://gitlab.services.bris.ac.uk/services-operations-public/veeam_restore_client.git',
-  :ref => '1.5.1'
+  :ref => '1.5.2'
 
 # NFS
 mod 'derdanne-nfs', '2.1.10'
