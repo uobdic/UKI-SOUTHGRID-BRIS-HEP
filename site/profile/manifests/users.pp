@@ -50,14 +50,14 @@ class profile::users {
   }
   # symlink to the correct location (/home -> /users) for each user
   $users.each |$key, $value| {
-    unless $value['ensure'] == 'absent' {
+    unless $value['ensure'] == 'absent' or "/home/${key}" == $value['home'] {
       file { "/home/${key}":
         ensure  => link,
         target  => $value['home'],
         require => User[$key],
       }
     }
-    if $value['ensure'] == 'absent' {
+    if $value['ensure'] == 'absent' and "/home/${key}" != $value['home'] {
       file { "/home/${key}":
         ensure => absent,
       }
