@@ -72,6 +72,7 @@ class profile::base {
       '/var/spool/arc',
       '/var/cache/cvmfs2',
       '/cephfs',
+      '/cvmfs',
     ],
     prunefs           => [
       '9p', 'afs', 'anon_inodefs', 'auto', 'autofs', 'bdev', 'binfmt_misc',
