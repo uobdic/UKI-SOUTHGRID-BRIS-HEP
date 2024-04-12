@@ -7,3 +7,14 @@ classes:
 packages:
   - centos-release-ceph-reef
   - ceph
+
+cvmfs::cvmfs_cache_base: '/var/cache/cvmfs'
+
+profile::users::users:
+  condor:
+    uid: '9618'
+    gid: '9618'
+    home: '/var/spool/condor'
+    shell: '/sbin/nologin'
+    comment: 'condor superuser'
+    group: condor
