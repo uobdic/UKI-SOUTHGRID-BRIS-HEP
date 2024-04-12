@@ -3,6 +3,12 @@ class profile::users {
   $groups     = lookup('profile::users::groups', Hash, 'deep', {})
   $users      = lookup('profile::users::users', Hash, 'deep', {})
 
+  # symlink to the correct location (/home -> /users)
+  file { '/home':
+    ensure => link,
+    target => '/users',
+  }
+
   if empty($groups) {
     notice('No profile::users::groups specified')
   }
