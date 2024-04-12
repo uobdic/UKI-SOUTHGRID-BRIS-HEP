@@ -10,6 +10,10 @@ packages:
 
 cvmfs::cvmfs_cache_base: '/var/cache/cvmfs'
 
+profile::users::groups:
+  condor:
+    gid: '9618'
+
 profile::users::users:
   condor:
     uid: '9618'
