@@ -1,0 +1,9 @@
+cvmfs::mount_method: 'mount'
+
+classes:
+  - profile::cvmfs
+  - podman
+
+packages:
+  - centos-release-ceph-reef
+  - ceph
