@@ -3,12 +3,6 @@ class profile::users {
   $groups     = lookup('profile::users::groups', Hash, 'deep', {})
   $users      = lookup('profile::users::users', Hash, 'deep', {})
 
-  # symlink to the correct location (/home -> /users)
-  file { '/home':
-    ensure => link,
-    target => '/users',
-  }
-
   if empty($groups) {
     notice('No profile::users::groups specified')
   }
@@ -51,6 +45,16 @@ class profile::users {
           group  => $acc_defaults['group'],
           mode   => '0700',
         }
+      }
+    }
+  }
+  # symlink to the correct location (/home -> /users) for each user
+  $users.each |$key, $value| {
+    unless $value['ensure'] == 'absent' {
+      file { "/home/${key}":
+        ensure  => link,
+        target  => "/users/${key}",
+        require => User[$key],
       }
     }
   }
