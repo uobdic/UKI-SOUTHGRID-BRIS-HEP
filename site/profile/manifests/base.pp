@@ -72,16 +72,16 @@ class profile::base {
       '/var/spool/arc',
       '/var/cache/cvmfs2',
       '/cephfs',
-      ],
-    prunefs            => [
+    ],
+    prunefs           => [
       '9p', 'afs', 'anon_inodefs', 'auto', 'autofs', 'bdev', 'binfmt_misc',
-     'cgroup', 'cifs', 'coda', 'configfs', 'cpuset', 'debugfs', 'devpts',
-     'ecryptfs', 'exofs', 'fuse', 'fusectl', 'gfs', 'gfs2', 'hugetlbfs',
-     'inotifyfs', 'iso9660', 'jffs2', 'lustre', 'mqueue', 'ncpfs', 'nfs',
-     'nfs4', 'nfsd', 'pipefs', 'proc', 'ramfs', 'rootfs', 'rpc_pipefs',
-     'securityfs', 'selinuxfs', 'sfs', 'sockfs', 'sysfs', 'tmpfs', 'ubifs',
-     'udf', 'usbfs',
-     'ceph', 'fuse.ceph',
+      'cgroup', 'cifs', 'coda', 'configfs', 'cpuset', 'debugfs', 'devpts',
+      'ecryptfs', 'exofs', 'fuse', 'fusectl', 'gfs', 'gfs2', 'hugetlbfs',
+      'inotifyfs', 'iso9660', 'jffs2', 'lustre', 'mqueue', 'ncpfs', 'nfs',
+      'nfs4', 'nfsd', 'pipefs', 'proc', 'ramfs', 'rootfs', 'rpc_pipefs',
+      'securityfs', 'selinuxfs', 'sfs', 'sockfs', 'sysfs', 'tmpfs', 'ubifs',
+      'udf', 'usbfs',
+      'ceph', 'fuse.ceph',
     ],
   }
 
