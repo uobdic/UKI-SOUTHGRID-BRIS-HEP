@@ -1,7 +1,6 @@
 # Profile for sudo users
 class profile::users::admin {
-  # purge sudo config and sudoers.d
-  class { 'sudo': }
+  include sudo
   # collect all users with sudo access
   $site_admins = hiera_array('site::admins', [])
   $node_admins = get($facts['node_info'], 'admins', [])
