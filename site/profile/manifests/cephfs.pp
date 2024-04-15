@@ -5,37 +5,44 @@ class profile::cephfs (
   Array[String] $keys = ['dice-reader'],
   Hash $mounts = {},
 ) {
-  yumrepo { 'ceph-reef':
-    baseurl  => 'https://download.ceph.com/rpm-reef/el9/x86_64',
-    descr    => 'Ceph Reef',
-    enabled  => 1,
-    gpgcheck => 0,
-  }
-  package { 'ceph':
-    ensure => latest,
+  package { 'centos-release-ceph-reef': }
+  package { 'ceph-common':
+    ensure  => latest,
+    require => [Package['centos-release-ceph-reef']],
   }
 
   # create the cephfs keys
   $keys.each |$key| {
     file { "/etc/ceph/ceph.client.${key}.keyring":
-      ensure => file,
-      source => "puppet:///dice_store/cephfs/ceph.client.${key}.keyring",
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0600',
+      ensure  => file,
+      source  => file("dice_store/cephfs/ceph.client.${key}.keyring"),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0600',
+      require => [Package['ceph-common']],
     }
   }
 
   file { '/etc/ceph/ceph.conf':
-    ensure => file,
-    source => 'puppet:///dice_store/cephfs/ceph.conf',
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644',
+    ensure  => file,
+    source  => file('dice_store/cephfs/ceph.conf'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => [Package['ceph-common']],
   }
 
   # create the mounts
-  if $mounts {
-    create_resources('mount', $mounts)
+  if !$mounts.empty {
+    $mount_locations = keys($mounts)
+    file { $mount_locations:
+      ensure => directory,
+    }
+    $defaults = {
+      'require'  => [File['/etc/ceph/ceph.conf'], File[$mount_locations]],
+      'fstype'   => 'ceph',
+      'ensure'   => 'mounted',
+    }
+    create_resources('mount', $mounts, $defaults)
   }
 }
