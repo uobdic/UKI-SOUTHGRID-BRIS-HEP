@@ -4,6 +4,7 @@ classes:
   - profile::cvmfs
   - podman
   - profile::cephfs
+  - profile::hdfs
   - packages::manage
 
 packages::install:
