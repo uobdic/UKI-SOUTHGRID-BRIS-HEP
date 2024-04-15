@@ -3,6 +3,7 @@ cvmfs::mount_method: 'mount'
 classes:
   - profile::cvmfs
   - podman
+  - profile::cephfs
 
 packages:
   - centos-release-ceph-reef
