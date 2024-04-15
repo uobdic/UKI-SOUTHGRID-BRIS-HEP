@@ -15,7 +15,7 @@ class profile::cephfs (
   $keys.each |$key| {
     file { "/etc/ceph/ceph.client.${key}.keyring":
       ensure  => file,
-      source  => "puppet://dice_store/cephfs/ceph.client.${key}.keyring",
+      source  => "puppet:///dice_store/cephfs/ceph.client.${key}.keyring",
       owner   => 'root',
       group   => 'root',
       mode    => '0600',
@@ -25,7 +25,7 @@ class profile::cephfs (
 
   file { '/etc/ceph/ceph.conf':
     ensure  => file,
-    source  => 'puppet://dice_store/cephfs/ceph.conf',
+    source  => 'puppet:///dice_store/cephfs/ceph.conf',
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
