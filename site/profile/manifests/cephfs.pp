@@ -1,6 +1,5 @@
 # class for setting up Cephfs - mostly for clients and mounts
-# @param cephfs_keys - the keys to use for the cephfs client
-# @param install_ceph - whether to install the ceph client or not
+# @param keys - the keys to use for the cephfs client
 # @param mounts - a hash of mounts to create; takes normal mount options
 class profile::cephfs (
   Array[String] $keys = ['dice-reader'],
