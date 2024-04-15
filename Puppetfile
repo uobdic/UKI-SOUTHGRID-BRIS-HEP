@@ -97,7 +97,7 @@ mod 'puppetlabs-apt', '9.4.0'
 mod 'veeam_restore_client',
   # :git => 'https://gitlab.services.bris.ac.uk/services-operations-public/veeam_restore_client.git',
   # :ref => '1.5.2'
-  :git => 'https://gitlab.services.bris.ac.uk/pp-computing/veeam_restore_client.git',
+  :git => 'git@gitlab.services.bris.ac.uk:pp-computing/veeam_restore_client.git',
   :ref => 'kreczko-modern-stdlib'
 
 # NFS
