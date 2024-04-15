@@ -4,10 +4,11 @@ classes:
   - profile::cvmfs
   - podman
   - profile::cephfs
+  - packages::manage
 
-packages:
-  - centos-release-ceph-reef
-  - ceph
+packages::install:
+  - nano
+  - wget
 
 cvmfs::cvmfs_cache_base: '/var/cache/cvmfs'
 
