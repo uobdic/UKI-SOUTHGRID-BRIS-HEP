@@ -23,3 +23,19 @@ profile::users::users:
     shell: '/sbin/nologin'
     comment: 'condor superuser'
     group: condor
+
+profile::cephfs:
+  keys:
+    - condor
+    - dice-user
+    - xrootd-user
+  mounts:
+    - name: '/condor'
+      fstype: 'cephfs'
+      device: condor@.dicefs=/condor
+    - name: '/dice'
+      fstype: 'cephfs'
+      device: dice-user@.dicefs=/dice
+    - name: '/xrootd'
+      fstype: 'cephfs'
+      device: xrootd-user@.dicefs=/xrootd
