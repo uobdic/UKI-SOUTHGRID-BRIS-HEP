@@ -34,9 +34,21 @@ class profile::cephfs (
 
   # create the mounts
   if !$mounts.empty {
+    # main mount point
+    file { '/cephfs':
+      ensure => directory,
+    }
     $mount_locations = keys($mounts)
     file { $mount_locations:
       ensure => directory,
+    }
+    # create symlink to main mount point
+    $mount_locations.each |$mount_location| {
+      file { "/cephfs/${mount_location}":
+        ensure  => link,
+        target  => $mount_location,
+        require => File[$mount_location],
+      }
     }
     $defaults = {
       'require'  => [File['/etc/ceph/ceph.conf'], File[$mount_locations]],
