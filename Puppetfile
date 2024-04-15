@@ -12,6 +12,7 @@ mod 'puppetlabs-stdlib', '9.6.0'
 mod 'puppetlabs/tftp', :latest
 mod 'puppetlabs/xinetd', :latest
 mod 'puppetlabs-motd', '7.1.0'
+mod 'pest-packages', '1.0.3'
 
 # community modules
 mod 'puppet/fetchcrl', :latest
