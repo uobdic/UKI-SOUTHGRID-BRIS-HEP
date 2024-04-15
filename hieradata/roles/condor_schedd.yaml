@@ -29,12 +29,15 @@ profile::cephfs::keys:
   - dice-user
   - xrootd-user
 profile::cephfs::mounts:
-  - name: '/condor'
+  condor:
+    name: '/condor'
     fstype: 'cephfs'
     device: condor@.dicefs=/condor
-  - name: '/dice'
+  dice:
+    name: '/dice'
     fstype: 'cephfs'
     device: dice-user@.dicefs=/dice
-  - name: '/xrootd'
+  xrootd:
+    name: '/xrootd'
     fstype: 'cephfs'
     device: xrootd-user@.dicefs=/xrootd
