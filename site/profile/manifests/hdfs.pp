@@ -10,14 +10,14 @@ class profile::hdfs (
 
   # Download hadoop
   exec { "download-hadoop-${hadoop_version}":
-    command => "wget -O /tmp/hadoop-${hadoop_version}.tar.gz http://apache.mirrors.pair.com/hadoop/common/hadoop-${hadoop_version}/hadoop-${hadoop_version}.tar.gz",
+    command => "/usr/bin/wget -O /tmp/hadoop-${hadoop_version}.tar.gz https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-${hadoop_version}/hadoop-${hadoop_version}.tar.gz",
     creates => "/tmp/hadoop-${hadoop_version}.tar.gz",
   }
   file { "/opt/hadoop-${hadoop_version}":
     ensure => 'directory',
   }
   exec { "extract-hadoop-${hadoop_version}":
-    command => "tar -xzf /tmp/hadoop-${hadoop_version}.tar.gz --strip-components=1 -C /opt/hadoop-${hadoop_version}",
+    command => "/usr/bin/tar -xzf /tmp/hadoop-${hadoop_version}.tar.gz --strip-components=1 -C /opt/hadoop-${hadoop_version}",
     creates => "/opt/hadoop-${hadoop_version}/bin/hadoop",
     require => File["/opt/hadoop-${hadoop_version}"],
   }
@@ -32,7 +32,9 @@ class profile::hdfs (
     ensure => 'file',
     source => 'puppet:///modules/profile/etc/profile.d/hadoop.sh',
   }
-  file { '/etc/hadoop/conf':
+  file { '/etc/hadoop':
+    ensure => 'directory',
+  } -> file { '/etc/hadoop/conf':
     ensure => 'directory',
   } -> file { '/etc/hadoop/conf/core-site.xml':
     ensure => 'file',
