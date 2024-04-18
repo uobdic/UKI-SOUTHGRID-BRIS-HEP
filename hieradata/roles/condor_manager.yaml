@@ -1,0 +1,30 @@
+cvmfs::mount_method: 'mount'
+
+classes:
+  - podman
+  - profile::cephfs
+  - packages::manage
+
+packages::install:
+  - nano
+  - wget
+
+profile::users::groups:
+  condor:
+    gid: '9618'
+
+profile::users::users:
+  condor:
+    uid: '9618'
+    gid: '9618'
+    home: '/var/spool/condor'
+    shell: '/sbin/nologin'
+    comment: 'condor superuser'
+    group: condor
+
+profile::cephfs::keys:
+  - condor
+
+profile::cephfs::mounts:
+  '/condor':
+    device: condor@.dicefs=/condor
