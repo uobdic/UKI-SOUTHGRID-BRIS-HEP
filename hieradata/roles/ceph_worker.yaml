@@ -2,7 +2,6 @@
 classes:
   - profile::cvmfs
   - profile::cephfs
-  - profile::hdfs
   - packages::manage
   - podman
 
