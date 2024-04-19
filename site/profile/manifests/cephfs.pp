@@ -54,6 +54,7 @@ class profile::cephfs (
       'require'  => [File['/etc/ceph/ceph.conf'], File[$mount_locations]],
       'fstype'   => 'ceph',
       'ensure'   => 'mounted',
+      'options'  => 'noatime,_netdev',
     }
     create_resources('mount', $mounts, $defaults)
   }
