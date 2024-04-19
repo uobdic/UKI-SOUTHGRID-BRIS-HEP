@@ -40,8 +40,10 @@ firewalld::ports:
     zone: public
     port: 1094
     protocol: 'tcp'
+    priority: 9000
   "Open port 4935 for dice-api":
     ensure: present
     zone: public
     port: 4935
     protocol: 'tcp'
+    priority: 9000
