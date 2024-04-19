@@ -6,6 +6,12 @@ class profile::base {
     class { 'chrony':
       servers => $chrony_servers,
     }
+    if $::facts['os']['release']['major'] == '9' {
+      file { '/etc/profile.d/container.sh':
+        ensure  => file,
+        content => 'alias docker=podman',
+      }
+    }
   } else {
     # RHEL 7
     class { 'ntp': }
