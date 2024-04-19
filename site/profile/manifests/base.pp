@@ -85,11 +85,4 @@ class profile::base {
       'ceph', 'fuse.ceph',
     ],
   }
-
-  if !empty($facts['node_info']) {
-    if $facts['node_info']['managed_network'] {
-      include network::global
-      include network::hiera
-    }
-  }
 }
