@@ -5,6 +5,7 @@ classes:
   - packages::manage
   - podman
 
+podman::enable_api_socket: true
 profile::monitored::use_prometheus: false
 
 profile::users::shell: '/sbin/nologin'
@@ -12,6 +13,7 @@ profile::users::shell: '/sbin/nologin'
 packages::install:
   - nano
   - wget
+  - podman-docker
 
 cvmfs::cvmfs_cache_base: '/var/cache/cvmfs'
 
