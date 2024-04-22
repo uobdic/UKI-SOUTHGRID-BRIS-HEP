@@ -12,6 +12,7 @@
 #    protocol: 'all'
 class profile::firewalld {
   include firewalld
+  resources { 'firewall': purge => true }
 
   $accept = lookup('profile::firewalld::accepts', Hash, 'deep', {})
   $drop   = lookup('profile::firewalld::drops', Hash, 'deep', {})

@@ -4,6 +4,9 @@ classes:
   - podman
   - profile::cephfs
   - packages::manage
+  - profile::htcondor
+
+profile::htcondor::role: "central-manager"
 
 packages::install:
   - nano

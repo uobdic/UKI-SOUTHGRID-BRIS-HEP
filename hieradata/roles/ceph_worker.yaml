@@ -4,6 +4,9 @@ classes:
   - profile::cephfs
   - packages::manage
   - podman
+  - profile::htcondor
+
+profile::htcondor::role: "execute"
 
 podman::enable_api_socket: true
 profile::monitored::use_prometheus: false

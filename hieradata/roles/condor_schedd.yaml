@@ -6,6 +6,9 @@ classes:
   - profile::cephfs
   - profile::hdfs
   - packages::manage
+  - profile::htcondor
+
+profile::htcondor::role: "submit"
 
 packages::install:
   - nano
