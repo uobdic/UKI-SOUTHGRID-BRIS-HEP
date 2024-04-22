@@ -18,8 +18,7 @@ class profile::htcondor::execute (
     owner   => 'condor',
     group   => 'condor',
     mode    => '0644',
-    content => template('profile/etc/condor/execute/20_worker.conf.erb'),
-    require => Package['htcondor'],
+    content => template('profile/etc/condor/20_worker.conf.erb'),
     notify  => Exec['/usr/sbin/condor_reconfig'],
   }
 

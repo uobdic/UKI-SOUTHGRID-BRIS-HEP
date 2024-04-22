@@ -12,4 +12,6 @@ class profile::htcondor (
   } else {
     fail("Invalid role ${role}")
   }
+
+  include profile::htcondor::service
 }
