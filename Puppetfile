@@ -13,6 +13,7 @@ mod 'puppetlabs/tftp', :latest
 mod 'puppetlabs/xinetd', :latest
 mod 'puppetlabs-motd', '7.1.0'
 mod 'pest-packages', '1.0.3'
+mod 'puppetlabs-sshkeys_core', '2.5.0'
 
 # community modules
 mod 'puppet/fetchcrl', :latest
@@ -87,6 +88,10 @@ mod 'cbsensor',
   :git => 'https://gitlab.services.bristol.ac.uk/services-operations-public/cbsensor.git',
   :tag => '3.4.0'
 
+mod 'sysusers',
+  :git => 'https://gitlab.services.bristol.ac.uk/services-operations-public/sysusers.git',
+  :tag => '0.1.0'
+
 mod 'puppet-archive', '7.1.0'
 mod 'puppet-systemd', '6.6.0'
 mod 'saz-sudo', '8.0.0' # newer version than in puppet-control
@@ -112,6 +117,7 @@ mod 'puppet-augeasproviders_core', '3.2.0'
 mod 'puppet-augeasproviders_pam', '3.0.1'
 mod 'puppet-augeasproviders_shellvar', '5.0.0'
 mod 'thias-sysctl', '1.0.7'
+
 
 
 # new-gen infrastructure
