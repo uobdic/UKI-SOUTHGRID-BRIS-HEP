@@ -7,4 +7,4 @@ Facter.add('grid_cert_expiry_date') do
         expiry_date.strftime('%Y-%m-%d')
         end
     end
-    end
+end
