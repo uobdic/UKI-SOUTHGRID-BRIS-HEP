@@ -19,5 +19,5 @@ class profile::service_accounts (
   }
 
   create_resources('group', $groups, $group_defaults)
-  create_resources('user', $users, $acc_defaults)
+  create_resources('accounts::user', $users, $acc_defaults)
 }
