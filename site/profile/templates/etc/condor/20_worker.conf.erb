@@ -1,10 +1,10 @@
-EXECUTE = <%= @execute_dir -%>
+EXECUTE = <%= @execute_dir %>
 
-NUM_CPUS = <%= @num_cpus -%>
-RESERVED_MEMORY = <%= @reserved_memory -%>
+NUM_CPUS = <%= @num_cpus %>
+RESERVED_MEMORY = <%= @reserved_memory %>
 
 # Enable GPU support (TODO)
-# MACHINE_RESOURCE_GPUS = <%= @num_gpus -%>
+# MACHINE_RESOURCE_GPUS = <%= @num_gpus %>
 
 # Enable CGROUP
 BASE_CGROUP = /system.slice/condor.service
