@@ -65,11 +65,13 @@ class profile::users {
             ensure  => link,
             target  => $value['home'],
             require => User[$key],
+            unless  => "/bin/test -d /home/${key}",
           }
         }
         if $value['ensure'] == 'absent' and "/home/${key}" != $value['home'] {
           file { "/home/${key}":
             ensure => absent,
+            unless => "/bin/test -d /home/${key}",
           }
         }
       }
