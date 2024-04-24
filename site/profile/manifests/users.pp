@@ -2,6 +2,7 @@
 class profile::users {
   $groups     = lookup('profile::users::groups', Hash, 'deep', {})
   $users      = lookup('profile::users::users', Hash, 'deep', {})
+  $default_cephfs_quota = 1000000000000
 
   if empty($groups) {
     notice('No profile::users::groups specified')
@@ -45,6 +46,13 @@ class profile::users {
             owner  => $key,
             group  => $acc_defaults['group'],
             mode   => '0700',
+          }
+          # set quote for cephfs
+          $quota = lookup("profile::users::${key}::cephfs_quota", Integer, 'deep', $default_cephfs_quota)
+          exec { 'set_cephfs_quota':
+            command => "/usr/bin/setfattr -n ceph.quota.max_bytes -v ${$quota} /cephfs/dice/users/${key}",
+            unless  => "/usr/bin/getfattr -n ceph.quota.max_bytes /cephfs/dice/users/${key}",
+            require => File['/cephfs/dice'],
           }
         }
       }
