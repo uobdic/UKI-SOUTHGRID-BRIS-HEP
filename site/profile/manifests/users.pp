@@ -61,7 +61,7 @@ class profile::users {
     unless $fqdn == 'sts.dice.priv' {
       $users.each |$key, $value| {
         exec { "check_home_symlink_${key}":
-          command => 'true',
+          command => '/usr/bin/true',
           unless  => "/bin/test -d /home/${key}",
         }
         unless $value['ensure'] == 'absent' or "/home/${key}" == $value['home'] {
