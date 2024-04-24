@@ -40,7 +40,7 @@ class profile::users {
     if $fqdn == 'sts.dice.priv' {
       $users.each |$key, $value| {
         unless $value['ensure'] == 'absent' {
-          file { ["/exports/users/${key}", "/exports/software/${key}", "/exports/scratch/${key}"]:
+          file { ["/exports/users/${key}", "/exports/software/${key}", "/exports/scratch/${key}", "/cephfs/dice/users/${key}"]:
             ensure => directory,
             owner  => $key,
             group  => $acc_defaults['group'],
