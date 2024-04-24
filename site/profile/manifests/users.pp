@@ -60,18 +60,21 @@ class profile::users {
     # symlink to the correct location (/home -> /users) for each user
     unless $fqdn == 'sts.dice.priv' {
       $users.each |$key, $value| {
+        exec { "check_home_symlink_${key}":
+          command => 'true',
+          unless  => "/bin/test -d /home/${key}",
+        }
         unless $value['ensure'] == 'absent' or "/home/${key}" == $value['home'] {
           file { "/home/${key}":
             ensure  => link,
             target  => $value['home'],
-            require => User[$key],
-            unless  => "/bin/test -d /home/${key}",
+            require => [User[$key], Exec["check_home_symlink_${key}"]],
           }
         }
         if $value['ensure'] == 'absent' and "/home/${key}" != $value['home'] {
           file { "/home/${key}":
-            ensure => absent,
-            unless => "/bin/test -d /home/${key}",
+            ensure  => absent,
+            require => Exec["check_home_symlink_${key}"],
           }
         }
       }
