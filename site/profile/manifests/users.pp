@@ -52,7 +52,7 @@ class profile::users {
           exec { "set_cephfs_quota /cephfs/dice/users/${key}":
             command => "/usr/bin/setfattr -n ceph.quota.max_bytes -v ${$quota} /cephfs/dice/users/${key}",
             unless  => "/usr/bin/getfattr -n ceph.quota.max_bytes /cephfs/dice/users/${key}",
-            require => File['/cephfs/dice'],
+            require => File["/cephfs/dice/users/${key}"],
           }
         }
       }
