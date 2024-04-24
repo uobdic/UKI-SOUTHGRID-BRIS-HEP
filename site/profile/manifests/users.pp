@@ -49,7 +49,7 @@ class profile::users {
           }
           # set quote for cephfs
           $quota = lookup("profile::users::${key}::cephfs_quota", Integer, 'deep', $default_cephfs_quota)
-          exec { 'set_cephfs_quota':
+          exec { "set_cephfs_quota /cephfs/dice/users/${key}":
             command => "/usr/bin/setfattr -n ceph.quota.max_bytes -v ${$quota} /cephfs/dice/users/${key}",
             unless  => "/usr/bin/getfattr -n ceph.quota.max_bytes /cephfs/dice/users/${key}",
             require => File['/cephfs/dice'],
