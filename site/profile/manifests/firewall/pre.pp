@@ -61,7 +61,7 @@ class profile::firewall::pre {
     proto    => 'all',
     iniface  => 'lo',
     jump     => 'accept',
-    provider => 'ip6tables',
+    protocol => 'ip6tables',
   }
 
   firewall { '003 accept related established rules':
@@ -74,6 +74,6 @@ class profile::firewall::pre {
     proto    => 'all',
     state    => ['RELATED', 'ESTABLISHED'],
     jump     => 'accept',
-    provider => 'ip6tables',
+    protocol => 'ip6tables',
   }
 }
