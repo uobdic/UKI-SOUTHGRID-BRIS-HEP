@@ -52,12 +52,17 @@ class profile::cephfs (
     file { $mount_locations:
       ensure => directory,
     }
-    # create symlink to main mount point
+    # create bind mount to main mount point
     $mount_locations.each |$mount_location| {
       file { "/cephfs/${mount_location}":
-        ensure  => link,
-        target  => $mount_location,
-        require => [File[$mount_location], Mount[$mount_location]],
+        ensure  => directory,
+      }
+      mount { "/cephfs/${mount_location}":
+        ensure  => 'mounted',
+        device  => $mount_location,
+        fstype  => 'none',
+        options => 'bind,nobootwait',
+        require => [File["/cephfs/${mount_location}"], Mount[$mount_location]],
       }
     }
     if $facts['os']['release']['major'] == '9' {
