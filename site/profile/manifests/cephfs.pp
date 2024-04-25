@@ -29,7 +29,7 @@ class profile::cephfs (
       owner   => 'root',
       group   => 'root',
       mode    => '0600',
-      require => [Package['ceph-common']],
+      require => [Package[$ceph_mount_dependency]],
     }
   }
 
@@ -39,7 +39,7 @@ class profile::cephfs (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    require => [Package['ceph-common']],
+    require => [Package[$ceph_mount_dependency]],
   }
 
   # create the mounts
