@@ -4,7 +4,7 @@ class profile::firewall::post {
   firewall { '199 Reject anything else - IPv6':
     chain    => 'FORWARD',
     proto    => 'all',
-    action   => 'reject',
+    jump     => 'reject',
     reject   => 'icmp6-adm-prohibited',
     before   => undef,
     provider => 'ip6tables',
@@ -13,7 +13,7 @@ class profile::firewall::post {
   firewall { '199 Reject anything else':
     chain    => 'FORWARD',
     proto    => 'all',
-    action   => 'reject',
+    jump     => 'reject',
     reject   => 'icmp-host-prohibited',
     before   => undef,
     provider => 'iptables',
@@ -30,7 +30,7 @@ class profile::firewall::post {
 
   firewall { '99998 Reject anything else - IPv6':
     proto    => 'all',
-    action   => 'reject',
+    jump     => 'reject',
     reject   => 'icmp6-adm-prohibited',
     before   => undef,
     provider => 'ip6tables',
@@ -38,7 +38,7 @@ class profile::firewall::post {
 
   firewall { '99998 Reject anything else':
     proto    => 'all',
-    action   => 'reject',
+    jump     => 'reject',
     reject   => 'icmp-host-prohibited',
     before   => undef,
     provider => 'iptables',

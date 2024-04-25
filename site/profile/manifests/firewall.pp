@@ -15,19 +15,19 @@ class profile::firewall {
     $drop_v6         = lookup('profile::firewall6::drop', Hash, 'deep', {})
 
     $accept_defaults = {
-      'action' => 'accept',
+      'jump' => 'accept',
     }
     $accept_defaults_v6 = {
-      'action' => 'accept',
+      'jump' => 'accept',
       'provider' => 'ip6tables',
     }
 
     $drop_defaults   = {
-      'action' => 'drop',
+      'jump' => 'drop',
       'proto' => 'all',
     }
     $drop_defaults_v6   = {
-      'action' => 'drop',
+      'jump' => 'drop',
       'provider' => 'ip6tables',
       'proto' => 'all',
     }
