@@ -25,7 +25,14 @@ class profile::firewall::post {
     jump       => 'LOG',
     log_prefix => '[iptables]: ',
     before     => undef,
-    protocol   => ['iptables', 'ip6tables'],
+    protocol   => 'iptables',
+  }
+  firewall { '99997 Log once all DROPs are done - IPv6':
+    proto      => 'all',
+    jump       => 'LOG',
+    log_prefix => '[iptables]: ',
+    before     => undef,
+    protocol   => 'ip6tables',
   }
 
   firewall { '99998 Reject anything else - IPv6':
