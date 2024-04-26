@@ -5,10 +5,28 @@ class profile::cephfs (
   Array[String] $keys = ['dice-reader'],
   Hash $mounts = {},
 ) {
-  package { 'centos-release-ceph-reef': }
-  package { 'ceph-common':
-    ensure  => latest,
-    require => [Package['centos-release-ceph-reef']],
+  $ceph_release = 'centos-release-ceph-reef'
+  $ceph_mount_dependency = $facts['os']['release']['major'] ? {
+    '7' => 'ceph-fuse',
+    default => 'ceph-common',
+  }
+  if $facts['os']['release']['major'] == '7' {
+    file { '/etc/yum.repos.d/ceph.repo':
+      ensure => file,
+      source => 'puppet:///dice_store/cephfs/ceph_el7.repo',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0644',
+    }
+    $ceph_repo_dependency = File['/etc/yum.repos.d/ceph.repo']
+  } else {
+    package { $ceph_release: }
+    $ceph_repo_dependency = Package[$ceph_release]
+  }
+  package { $ceph_mount_dependency:
+    ensure          => latest,
+    require         => $ceph_repo_dependency,
+    install_options => ['--enablerepo', 'epel'],
   }
 
   # create the cephfs keys
@@ -19,7 +37,7 @@ class profile::cephfs (
       owner   => 'root',
       group   => 'root',
       mode    => '0600',
-      require => [Package['ceph-common']],
+      require => [Package[$ceph_mount_dependency]],
     }
   }
 
@@ -29,7 +47,7 @@ class profile::cephfs (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    require => [Package['ceph-common']],
+    require => [Package[$ceph_mount_dependency]],
   }
 
   # create the mounts
@@ -42,20 +60,42 @@ class profile::cephfs (
     file { $mount_locations:
       ensure => directory,
     }
-    # create symlink to main mount point
+    # create bind mount to main mount point
     $mount_locations.each |$mount_location| {
-      file { "/cephfs/${mount_location}":
-        ensure  => link,
-        target  => $mount_location,
-        require => File[$mount_location],
+      $mount_name = $mount_location[1, -1]
+      file { "/cephfs/${mount_name}":
+        ensure  => directory,
+      }
+      mount { "/cephfs/${mount_name}":
+        ensure  => 'mounted',
+        device  => $mount_location,
+        fstype  => 'none',
+        options => 'bind,nobootwait',
+        require => [File["/cephfs/${mount_name}"], Mount[$mount_location]],
       }
     }
-    $defaults = {
-      'require'  => [File['/etc/ceph/ceph.conf'], File[$mount_locations]],
-      'fstype'   => 'ceph',
-      'ensure'   => 'mounted',
-      'options'  => 'noatime,_netdev',
+    if $facts['os']['release']['major'] == '9' {
+      $defaults = {
+        'require'  => [File['/etc/ceph/ceph.conf'], File[$mount_locations]],
+        'fstype'   => 'ceph',
+        'ensure'   => 'mounted',
+        'options'  => 'noatime,_netdev',
+      }
+      create_resources('mount', $mounts, $defaults)
+    } else {
+      $mounts.map |$mount, $options| {
+        # default options are of the form "dice-user@.dicefs=/dice"
+        # we want to extract the client ID before the '@' sign
+        $client_id = $options['device'].split('@')[0]
+        $mount_point = $options['device'].split('=')[1]
+        mount { $mount:
+          ensure  => 'mounted',
+          device  => 'none',
+          fstype  => 'fuse.ceph',
+          options => "ceph.id=${client_id},ceph.client_mountpoint=${mount_point},noatime,_netdev",
+          require => [File['/etc/ceph/ceph.conf'], File[$mount]],
+        }
+      }
     }
-    create_resources('mount', $mounts, $defaults)
   }
 }

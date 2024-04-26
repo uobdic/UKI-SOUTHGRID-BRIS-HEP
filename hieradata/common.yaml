@@ -5,7 +5,6 @@ classes:
  - 'profile::base'
  - 'profile::monitored'
  - profile::users::admin
- - profile::cephfs
 # - 'profile::firewall::setup'
 
 packages:
@@ -85,10 +84,3 @@ site::node_info:
   service_accounts: service_accounts
 
 cbsensor::version: "v7"
-
-profile::cephfs::keys:
-  - xrootd
-
-profile::cephfs::mounts:
-  '/xrootd':
-    device: dice-user@.dicefs=/xrootd

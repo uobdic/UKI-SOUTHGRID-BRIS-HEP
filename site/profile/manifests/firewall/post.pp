@@ -4,19 +4,19 @@ class profile::firewall::post {
   firewall { '199 Reject anything else - IPv6':
     chain    => 'FORWARD',
     proto    => 'all',
-    action   => 'reject',
+    jump     => 'reject',
     reject   => 'icmp6-adm-prohibited',
     before   => undef,
-    provider => 'ip6tables',
+    protocol => 'ip6tables',
   }
 
   firewall { '199 Reject anything else':
     chain    => 'FORWARD',
     proto    => 'all',
-    action   => 'reject',
+    jump     => 'reject',
     reject   => 'icmp-host-prohibited',
     before   => undef,
-    provider => 'iptables',
+    protocol => 'iptables',
   }
 
   # after everything
@@ -25,22 +25,29 @@ class profile::firewall::post {
     jump       => 'LOG',
     log_prefix => '[iptables]: ',
     before     => undef,
-    provider   => ['iptables', 'ip6tables'],
+    protocol   => 'iptables',
+  }
+  firewall { '99997 Log once all DROPs are done - IPv6':
+    proto      => 'all',
+    jump       => 'LOG',
+    log_prefix => '[iptables]: ',
+    before     => undef,
+    protocol   => 'ip6tables',
   }
 
   firewall { '99998 Reject anything else - IPv6':
     proto    => 'all',
-    action   => 'reject',
+    jump     => 'reject',
     reject   => 'icmp6-adm-prohibited',
     before   => undef,
-    provider => 'ip6tables',
+    protocol => 'ip6tables',
   }
 
   firewall { '99998 Reject anything else':
     proto    => 'all',
-    action   => 'reject',
+    jump     => 'reject',
     reject   => 'icmp-host-prohibited',
     before   => undef,
-    provider => 'iptables',
+    protocol => 'iptables',
   }
 }
