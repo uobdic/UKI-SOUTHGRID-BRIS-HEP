@@ -62,15 +62,16 @@ class profile::cephfs (
     }
     # create bind mount to main mount point
     $mount_locations.each |$mount_location| {
-      file { "/cephfs/${mount_location}":
+      $mount_name = $mount_location[1, -1]
+      file { "/cephfs/${mount_name}":
         ensure  => directory,
       }
-      mount { "/cephfs/${mount_location}":
+      mount { "/cephfs/${mount_name}":
         ensure  => 'mounted',
         device  => $mount_location,
         fstype  => 'none',
         options => 'bind,nobootwait',
-        require => [File["/cephfs/${mount_location}"], Mount[$mount_location]],
+        require => [File["/cephfs/${mount_name}"], Mount[$mount_location]],
       }
     }
     if $facts['os']['release']['major'] == '9' {
