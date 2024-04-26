@@ -86,11 +86,12 @@ class profile::cephfs (
         # default options are of the form "dice-user@.dicefs=/dice"
         # we want to extract the client ID before the '@' sign
         $client_id = $options['device'].split('@')[0]
+        $mount_point = $options['device'].split('=')[1]
         mount { $mount:
           ensure  => 'mounted',
           device  => 'none',
           fstype  => 'fuse.ceph',
-          options => "ceph.id=${client_id},ceph.client_mountpoint=${options['device']},noatime,_netdev",
+          options => "ceph.id=${client_id},ceph.client_mountpoint=${mount_point},noatime,_netdev",
           require => [File['/etc/ceph/ceph.conf'], File[$mount]],
         }
       }
