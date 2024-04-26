@@ -40,8 +40,9 @@ class profile::firewall::pre {
   }
 
   firewall { '00001 accept all icmpv6':
-    proto => 'ipv6-icmp',
-    jump  => 'accept',
+    proto    => 'ipv6-icmp',
+    jump     => 'accept',
+    protocol => 'ip6tables',
   }
 
   firewall { '001 accept all to lo interface':
