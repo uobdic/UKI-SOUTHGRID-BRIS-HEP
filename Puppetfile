@@ -14,6 +14,7 @@ mod 'puppetlabs/xinetd', :latest
 mod 'puppetlabs-motd', '7.1.0'
 mod 'pest-packages', '1.0.3'
 mod 'puppetlabs-sshkeys_core', '2.5.0'
+mod 'puppet-filemapper', '4.0.0'
 
 # community modules
 mod 'puppet/fetchcrl', :latest
