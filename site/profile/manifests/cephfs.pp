@@ -89,7 +89,7 @@ class profile::cephfs (
         mount { $mount:
           ensure  => 'mounted',
           device  => 'none',
-          fstype  => 'ceph',
+          fstype  => 'fuse.ceph',
           options => "ceph.id=${client_id},ceph.client_mountpoint=${options['device']},noatime,_netdev",
           require => [File['/etc/ceph/ceph.conf'], File[$mount]],
         }
