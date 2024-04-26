@@ -5,24 +5,27 @@ class profile::cephfs (
   Array[String] $keys = ['dice-reader'],
   Hash $mounts = {},
 ) {
-  $ceph_release = $facts['os']['release']['major'] ? {
-    '7' => 'ceph-release',
-    default => 'centos-release-ceph-reef',
-  }
+  $ceph_release = 'centos-release-ceph-reef'
   $ceph_mount_dependency = $facts['os']['release']['major'] ? {
     '7' => 'ceph-fuse',
     default => 'ceph-common',
   }
   if $facts['os']['release']['major'] == '7' {
-    package { $ceph_release:
-      name => 'https://download.ceph.com/rpm-octopus/el7/noarch/ceph-release-1-1.el7.noarch.rpm',
+    file { '/etc/yum.repos.d/ceph.repo':
+      ensure => file,
+      source => 'puppet:///dice_store/cephfs/ceph_el7.repo',
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0644',
     }
+    $ceph_repo_dependency = File['/etc/yum.repos.d/ceph.repo']
   } else {
     package { $ceph_release: }
+    $ceph_repo_dependency = Package[$ceph_release]
   }
   package { $ceph_mount_dependency:
     ensure          => latest,
-    require         => [Package[$ceph_release]],
+    require         => $ceph_repo_dependency,
     install_options => ['--enablerepo', 'epel'],
   }
 
