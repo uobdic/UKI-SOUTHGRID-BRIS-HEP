@@ -16,4 +16,11 @@ class profile::squid {
     enable  => true,
     require => Package['frontier-squid'],
   }
+
+  file { '/etc/squid/squid.conf':
+    ensure  => 'file',
+    source  => 'puppet:///modules/profile/etc/squid/squid.conf',
+    require => Package['frontier-squid'],
+    notify  => Service['frontier-squid'],
+  }
 }
