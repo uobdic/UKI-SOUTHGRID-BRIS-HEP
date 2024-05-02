@@ -1,0 +1,15 @@
+classes:
+  - profile::firewalld
+
+firewalld::ports:
+  "Open port 9618 for condor":
+    ensure: present
+    zone: public
+    port: 9618
+    protocol: 'tcp'
+
+firewalld::services:
+  "Allow access to HTTP service on port 80 for CEView (internal only)":
+    service: http
+    zone: public
+    ensure: present
