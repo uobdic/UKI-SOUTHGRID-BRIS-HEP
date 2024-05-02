@@ -1,0 +1,11 @@
+---
+classes:
+  - profile::firewalld
+  - profile::squid
+
+firewalld::ports:
+  "Open port  3128 for squid":
+    ensure: present
+    zone: public
+    port: 3128
+    protocol: 'tcp'
