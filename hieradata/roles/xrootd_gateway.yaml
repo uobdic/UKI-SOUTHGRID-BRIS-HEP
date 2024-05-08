@@ -2,7 +2,7 @@
 classes:
   - profile::firewalld
   - profile::xrootd::gateway
-
+  - profile::cephfs
 
 firewalld::custom_services:
   xrootd:
@@ -45,3 +45,13 @@ firewalld::ports:
     zone: public
     port: 4935
     protocol: 'tcp'
+
+profile::cephfs::keys:
+  - dice-user
+  - xrootd
+
+profile::cephfs::mounts:
+  '/dice':
+    device: dice-user@.dicefs=/dice
+  '/xrootd':
+    device: xrootd@.dicefs=/xrootd
