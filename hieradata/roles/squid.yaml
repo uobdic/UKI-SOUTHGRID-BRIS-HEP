@@ -9,3 +9,8 @@ firewalld::ports:
     zone: public
     port: 3128
     protocol: 'tcp'
+  "Open port  3401 for squid monitoring":
+    ensure: present
+    zone: public
+    port: 3401
+    protocol: 'udp'
