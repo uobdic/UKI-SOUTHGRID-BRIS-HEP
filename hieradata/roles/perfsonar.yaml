@@ -2,4 +2,5 @@
 classes:
   - "::perfsonar"
 
+perfsonar::manage_firewall: false
 network::global::nozeroconf: "yes"
