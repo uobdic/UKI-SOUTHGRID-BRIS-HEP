@@ -1,5 +1,5 @@
 # class for configuring HTCondor
-# @param role: The role of the node, either 'execute', 'manager', or 'submit'
+# @param role [String]: The role of the node, either 'execute', 'manager', or 'submit'
 class profile::htcondor (
   String $role = 'execute',
 ) {
