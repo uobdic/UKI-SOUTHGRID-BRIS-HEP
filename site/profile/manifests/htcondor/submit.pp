@@ -7,10 +7,12 @@ class profile::htcondor::submit (
   file { '/etc/condor/config.d/00_accounting.conf':
     ensure => file,
     source => "puppet:///modules/${module_name}/etc/condor/00_accounting.conf",
+    notify => Exec['/usr/sbin/condor_reconfig'],
   }
 
   file { '/etc/condor/config.d/12_resource_limits.conf':
     ensure  => file,
     content => template("${module_name}/etc/condor/12_resource_limits.conf.erb"),
+    notify  => Exec['/usr/sbin/condor_reconfig'],
   }
 }

@@ -7,5 +7,5 @@
 <%= name %> = ( <%= value %> )
 <% end %>
 
-SYSTEM_PERIODIC_REMOVE = <%=periodic_remove_requirements.keys.sort.join(" || ") %>
+SYSTEM_PERIODIC_REMOVE = <%=@periodic_remove_requirements.keys.sort.join(" || ") %>
 <% end %>
