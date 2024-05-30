@@ -1,0 +1,11 @@
+# HTCondor configuration: resource limits
+# This file will be deployed on every scheduler
+
+<% if @periodic_remove_requirements -%>
+# Remove jobs that exceed their resource limits
+<% @periodic_remove_requirements.sort.each do |name, value| -%>
+<%= name %> = ( <%= value %> )
+<% end %>
+
+SYSTEM_PERIODIC_REMOVE = <%=periodic_remove_requirements.keys.sort.join(" || ") %>
+<% end %>
