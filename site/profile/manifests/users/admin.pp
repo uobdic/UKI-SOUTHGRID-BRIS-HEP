@@ -1,7 +1,7 @@
 # Profile for sudo users
 class profile::users::admin {
-  $node_role = $facts['node_info']['role']
-  unless $node_role == 'desktop' {
+  $node_role = fact('node_info.role')
+  unless $node_role == 'desktop' or $node_role == undef {
     include sudo
     # collect all users with sudo access
     $site_admins = hiera_array('site::admins', [])
