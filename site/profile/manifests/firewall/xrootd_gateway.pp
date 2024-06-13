@@ -18,13 +18,13 @@ class profile::firewall::xrootd_gateway {
     proto    => 'tcp',
     dport    => '1094',
     jump     => 'accept',
-    provider => 'ip6tables',
+    protocol => 'ip6tables',
   }
   firewall { '961 allow xrootd':
     state    => 'NEW',
     proto    => 'tcp',
     dport    => '1194',
     jump     => 'accept',
-    provider => 'ip6tables',
+    protocol => 'ip6tables',
   }
 }

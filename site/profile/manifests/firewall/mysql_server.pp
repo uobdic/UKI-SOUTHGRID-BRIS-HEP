@@ -5,6 +5,6 @@ class profile::firewall::mysql_server {
     proto    => 'tcp',
     dport    => '3306',
     jump     => 'accept',
-    provider => 'ip6tables',
+    protocol => 'ip6tables',
   }
 }

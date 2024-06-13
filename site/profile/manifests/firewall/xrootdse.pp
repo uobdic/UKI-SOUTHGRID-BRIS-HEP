@@ -17,13 +17,13 @@ class profile::firewall::xrootdse {
     proto    => 'tcp',
     dport    => '1094',
     jump     => 'accept',
-    provider => 'ip6tables',
+    protocol => 'ip6tables',
   }
   firewall { '960 allow https':
     state    => 'NEW',
     proto    => 'tcp',
     dport    => '443',
     jump     => 'accept',
-    provider => 'ip6tables',
+    protocol => 'ip6tables',
   }
 }
