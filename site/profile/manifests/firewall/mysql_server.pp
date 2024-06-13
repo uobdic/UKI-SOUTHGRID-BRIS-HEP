@@ -4,7 +4,7 @@ class profile::firewall::mysql_server {
     state    => 'NEW',
     proto    => 'tcp',
     dport    => '3306',
-    action   => 'accept',
+    jump     => 'accept',
     provider => 'ip6tables',
   }
 }

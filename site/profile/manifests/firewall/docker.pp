@@ -30,7 +30,7 @@ class profile::firewall::docker {
 
   firewall { '552 docker FORWARD out docker0 related established':
     chain    => 'FORWARD',
-    action   => 'accept',
+    jump     => 'accept',
     proto    => 'all',
     outiface => 'docker0',
     table    => 'filter',
@@ -47,7 +47,7 @@ class profile::firewall::docker {
 
   firewall { '554 docker FORWARD in docker0 out not docker0 accept':
     chain    => 'FORWARD',
-    action   => 'accept',
+    jump     => 'accept',
     proto    => 'all',
     iniface  => 'docker0',
     outiface => '! docker0',
@@ -56,7 +56,7 @@ class profile::firewall::docker {
 
   firewall { '555 docker FORWARD in docker0 out docker0 accept':
     chain    => 'FORWARD',
-    action   => 'accept',
+    jump     => 'accept',
     proto    => 'all',
     iniface  => 'docker0',
     outiface => 'docker0',
@@ -82,7 +82,7 @@ class profile::firewall::docker {
   }
 
   firewall { '558 docker DOCKER-ISOLATION-STAGE-2 out docker0 drop':
-    action   => 'drop',
+    jump     => 'drop',
     chain    => 'DOCKER-ISOLATION-STAGE-2',
     outiface => 'docker0',
     proto    => 'all',
