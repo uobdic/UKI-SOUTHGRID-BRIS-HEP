@@ -19,7 +19,7 @@ class profile::firewall {
     }
     $accept_defaults_v6 = {
       'jump' => 'accept',
-      'provider' => 'ip6tables',
+      'protocol' => 'ip6tables',
     }
 
     $drop_defaults   = {
@@ -28,7 +28,7 @@ class profile::firewall {
     }
     $drop_defaults_v6   = {
       'jump' => 'drop',
-      'provider' => 'ip6tables',
+      'protocol' => 'ip6tables',
       'proto' => 'all',
     }
     include profile::firewall::setup
