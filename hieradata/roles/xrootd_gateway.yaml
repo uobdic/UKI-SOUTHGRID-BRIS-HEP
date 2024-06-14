@@ -4,6 +4,12 @@ classes:
   - profile::xrootd::gateway
   - profile::cephfs
 
+cvmfs::cvmfs_cache_base: '/var/cache/cvmfs'
+
+site::site_info::cvmfs_mounts:
+    grid.cern.ch:
+      cvmfs_quota_limit: 1000
+
 firewalld::custom_services:
   xrootd:
     short: 'xrootd'
