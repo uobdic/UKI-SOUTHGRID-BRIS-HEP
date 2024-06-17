@@ -2,7 +2,7 @@
 class profile::users {
   $groups     = lookup('profile::users::groups', Hash, 'deep', {})
   $users      = lookup('profile::users::users', Hash, 'deep', {})
-  $default_cephfs_quota = 1000000000000
+  $default_cephfs_quota = 1100000000000
 
   if empty($groups) {
     notice('No profile::users::groups specified')
