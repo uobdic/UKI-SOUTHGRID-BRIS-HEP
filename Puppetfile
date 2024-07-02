@@ -1,7 +1,7 @@
 forge 'http://forge.puppetlabs.com'
 
 # Puppetlabs modules
-mod 'puppetlabs-accounts', '8.1.1'
+mod 'puppetlabs-accounts', '8.2.0'
 mod 'puppetlabs-concat', '9.0.2'
 mod 'puppetlabs-firewall', '8.0.1'
 mod 'puppetlabs/inifile', :latest
