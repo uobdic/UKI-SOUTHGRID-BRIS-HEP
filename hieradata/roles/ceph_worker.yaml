@@ -5,6 +5,8 @@ classes:
   - packages::manage
   - podman
   - profile::htcondor
+  - profile::apptainer
+  - profile::heposlibs
 
 profile::htcondor::role: "execute"
 

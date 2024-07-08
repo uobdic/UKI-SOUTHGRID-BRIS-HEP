@@ -84,3 +84,18 @@ site::node_info:
   service_accounts: service_accounts
 
 cbsensor::version: "v7"
+
+apptainer::install_setuid: false
+apptainer::use_nvidia_container_cli: no
+apptainer::bind_paths:
+  - '/etc/localtime'
+  - '/etc/hosts'
+  - '/users'
+  - '/condor'
+  - '/dice'
+  - '/xrootd'
+  - '/cephfs'
+  - '/software'
+  - '/cvmfs'
+  - '/shared/scratch'
+  - '/etc/grid-security'

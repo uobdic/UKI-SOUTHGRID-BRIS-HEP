@@ -5,6 +5,8 @@ classes:
   - profile::hdfs
   - packages::manage
   - profile::htcondor
+  - profile::apptainer
+  - profile::heposlibs
 
 profile::htcondor::role: "submit"
 profile::htcondor::submit::periodic_remove_requirements:
