@@ -1,0 +1,16 @@
+# Path to the container binary.
+SINGULARITY = /etc/condor/container_wrapper
+
+# Forces _all_ jobs to run inside container.
+SINGULARITY_JOB = !isUndefined(TARGET.SingularityImage)
+
+# Forces all jobs to use the given image.
+SINGULARITY_IMAGE_EXPR = TARGET.SingularityImage
+
+# Paths to bind via user bind control.
+<% if @bind_paths %>
+SINGULARITY_BIND_EXPR = "<%= @bind_paths.sort.flatten.join(',') -%>"
+<% end %>
+
+# Maps $_CONDOR_SCRATCH_DIR on the host to given path inside the image.
+SINGULARITY_TARGET_DIR = /srv
