@@ -1,5 +1,10 @@
 # class to control the HTCondor systemctl service
 class profile::htcondor::service {
+  file { '/etc/condor/config.d/00-site-common.conf':
+    ensure  => file,
+    source  => "puppet:///modules/${module_name}/etc/condor/00-site-common.conf",
+    require => Package['htcondor'],
+  }
   service { 'condor':
     ensure => running,
     enable => true,
