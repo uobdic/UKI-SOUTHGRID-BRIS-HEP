@@ -2,7 +2,7 @@
 class profile::htcondor::common {
   file { '/etc/condor/config.d/00-site-common.conf':
     ensure => file,
-    source => "puppet:///modules/${module_name}/etc/condor/00-site-common.conf",
+    source => "puppet:///modules/${module_name}/etc/condor/00_site_common.conf",
   }
   service { 'condor':
     ensure => running,
