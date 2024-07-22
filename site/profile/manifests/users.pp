@@ -22,6 +22,7 @@ class profile::users {
 
   $defaults     = {
     'ensure' => present,
+    'tag'    => 'accounts::groups',
   }
 
   $acc_defaults = {
@@ -32,7 +33,10 @@ class profile::users {
     'managehome'   => false,
     'gid'          => '100',
     'group'        => 'users',
+    'tag'          => 'accounts::users',
   }
+  # make sure groups are created before users
+  Resource_type<| tag == 'accounts::groups' |> -> Resource_type<| tag == 'accounts::users' |>
 
   unless 'lcgce' in $fqdn {
     create_resources('group', $groups, $defaults)
