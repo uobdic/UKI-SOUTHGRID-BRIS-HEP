@@ -67,7 +67,7 @@ class profile::users {
         unless $value['ensure'] == 'absent' or "/home/${key}" == $value['home'] {
           exec { "create_home_symlink_${key}":
             command => "/usr/bin/ln -s ${value['home']} /home/${key}",
-            unless  => "/usr/bin/test -d /home/${key}",
+            unless  => "/usr/bin/test -d /home/${key} || /usr/bin/test -L /home/${key}",
           }
         }
         if $value['ensure'] == 'absent' and "/home/${key}" != $value['home'] {
