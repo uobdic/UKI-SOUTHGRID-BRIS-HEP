@@ -10,7 +10,7 @@ class profile::hdfs (
 
   # Download hadoop
   exec { "download-hadoop-${hadoop_version}":
-    command => "/usr/bin/wget -O /tmp/hadoop-${hadoop_version}.tar.gz https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-${hadoop_version}/hadoop-${hadoop_version}.tar.gz",
+    command => "/usr/bin/wget -O /tmp/hadoop-${hadoop_version}.tar.gz https://dlcdn.apache.org/hadoop/common/hadoop-${hadoop_version}/hadoop-${hadoop_version}.tar.gz",
     creates => "/tmp/hadoop-${hadoop_version}.tar.gz",
   }
   file { "/opt/hadoop-${hadoop_version}":
