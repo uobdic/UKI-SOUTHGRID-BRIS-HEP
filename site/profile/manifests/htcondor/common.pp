@@ -15,4 +15,9 @@ class profile::htcondor::common {
     unless      => 'test -f /etc/condor/config.d/19_remote_submit.config',
     require     => Service['condor'],
   }
+
+  file {'/etc/profile.d/00_grid.sh':
+    ensure => present,
+    source => "puppet:///modules/${module_name}/etc/profile.d/00_grid.sh",
+  }
 }
