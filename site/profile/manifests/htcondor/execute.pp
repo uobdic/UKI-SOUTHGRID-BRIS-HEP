@@ -8,6 +8,8 @@ class profile::htcondor::execute (
   Integer $num_gpus = 0,
   Integer $reserved_memory = 0,
   String $execute_dir_base = '/condor/scratch',
+  Boolean $use_gpu = false,
+  Boolean $start_jobs = true,
 ) {
   $execute_dir = "${execute_dir_base}/${facts['networking']['fqdn']}"
   $worker_cfg = '/etc/condor/config.d/20_worker.cfg'
@@ -27,5 +29,18 @@ class profile::htcondor::execute (
     owner  => 'condor',
     group  => 'condor',
     mode   => '0755',
+  }
+
+  if $start_jobs {
+    file {'/etc/condor/config.d/999_off.config':
+      ensure => 'absent',
+      notify => Exec['/usr/sbin/condor_reconfig'],
+    }
+  } else {
+    file {'/etc/condor/config.d/999_off.config':
+      ensure  => 'present',
+      content => 'START = !isUndefined(TARGET.MAGIC)',
+      notify  => Exec['/usr/sbin/condor_reconfig'],
+    }
   }
 }
