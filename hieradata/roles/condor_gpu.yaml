@@ -15,8 +15,6 @@ profile::htcondor::execute::start_jobs: false
 podman::enable_api_socket: true
 profile::monitored::use_prometheus: false
 
-profile::users::shell: '/sbin/nologin'
-
 packages::install:
   - nano
   - wget
