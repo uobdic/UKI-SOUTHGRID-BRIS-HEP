@@ -85,6 +85,7 @@ site::node_info:
 
 cbsensor::version: "v7"
 
+apptainer::version: 'latest'
 apptainer::install_setuid: false
 apptainer::use_nvidia_container_cli: 'no'
 apptainer::bind_paths:
