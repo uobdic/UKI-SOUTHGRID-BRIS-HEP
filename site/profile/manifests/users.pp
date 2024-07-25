@@ -73,7 +73,7 @@ class profile::users {
         if $value['ensure'] == 'absent' and "/home/${key}" != $value['home'] {
           exec { "remove_home_symlink_${key}":
             command => "/usr/bin/rm -f /home/${key}",
-            unless  => "/usr/bin/test ! -d /home/${key} && /usr/bin/test ! -L /home/${key}",
+            onlyif  => "/usr/bin/test -L /home/${key}",
           }
         }
       }
