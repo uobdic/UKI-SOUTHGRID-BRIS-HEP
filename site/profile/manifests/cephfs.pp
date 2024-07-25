@@ -70,7 +70,7 @@ class profile::cephfs (
         ensure  => 'mounted',
         device  => $mount_location,
         fstype  => 'none',
-        options => 'bind,nobootwait',
+        options => 'bind,nobootwait,_netdev',
         require => [File["/cephfs/${mount_name}"], Mount[$mount_location]],
       }
     }
