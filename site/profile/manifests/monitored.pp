@@ -15,9 +15,10 @@ class profile::monitored (
     "Settings for monitoring: prometheus=${use_prometheus}, smartd=${use_smartd},\
      central_logging=${use_central_logging}, psacct=${use_process_accounting}":
   }
+  $role = $facts['node_info']['role']
   if $use_prometheus {
     # some nodes already have prometheus due to their services
-    unless $hostgroup =~ /ceph_condor/ {
+    unless $role =~ /ceph_worker/ {
       include profile::monitored::prometheus
     }
   }
