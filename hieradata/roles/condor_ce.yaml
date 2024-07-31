@@ -1,5 +1,6 @@
 classes:
   - profile::firewalld
+  - profile::cephfs
 
 firewalld::ports:
   "Open port 9618 for condor":
@@ -13,3 +14,14 @@ firewalld::services:
     service: http
     zone: public
     ensure: present
+
+profile::cephfs::keys:
+  - dice-user
+
+profile::cephfs::mounts:
+  '/condor':
+    device: dice-user@.dicefs=/condor
+  '/dice':
+    device: dice-user@.dicefs=/dice
+  '/xrootd':
+    device: dice-user@.dicefs=/xrootd

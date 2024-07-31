@@ -1,6 +1,7 @@
 
 classes:
   - profile::htcondor_ce
+  - profile::cephfs
 
 htcondor_ce::condor_view_hosts: ['lcgce02.phy.bris.ac.uk']
 htcondor_ce::job_routes_template: 'htcondor_ce/job_routes.conf.erb'
@@ -59,3 +60,14 @@ htcondor_ce::job_routes:
     Requirements: '(x509UserProxyVOName == "eucliduk.net");'
   dice_other_centos7:
     Requirements: '(x509UserProxyVOName =!= "atlas") && (x509UserProxyVOName =!= "cms") && (x509UserProxyVOName =!= "dune") && (x509UserProxyVOName =!= "gridpp") && (x509UserProxyVOName =!= "ilc") && (x509UserProxyVOName =!= "lhcb") && (x509UserProxyVOName =!= "lsst") && (x509UserProxyVOName =!= "lz") && (x509UserProxyVOName =!= "ops") && (x509UserProxyVOName =!= "mu3e");'
+
+profile::cephfs::keys:
+  - dice-user
+
+profile::cephfs::mounts:
+  '/condor':
+    device: dice-user@.dicefs=/condor
+  '/dice':
+    device: dice-user@.dicefs=/dice
+  '/xrootd':
+    device: dice-user@.dicefs=/xrootd
