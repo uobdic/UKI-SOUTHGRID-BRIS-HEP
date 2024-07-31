@@ -56,6 +56,7 @@ mod 'benformosa-linux_disable_ipv6', '0.1.1'
 mod 'htcondor',
   :git => 'https://github.com/HEP-Puppet/htcondor',
   :ref => 'v2.1.0'
+mod 'puppetlabs-mysql', '16.0.0'
 
 # CERN OPS
 mod 'bdii',
