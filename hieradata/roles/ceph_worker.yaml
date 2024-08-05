@@ -15,9 +15,6 @@ profile::monitored::use_prometheus: false
 
 profile::users::shell: '/sbin/nologin'
 
-profile::extra::packages_to_install:
-  - podman-docker
-
 cvmfs::cvmfs_cache_base: '/var/cache/cvmfs'
 
 profile::users::groups:
