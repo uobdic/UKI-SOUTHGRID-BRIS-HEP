@@ -7,10 +7,12 @@ classes:
  - profile::users::admin
 # - 'profile::firewall::setup'
 
-packages:
+profile::default::packages_to_install:
   - kernel-devel
+  - lvm2
   - nano
   - tree
+  - wget
 
 ntp::enable: true
 ntp::servers:
