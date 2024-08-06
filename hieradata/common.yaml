@@ -13,6 +13,7 @@ profile::default::packages_to_install:
   - nano
   - tree
   - wget
+  - yum-utils
 
 ntp::enable: true
 ntp::servers:
