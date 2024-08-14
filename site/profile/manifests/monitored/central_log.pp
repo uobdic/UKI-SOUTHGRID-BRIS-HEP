@@ -22,12 +22,19 @@ class profile::monitored::central_log {
       ]:
         ensure => 'absent',
     }
+  }
 
-    file { '/etc/rsyslog.conf':
+  file { '/etc/rsyslog.conf':
       ensure  => 'file',
       content => template("${module_name}/etc/rsyslog.conf.erb"),
       mode    => '0644',
       notify  => Service['rsyslog'],
+  }
+
+  if $is_central_log {
+    file { '/etc/rsyslog.d/listen.conf':
+      ensure  => 'file',
+      content => '$SystemLogSocketName /run/systemd/journal/syslog',
     }
   }
 
