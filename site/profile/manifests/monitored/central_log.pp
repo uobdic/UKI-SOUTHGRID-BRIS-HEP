@@ -35,6 +35,7 @@ class profile::monitored::central_log {
     file { '/etc/rsyslog.d/listen.conf':
       ensure  => 'file',
       content => '$SystemLogSocketName /run/systemd/journal/syslog',
+      notify  => Service['rsyslog'],
     }
   }
 
