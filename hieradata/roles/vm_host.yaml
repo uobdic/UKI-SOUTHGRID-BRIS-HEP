@@ -1,2 +1,13 @@
 ---
 profile::base::automatic_updates: false
+
+classes:
+  - profile::cephfs
+  - packages::manage
+
+profile::cephfs::keys:
+  - dice-user
+
+profile::cephfs::mounts:
+  '/dice':
+    device: dice-user@.dicefs=/dice
