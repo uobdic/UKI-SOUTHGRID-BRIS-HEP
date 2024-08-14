@@ -37,6 +37,18 @@ class profile::monitored::central_log {
       content => '$SystemLogSocketName /run/systemd/journal/syslog',
       notify  => Service['rsyslog'],
     }
+    if $facts['os']['family'] == 'RedHat' and $facts['os']['release']['major'] > 7 {
+      firewalld_port { 'syslog udp':
+        ensure => 'present',
+        port   => 514,
+        proto  => 'udp',
+      }
+      firewalld_port { 'syslog tcp':
+        ensure => 'present',
+        port   => 514,
+        proto  => 'tcp',
+      }
+    }
   }
 
   service { 'rsyslog':
