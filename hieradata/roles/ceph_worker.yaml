@@ -7,6 +7,7 @@ classes:
   - profile::htcondor
   - profile::apptainer
   - profile::heposlibs
+  - profile::nfs_mounts
 
 profile::htcondor::role: "execute"
 
@@ -41,3 +42,14 @@ profile::cephfs::mounts:
     device: dice-user@.dicefs=/dice
   '/xrootd':
     device: dice-user@.dicefs=/xrootd
+
+profile::nfs_mounts::mounts:
+  '/shared/scratch':
+    path: /exports/scratch
+    read_only: false
+  '/users':
+    path: /exports/scratch
+    read_only: true
+  '/software':
+    path: /exports/scratch
+    read_only: true
