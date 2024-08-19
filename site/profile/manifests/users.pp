@@ -59,11 +59,10 @@ class profile::users {
           group  => $acc_defaults['group'],
           mode   => '0700',
         } -> file { "/exports/users/${key}/.ssh/authorized_keys":
-          ensure  => file,
-          owner   => $key,
-          group   => $acc_defaults['group'],
-          mode    => '0600',
-          content => $value['ssh_key'],
+          ensure => present,
+          owner  => $key,
+          group  => $acc_defaults['group'],
+          mode   => '0600',
         }
       }
     }
