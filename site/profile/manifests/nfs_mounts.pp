@@ -24,7 +24,6 @@ class profile::nfs_mounts (
       default => $settings['group'],
     }
     filepath { $mount_point:
-      ensure      => directory,
       managedepth => 3,
       owner       => 'root',
       group       => $group,
