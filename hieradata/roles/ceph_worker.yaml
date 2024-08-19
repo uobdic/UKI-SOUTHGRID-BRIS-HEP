@@ -55,3 +55,8 @@ profile::nfs_mounts::mounts:
     path: /exports/software
     read_only: true
     group: users
+  '/opt/astro':
+    server: echidna.star.bris.ac.uk
+    path: /data/echidna1
+    read_only: true
+    group: dice-astro
