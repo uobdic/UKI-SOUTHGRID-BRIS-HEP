@@ -38,7 +38,7 @@ class profile::nfs_mounts (
       atboot  => true,
       dump    => 0,
       pass    => 0,
-      require => File[$mount_point],
+      require => [File[$mount_point],Package['nfs-utils']],
     }
   }
 }
