@@ -135,3 +135,5 @@ mod 'southalc-types', '0.3.5'
 
 # Rocky 9 stuff
 mod 'treydock-yum_cron', '7.1.0'
+
+mod 'edgej-filepath', '1.1.0'

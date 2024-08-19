@@ -23,12 +23,12 @@ class profile::nfs_mounts (
       undef   => 'root',
       default => $settings['group'],
     }
-    file { $mount_point:
-      ensure  => directory,
-      recurse => true,
-      owner   => 'root',
-      group   => $group,
-      mode    => '0775',
+    filepath { $mount_point:
+      ensure      => directory,
+      managedepth => 3,
+      owner       => 'root',
+      group       => $group,
+      mode        => '0775',
     }
     mount { $mount_point:
       ensure  => mounted,
