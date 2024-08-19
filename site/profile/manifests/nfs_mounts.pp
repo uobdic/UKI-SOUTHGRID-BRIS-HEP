@@ -2,6 +2,10 @@
 class profile::nfs_mounts (
   Hash $mounts = {},
 ) {
+  package { 'nfs-utils':
+    ensure => present,
+  }
+
   $dice_storage = lookup('dice::storage', Hash, 'deep', {})
   $default_server = $dice_storage['nfs']['server']
   $mounts.each |$mount_point, $settings| {
