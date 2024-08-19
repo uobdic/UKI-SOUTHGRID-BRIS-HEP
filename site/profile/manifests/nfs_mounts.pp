@@ -1,10 +1,10 @@
 # == Class: profile::nfs_mounts
 class profile::nfs_mounts (
-  Hash $nfs_mounts = {},
+  Hash $mounts = {},
 ) {
   $dice_storage = lookup('dice::storage', Hash, 'deep', {})
   $default_server = $dice_storage['nfs']['server']
-  $nfs_mounts.each |$mount_point, $settings| {
+  $mounts.each |$mount_point, $settings| {
     $server = $settings['server'] ? {
       undef   => $default_server,
       default => $settings['server'],
