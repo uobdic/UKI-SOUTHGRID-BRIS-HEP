@@ -27,11 +27,10 @@ class profile::nfs_mounts (
       undef   => 'mounted',
       default => $settings['ensure'],
     }
-    filepath { $mount_point:
-      managedepth => 3,
-      owner       => 'root',
-      group       => $group,
-      mode        => '0775',
+    exec { $mount_point:
+      command => "mkdir -p ${mount_point}; chown root:${group} ${mount_point}; chmod 0775 ${mount_point}",
+      path    => '/bin:/usr/bin',
+      unless  => "mount | awk '{if (\$3 == \"${mount_point}\") { exit 0}} ENDFILE{exit -1}'",
     }
     mount { $mount_point:
       ensure  => $ensure,
@@ -41,7 +40,7 @@ class profile::nfs_mounts (
       atboot  => true,
       dump    => 0,
       pass    => 0,
-      require => [Filepath[$mount_point],Package['nfs-utils']],
+      require => [Exec[$mount_point],Package['nfs-utils']],
     }
   }
 }
