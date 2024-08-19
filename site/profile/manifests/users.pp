@@ -1,5 +1,7 @@
 # puppet class to create local users
-class profile::users {
+class profile::users (
+  $shell = '/sbin/nologin',
+) {
   $groups     = lookup('profile::users::groups', Hash, 'deep', {})
   $users      = lookup('profile::users::users', Hash, 'deep', {})
   $default_cephfs_quota = 1100000000000
@@ -63,6 +65,7 @@ class profile::users {
           owner  => $key,
           group  => $acc_defaults['group'],
           mode   => '0600',
+          }
         }
       }
     }
