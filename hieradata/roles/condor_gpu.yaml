@@ -53,8 +53,8 @@ profile::nfs_mounts::mounts:
     path: /exports/scratch
     read_only: false
   '/users':
-    path: /exports/scratch
+    path: /exports/users
     read_only: false
   '/software':
-    path: /exports/scratch
+    path: /exports/software
     read_only: false
