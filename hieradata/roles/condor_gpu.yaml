@@ -52,9 +52,11 @@ profile::nfs_mounts::mounts:
   '/shared/scratch':
     path: /exports/scratch
     read_only: false
+    group: users
   '/users':
     path: /exports/users
     read_only: false
   '/software':
     path: /exports/software
     read_only: false
+    group: users

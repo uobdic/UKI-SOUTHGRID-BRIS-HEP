@@ -15,11 +15,15 @@ class profile::nfs_mounts (
     }
     $options = "${read_options},hard,intr,rsize=8192,wsize=8192,_netdev"
     $device = "${server}:${settings['path']}"
+    $group = $settings['group'] ? {
+      undef   => 'root',
+      default => $settings['group'],
+    }
     file { $mount_point:
       ensure => directory,
       owner  => 'root',
-      group  => 'root',
-      mode   => '0700',
+      group  => $group,
+      mode   => '0775',
     }
     mount { $mount_point:
       ensure  => mounted,
