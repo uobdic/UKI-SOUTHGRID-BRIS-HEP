@@ -20,10 +20,11 @@ class profile::nfs_mounts (
       default => $settings['group'],
     }
     file { $mount_point:
-      ensure => directory,
-      owner  => 'root',
-      group  => $group,
-      mode   => '0775',
+      ensure  => directory,
+      recurse => true,
+      owner   => 'root',
+      group   => $group,
+      mode    => '0775',
     }
     mount { $mount_point:
       ensure  => mounted,
