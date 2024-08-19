@@ -23,6 +23,10 @@ class profile::nfs_mounts (
       undef   => 'root',
       default => $settings['group'],
     }
+    $ensure = $settings['ensure'] ? {
+      undef   => 'mounted',
+      default => $settings['ensure'],
+    }
     filepath { $mount_point:
       managedepth => 3,
       owner       => 'root',
@@ -30,7 +34,7 @@ class profile::nfs_mounts (
       mode        => '0775',
     }
     mount { $mount_point:
-      ensure  => mounted,
+      ensure  => $ensure,
       device  => $device,
       fstype  => 'nfs',
       options => $options,
