@@ -9,10 +9,6 @@ class profile::login (
   String $krb5_realm,
   String $krb5_kpasswd,
 ) {
-  package { ['sssd', 'sssd-krb5', 'sssd-krb5-common']:
-    ensure => 'present',
-  }
-
   sssd::domain { 'dice.priv':
     id_provider       => 'files',
     auth_provider     => 'krb5',
@@ -23,7 +19,7 @@ class profile::login (
     debug_level       => 9,
   }
 
-  sssd::provider::krb5 { 'krb5':
+  sssd::provider::krb5 { 'dice.priv':
     krb5_server  => $krb5_server,
     krb5_realm   => $krb5_realm,
     krb5_kpasswd => $krb5_kpasswd,
