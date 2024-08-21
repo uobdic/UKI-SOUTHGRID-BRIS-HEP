@@ -137,3 +137,5 @@ mod 'southalc-types', '0.3.5'
 mod 'treydock-yum_cron', '7.1.0'
 
 mod 'edgej-filepath', '1.1.0'
+
+mod 'simp-sssd', '7.10.0'
