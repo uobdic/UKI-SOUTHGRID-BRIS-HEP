@@ -31,4 +31,10 @@ class profile::login (
     unless  => 'authselect current | grep -q sssd',
     path    => ['/usr/sbin', '/usr/bin'],
   }
+  # now krb5:
+  file { '/etc/krb5.conf':
+    ensure => file,
+    source => 'puppet:///dice_store/krb5/krb5.conf', # lint:ignore:puppet_url_without_modules
+    notify => Service['sssd'],
+  }
 }
