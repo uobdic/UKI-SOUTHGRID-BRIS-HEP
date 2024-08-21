@@ -24,4 +24,10 @@ class profile::login (
     krb5_realm   => $krb5_realm,
     krb5_kpasswd => $krb5_kpasswd,
   }
+
+  # execute authselect, if not already set to sssd
+  exec { 'authselect':
+    command => 'authselect select sssd --force',
+    unless  => 'authselect current | grep -q sssd',
+  }
 }
