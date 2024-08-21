@@ -29,5 +29,6 @@ class profile::login (
   exec { 'authselect':
     command => 'authselect select sssd --force',
     unless  => 'authselect current | grep -q sssd',
+    path    => ['/usr/sbin', '/usr/bin'],
   }
 }
