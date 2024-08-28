@@ -28,5 +28,5 @@ export HOME
 export SINGULARITY_HOME=$HOME
 export HOSTNAME=`hostname -f`
 
-echo "Executing apptainer $1 --home $HOME ${@:2}"
-apptainer $1 --home $HOME ${@:2}
+echo "Executing apptainer $1 ${@:2}"
+apptainer $1 ${@:2}
