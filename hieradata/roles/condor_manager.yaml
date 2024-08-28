@@ -31,3 +31,10 @@ profile::cephfs::keys:
 profile::cephfs::mounts:
   '/condor':
     device: condor@.dicefs=/condor
+
+firewalld::ports:
+  "Open standard condor ports":
+    ensure: present
+    zone: public
+    port: 9618
+    protocol: 'tcp'

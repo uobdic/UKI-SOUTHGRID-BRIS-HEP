@@ -64,3 +64,10 @@ profile::nfs_mounts::mounts:
     path: /data/echidna1
     read_only: true
     group: dice-astro
+
+firewalld::ports:
+  "Open standard condor ports":
+    ensure: present
+    zone: public
+    port: 9618
+    protocol: 'tcp'
