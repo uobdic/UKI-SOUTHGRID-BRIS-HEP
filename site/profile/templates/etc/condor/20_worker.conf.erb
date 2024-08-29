@@ -9,3 +9,6 @@ RESERVED_MEMORY = <%= @reserved_memory %>
 # Enable CGROUP
 BASE_CGROUP = /system.slice/condor.service
 CGROUP_MEMORY_LIMIT_POLICY = soft
+
+# Disable PID namespaces since they do not work with cgroup
+USE_PID_NAMESPACES = False
