@@ -4,7 +4,7 @@ classes:
   - podman
   - profile::nfs_mounts
 
-podman::compose_pkg_ensure: 'latest'
+podman::compose_pkg_ensure: 'installed'
 
 profile::users::shell: '/sbin/nologin'
 
