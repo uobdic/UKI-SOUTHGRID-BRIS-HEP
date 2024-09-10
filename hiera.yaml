@@ -12,6 +12,7 @@ hierarchy:
       - "nodes/%{::trusted.certname}.yaml"
       - "firewall/defaults.yaml"
       - "firewall/%{::node_info.firewall}.yaml"
+      - "users/site_admins.yaml"
       - "users/%{::node_info.users}.yaml"
       - "users/%{::node_info.service_accounts}.yaml"
       - "users/%{::node_info.admin_accounts}.yaml"
