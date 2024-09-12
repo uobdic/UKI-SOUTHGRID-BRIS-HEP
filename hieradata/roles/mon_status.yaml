@@ -2,6 +2,7 @@ classes:
   - profile::cephfs
   - packages::manage
   - podman
+  - profile::firewalld
   - profile::nfs_mounts
 
 podman::compose_pkg_ensure: 'installed'
@@ -28,6 +29,18 @@ firewalld::ports:
     zone: public
     port: 9618
     protocol: 'tcp'
+  "Open condor monitoring port":
+    ensure: present
+    zone: public
+    port: 19618
+    protocol: 'tcp'
+  
+
+firewalld::services:
+  "Allow access to HTTP service on port 80 for CEView (internal only)":
+    service: http
+    zone: public
+    ensure: present
 
 profile::cephfs::keys:
   - condor

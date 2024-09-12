@@ -1,0 +1,12 @@
+classes:
+  - profile::cephfs
+  - packages::manage
+  - podman
+  - profile::firewalld
+
+firewalld::ports:
+  "Open standard grafana ports":
+    ensure: present
+    zone: public
+    port: 3000
+    protocol: 'tcp'

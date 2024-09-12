@@ -1,0 +1,18 @@
+classes:
+  - profile::cephfs
+  - packages::manage
+  - podman
+  - profile::firewalld
+
+firewalld::ports:
+  "Open standard prometheus ports":
+    ensure: present
+    zone: public
+    port: 9090
+    protocol: 'tcp'
+  "Open monitoring prometheus ports":
+    ensure: present
+    zone: public
+    port: 9100
+    protocol: 'tcp'
+  

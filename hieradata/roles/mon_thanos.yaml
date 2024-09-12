@@ -1,0 +1,5 @@
+classes:
+  - profile::cephfs
+  - packages::manage
+  - podman
+  - profile::firewalld
