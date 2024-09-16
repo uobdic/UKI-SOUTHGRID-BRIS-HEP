@@ -2,12 +2,13 @@
 message: "This is our common yaml file"
 classes:
  - site::basic
+ - packages::manage
  - 'profile::base'
  - 'profile::monitored'
  - profile::users::admin
 # - 'profile::firewall::setup'
 
-profile::default::packages_to_install:
+packages::install:
   - kernel-devel
   - lvm2
   - nano
