@@ -2,8 +2,7 @@ classes:
   - profile::firewalld
   - profile::cephfs
 
-site::node_info:
-  users: pool_accounts
+site::node_info::users: pool_accounts
 
 firewalld::ports:
   "Open port 9618 for condor":
