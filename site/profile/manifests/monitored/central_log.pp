@@ -25,10 +25,10 @@ class profile::monitored::central_log {
   }
 
   file { '/etc/rsyslog.conf':
-      ensure  => 'file',
-      content => template("${module_name}/etc/rsyslog.conf.erb"),
-      mode    => '0644',
-      notify  => Service['rsyslog'],
+    ensure  => 'file',
+    content => template("${module_name}/etc/rsyslog.conf.erb"),
+    mode    => '0644',
+    notify  => Service['rsyslog'],
   }
 
   if $is_central_log {
