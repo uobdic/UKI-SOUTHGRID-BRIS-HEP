@@ -39,14 +39,14 @@ class profile::monitored::central_log {
     }
     if $facts['os']['family'] == 'RedHat' and member(['8', '9'], $::facts['os']['release']['major']) {
       firewalld_port { 'syslog udp':
-        ensure => 'present',
-        port   => 514,
-        proto  => 'udp',
+        ensure   => 'present',
+        port     => 514,
+        protocol => 'udp',
       }
       firewalld_port { 'syslog tcp':
-        ensure => 'present',
-        port   => 514,
-        proto  => 'tcp',
+        ensure   => 'present',
+        port     => 514,
+        protocol => 'tcp',
       }
     }
   }
