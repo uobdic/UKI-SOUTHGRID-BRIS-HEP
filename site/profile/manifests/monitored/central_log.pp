@@ -42,11 +42,13 @@ class profile::monitored::central_log {
         ensure   => 'present',
         port     => 514,
         protocol => 'udp',
+        zone     => 'public',
       }
       firewalld_port { 'syslog tcp':
         ensure   => 'present',
         port     => 514,
         protocol => 'tcp',
+        zone     => 'public',
       }
     }
   }
