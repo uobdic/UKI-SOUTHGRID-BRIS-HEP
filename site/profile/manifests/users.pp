@@ -82,7 +82,7 @@ class profile::users (
             onlyif  => "/usr/bin/test -L /users/${key}",
           }
         }
-        if $value['ensure'] == 'present' {
+        if $value['ensure'] == 'present' or $value['ensure'] == undef {
           exec { "create_home_symlink_${key}":
             command => "/usr/bin/ln -s /users/${key} /home/${key}",
             unless  => "/usr/bin/test -d /home/${key} || /usr/bin/test -L /home/${key}",
