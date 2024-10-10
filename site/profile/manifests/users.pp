@@ -69,7 +69,7 @@ class profile::users (
         }
       }
     }
-    # symlink to the correct location (/home -> /users) for each user
+    # symlink to the correct location (/home <-> /users) for each user
     unless $fqdn == 'sts.dice.priv' {
       $users.each |$key, $value| {
         if $value['ensure'] == 'absent' {
