@@ -54,17 +54,17 @@ class profile::users (
             unless  => "/usr/bin/getfattr -n ceph.quota.max_bytes /cephfs/dice/users/${key}",
             require => File["/cephfs/dice/users/${key}"],
           }
-        # make sure .ssh/authorized_keys is created for each user
-        file { "/exports/users/${key}/.ssh":
-          ensure => directory,
-          owner  => $key,
-          group  => $acc_defaults['group'],
-          mode   => '0700',
-        } -> file { "/exports/users/${key}/.ssh/authorized_keys":
-          ensure => present,
-          owner  => $key,
-          group  => $acc_defaults['group'],
-          mode   => '0600',
+          # make sure .ssh/authorized_keys is created for each user
+          file { "/exports/users/${key}/.ssh":
+            ensure => directory,
+            owner  => $key,
+            group  => $acc_defaults['group'],
+            mode   => '0700',
+          } -> file { "/exports/users/${key}/.ssh/authorized_keys":
+            ensure => file,
+            owner  => $key,
+            group  => $acc_defaults['group'],
+            mode   => '0600',
           }
         }
       }
