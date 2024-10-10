@@ -54,34 +54,42 @@ class profile::users (
             unless  => "/usr/bin/getfattr -n ceph.quota.max_bytes /cephfs/dice/users/${key}",
             require => File["/cephfs/dice/users/${key}"],
           }
-        # make sure .ssh/authorized_keys is created for each user
-        file { "/exports/users/${key}/.ssh":
-          ensure => directory,
-          owner  => $key,
-          group  => $acc_defaults['group'],
-          mode   => '0700',
-        } -> file { "/exports/users/${key}/.ssh/authorized_keys":
-          ensure => present,
-          owner  => $key,
-          group  => $acc_defaults['group'],
-          mode   => '0600',
+          # make sure .ssh/authorized_keys is created for each user
+          file { "/exports/users/${key}/.ssh":
+            ensure => directory,
+            owner  => $key,
+            group  => $acc_defaults['group'],
+            mode   => '0700',
+          } -> file { "/exports/users/${key}/.ssh/authorized_keys":
+            ensure => file,
+            owner  => $key,
+            group  => $acc_defaults['group'],
+            mode   => '0600',
           }
         }
       }
     }
-    # symlink to the correct location (/home -> /users) for each user
+    # symlink to the correct location (/home <-> /users) for each user
     unless $fqdn == 'sts.dice.priv' {
       $users.each |$key, $value| {
-        unless $value['ensure'] == 'absent' or "/home/${key}" == $value['home'] {
-          exec { "create_home_symlink_${key}":
-            command => "/usr/bin/ln -s ${value['home']} /home/${key}",
-            unless  => "/usr/bin/test -d /home/${key} || /usr/bin/test -L /home/${key}",
-          }
-        }
-        if $value['ensure'] == 'absent' and "/home/${key}" != $value['home'] {
+        if $value['ensure'] == 'absent' {
           exec { "remove_home_symlink_${key}":
             command => "/usr/bin/rm -f /home/${key}",
             onlyif  => "/usr/bin/test -L /home/${key}",
+          }
+          exec { "remove_users_symlink_${key}":
+            command => "/usr/bin/rm -f /users/${key}",
+            onlyif  => "/usr/bin/test -L /users/${key}",
+          }
+        }
+        if $value['ensure'] == 'present' or $value['ensure'] == undef {
+          exec { "create_home_symlink_${key}":
+            command => "/usr/bin/ln -s /users/${key} /home/${key}",
+            unless  => "/usr/bin/test -d /home/${key} || /usr/bin/test -L /home/${key}",
+          }
+          exec { "create_users_symlink_${key}":
+            command => "/usr/bin/ln -s /home/${key} /users/${key}",
+            unless  => "/usr/bin/test -d /users/${key} || /usr/bin/test -L /users/${key}",
           }
         }
       }
