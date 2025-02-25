@@ -44,7 +44,7 @@ mod 'puppet-mlocate',
   :ref => '1523cf1773d5fec39a6e96ad2a0edf1a28b2ceb5'
 
 mod 'treydock-singularity', '5.5.0'
-mod 'treydock-apptainer', '2.0.0'
+mod 'treydock-apptainer', '4.0.0'
 mod 'treydock-golang', '2.3.0'
 mod 'puppetlabs-yumrepo_core', '2.1.0'
 
