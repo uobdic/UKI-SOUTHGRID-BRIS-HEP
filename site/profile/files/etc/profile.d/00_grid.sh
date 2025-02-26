@@ -12,6 +12,6 @@ fi
 
 if [ -f "/etc/condor/get_bind_mounts" ]
 then
-  APPTAINER_BINDPATHS=$(/etc/condor/get_bind_mounts)
-  export APPTAINER_BINDPATHS
+  APPTAINER_BINDPATH=$(/etc/condor/get_bind_mounts)
+  export APPTAINER_BINDPATH
 fi

@@ -30,9 +30,9 @@ export APPTAINER_HOME=$HOME
 export HOSTNAME=`hostname -f`
 
 # determine extra bind mounts
-APPTAINER_BINDPATHS=$(/etc/condor/get_bind_mounts)
-export APPTAINER_BINDPATHS
-echo "Using additional bind mounts: ${APPTAINER_BINDPATHS}"
+APPTAINER_BINDPATH=$(/etc/condor/get_bind_mounts)
+export APPTAINER_BINDPATH
+echo "Using additional bind mounts: ${APPTAINER_BINDPATH}"
 
 echo "Executing apptainer $1 ${@:2}"
 apptainer $1 ${@:2}
