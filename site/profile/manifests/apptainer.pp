@@ -19,12 +19,12 @@ class profile::apptainer {
       source => "puppet:///modules/${module_name}/etc/condor/get_bind_mounts",
       mode   => '0755',
     }
-  }
-  # overwrite /usr/bin/apptainer with a wrapper script
-  file { '/usr/bin/apptainer':
-    ensure  => link,
-    target  => '/etc/condor/container_wrapper',
-    force   => true,
-    require => File['/etc/condor/container_wrapper'],
+    # overwrite /usr/bin/apptainer with a wrapper script
+    file { '/usr/bin/apptainer':
+      ensure  => link,
+      target  => '/etc/condor/container_wrapper',
+      force   => true,
+      require => File['/etc/condor/container_wrapper'],
+    }
   }
 }
