@@ -11,25 +11,26 @@
 #    source: 'YYY'
 #    protocol: 'all'
 class profile::firewalld {
-  include firewalld
-  # resources { 'firewall': purge => true }
+  unless $facts['os']['release']['major'] < 8 {
+    include firewalld
 
-  $accept = lookup('profile::firewalld::accepts', Hash, 'deep', {})
-  $drop   = lookup('profile::firewalld::drops', Hash, 'deep', {})
+    $accept = lookup('profile::firewalld::accepts', Hash, 'deep', {})
+    $drop   = lookup('profile::firewalld::drops', Hash, 'deep', {})
 
-  $accept_defaults = {
-    'ensure'   => present,
-    'zone'   => 'public',
-    'action'   => 'accept',
-    'protocol' => 'tcp',
+    $accept_defaults = {
+      'ensure'   => present,
+      'zone'   => 'public',
+      'action'   => 'accept',
+      'protocol' => 'tcp',
+    }
+    create_resources('firewalld_rich_rule', $accept, $accept_defaults)
+
+    $drop_defaults = {
+      'ensure'   => present,
+      'zone'   => 'public',
+      'action'   => 'drop',
+      'protocol' => 'tcp',
+    }
+    create_resources('firewalld_rich_rule', $drop, $drop_defaults)
   }
-  create_resources('firewalld_rich_rule', $accept, $accept_defaults)
-
-  $drop_defaults = {
-    'ensure'   => present,
-    'zone'   => 'public',
-    'action'   => 'drop',
-    'protocol' => 'tcp',
-  }
-  create_resources('firewalld_rich_rule', $drop, $drop_defaults)
 }
