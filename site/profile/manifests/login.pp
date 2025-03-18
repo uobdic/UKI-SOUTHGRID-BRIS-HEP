@@ -9,7 +9,12 @@ class profile::login (
   String $krb5_realm,
   String $krb5_kpasswd,
 ) {
-  unless $facts['os']['release']['major'] < 8 {
+  $supported_distro = "${facts['os']['family']}-${facts['os']['release']['major']}" ? {
+    default        => false,
+    /RedHat-(8|9)/ => true,
+  }
+
+  if $supported_distro {
     sssd::domain { 'dice.priv':
       id_provider       => 'files',
       auth_provider     => 'krb5',

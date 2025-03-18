@@ -11,7 +11,12 @@
 #    source: 'YYY'
 #    protocol: 'all'
 class profile::firewalld {
-  unless $facts['os']['release']['major'] < 8 {
+  $supported_distro = "${facts['os']['family']}-${facts['os']['release']['major']}" ? {
+    default        => false,
+    /RedHat-(8|9)/ => true,
+  }
+
+  if $supported_distro {
     include firewalld
 
     $accept = lookup('profile::firewalld::accepts', Hash, 'deep', {})
