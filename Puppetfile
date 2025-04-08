@@ -90,6 +90,10 @@ mod 'cbsensor',
   :git => 'https://gitlab.services.bristol.ac.uk/services-operations-public/cbsensor.git',
   :tag => '3.4.0'
 
+mod 'cbagent',
+  :git => 'https://gitlab.services.bristol.ac.uk/services-operations-public/cbagent.git',
+  :tag => '0.0.1'
+
 mod 'sysusers',
   :git => 'https://gitlab.services.bristol.ac.uk/services-operations-public/sysusers.git',
   :tag => '0.1.0'
