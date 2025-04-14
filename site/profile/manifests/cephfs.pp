@@ -5,7 +5,7 @@ class profile::cephfs (
   Array[String] $keys = ['dice-reader'],
   Hash $mounts = {},
 ) {
-  $ceph_release = 'centos-release-ceph-reef'
+  $ceph_release = 'centos-release-ceph-squid'
   $ceph_mount_dependency = $facts['os']['release']['major'] ? {
     '7' => 'ceph-fuse',
     default => 'ceph-common',
