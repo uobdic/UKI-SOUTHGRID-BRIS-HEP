@@ -16,7 +16,7 @@ class profile::users::poolaccounts (
     'gid'           => '100',
     'group'         => 'users',
     'tag'           => 'poolaccounts::users',
-    'bashrc_source' => 'puppet:///modules/accounts/shell/bashrc',
+    'bashrc_source' => "puppet:///modules/${module_name}/home/bashrc",
   }
   create_resources('group', $groups, $defaults)
   create_resources('accounts::user', $users, $acc_defaults)
