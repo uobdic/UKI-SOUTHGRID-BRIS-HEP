@@ -12,7 +12,7 @@ class profile::users::poolaccounts (
     'shell'        => '/sbin/nologin',
     'password'     => '!!',
     'create_group' => false,
-    'managehome'   => false,
+    'managehome'   => true,
     'gid'          => '100',
     'group'        => 'users',
     'tag'          => 'poolaccounts::users',
