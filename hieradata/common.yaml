@@ -96,6 +96,7 @@ apptainer::bind_paths:
   - '/etc/localtime'
   - '/etc/hosts'
   - '/users'
+  - '/cms'
   - '/condor'
   - '/dice'
   - '/xrootd'

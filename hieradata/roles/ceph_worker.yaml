@@ -30,6 +30,8 @@ profile::cephfs::mounts:
     device: dice-user@.dicefs=/dice
   '/xrootd':
     device: dice-user@.dicefs=/xrootd
+  '/cms':
+    device: dice-user@.dicefs=/xrootd/cms
 
 profile::nfs_mounts::mounts:
   '/shared/scratch':
