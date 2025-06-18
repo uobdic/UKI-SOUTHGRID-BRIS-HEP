@@ -26,7 +26,6 @@ class profile::firewalld {
       'ensure'   => present,
       'zone'   => 'public',
       'action'   => 'accept',
-      'protocol' => 'tcp',
     }
     create_resources('firewalld_rich_rule', $accept, $accept_defaults)
 
@@ -34,7 +33,6 @@ class profile::firewalld {
       'ensure'   => present,
       'zone'   => 'public',
       'action'   => 'drop',
-      'protocol' => 'tcp',
     }
     create_resources('firewalld_rich_rule', $drop, $drop_defaults)
   }
