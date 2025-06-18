@@ -25,10 +25,10 @@ class profile::monitored::central_log {
   }
 
   file { '/etc/rsyslog.conf':
-      ensure  => 'file',
-      content => template("${module_name}/etc/rsyslog.conf.erb"),
-      mode    => '0644',
-      notify  => Service['rsyslog'],
+    ensure  => 'file',
+    content => template("${module_name}/etc/rsyslog.conf.erb"),
+    mode    => '0644',
+    notify  => Service['rsyslog'],
   }
 
   if $is_central_log {
@@ -37,16 +37,18 @@ class profile::monitored::central_log {
       content => '$SystemLogSocketName /run/systemd/journal/syslog',
       notify  => Service['rsyslog'],
     }
-    if $facts['os']['family'] == 'RedHat' and $facts['os']['release']['major'] > 7 {
+    if $facts['os']['family'] == 'RedHat' and member(['8', '9'], $::facts['os']['release']['major']) {
       firewalld_port { 'syslog udp':
-        ensure => 'present',
-        port   => 514,
-        proto  => 'udp',
+        ensure   => 'present',
+        port     => 514,
+        protocol => 'udp',
+        zone     => 'public',
       }
       firewalld_port { 'syslog tcp':
-        ensure => 'present',
-        port   => 514,
-        proto  => 'tcp',
+        ensure   => 'present',
+        port     => 514,
+        protocol => 'tcp',
+        zone     => 'public',
       }
     }
   }

@@ -1,0 +1,5 @@
+---
+message: "This machine belongs to the LCG group (external service)"
+classes:
+  - profile::firewalld
+  - profile::grid_cert

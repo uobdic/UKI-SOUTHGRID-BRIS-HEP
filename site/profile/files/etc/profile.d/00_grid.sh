@@ -9,3 +9,11 @@ then
 else
   echo "User root detected - not loading grid setup"
 fi
+
+if [ -f "/etc/condor/get_bind_mounts" ]
+then
+  APPTAINER_BINDPATH=$(/etc/condor/get_bind_mounts)
+  SINGULARITY_BINDPATH=$APPTAINER_BINDPATH
+  export APPTAINER_BINDPATH
+  export SINGULARITY_BINDPATH
+fi

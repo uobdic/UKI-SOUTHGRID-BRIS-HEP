@@ -11,25 +11,31 @@
 #    source: 'YYY'
 #    protocol: 'all'
 class profile::firewalld {
-  include firewalld
-  # resources { 'firewall': purge => true }
-
-  $accept = lookup('profile::firewalld::accepts', Hash, 'deep', {})
-  $drop   = lookup('profile::firewalld::drops', Hash, 'deep', {})
-
-  $accept_defaults = {
-    'ensure'   => present,
-    'zone'   => 'public',
-    'action'   => 'accept',
-    'protocol' => 'tcp',
+  $supported_distro = "${facts['os']['family']}-${facts['os']['release']['major']}" ? {
+    default        => false,
+    /RedHat-(8|9)/ => true,
   }
-  create_resources('firewalld_rich_rule', $accept, $accept_defaults)
 
-  $drop_defaults = {
-    'ensure'   => present,
-    'zone'   => 'public',
-    'action'   => 'drop',
-    'protocol' => 'tcp',
+  if $supported_distro {
+    include firewalld
+
+    $accept = lookup('profile::firewalld::accepts', Hash, 'deep', {})
+    $drop   = lookup('profile::firewalld::drops', Hash, 'deep', {})
+
+    $accept_defaults = {
+      'ensure'   => present,
+      'zone'   => 'public',
+      'action'   => 'accept',
+      'protocol' => 'tcp',
+    }
+    create_resources('firewalld_rich_rule', $accept, $accept_defaults)
+
+    $drop_defaults = {
+      'ensure'   => present,
+      'zone'   => 'public',
+      'action'   => 'drop',
+      'protocol' => 'tcp',
+    }
+    create_resources('firewalld_rich_rule', $drop, $drop_defaults)
   }
-  create_resources('firewalld_rich_rule', $drop, $drop_defaults)
 }

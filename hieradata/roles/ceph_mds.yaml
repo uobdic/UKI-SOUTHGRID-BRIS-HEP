@@ -3,23 +3,11 @@ classes:
   - profile::cephfs
   - packages::manage
   - podman
+  - profile::users::poolaccounts
 
 profile::monitored::use_prometheus: false
 
 profile::users::shell: '/sbin/nologin'
-
-profile::users::groups:
-  condor:
-    gid: '9618'
-
-profile::users::users:
-  condor:
-    uid: '9618'
-    gid: '9618'
-    home: '/var/lib/condor'
-    shell: '/sbin/nologin'
-    comment: 'condor superuser'
-    group: condor
 
 profile::cephfs::keys:
   - condor

@@ -89,13 +89,14 @@ site::node_info:
 
 cbsensor::version: "v7"
 
-apptainer::version: '1.3.3'
+apptainer::version: '1.4.1'
 apptainer::install_setuid: false
 apptainer::use_nvidia_container_cli: 'no'
 apptainer::bind_paths:
   - '/etc/localtime'
   - '/etc/hosts'
   - '/users'
+  - '/cms'
   - '/condor'
   - '/dice'
   - '/xrootd'

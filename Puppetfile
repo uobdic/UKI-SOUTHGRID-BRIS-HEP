@@ -44,7 +44,7 @@ mod 'puppet-mlocate',
   :ref => '1523cf1773d5fec39a6e96ad2a0edf1a28b2ceb5'
 
 mod 'treydock-singularity', '5.5.0'
-mod 'treydock-apptainer', '2.0.0'
+mod 'treydock-apptainer', '4.0.0'
 mod 'treydock-golang', '2.3.0'
 mod 'puppetlabs-yumrepo_core', '2.1.0'
 
@@ -89,6 +89,10 @@ mod 'jamtur01/httpauth', '0.0.6'
 mod 'cbsensor',
   :git => 'https://gitlab.services.bristol.ac.uk/services-operations-public/cbsensor.git',
   :tag => '3.4.0'
+
+mod 'cbagent',
+  :git => 'https://gitlab.services.bristol.ac.uk/services-operations-public/cbagent.git',
+  :tag => '0.0.1'
 
 mod 'sysusers',
   :git => 'https://gitlab.services.bristol.ac.uk/services-operations-public/sysusers.git',

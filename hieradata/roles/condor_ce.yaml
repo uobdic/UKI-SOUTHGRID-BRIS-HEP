@@ -1,15 +1,25 @@
 classes:
   - profile::firewalld
   - profile::cephfs
+  - profile::grid_cert
+  - 'profile::backed_up'
+  - profile::users::poolaccounts
 
 site::node_info:
-  users: pool_accounts
+  users: poolaccounts
+
+profile::users::shell: '/sbin/nologin'
 
 firewalld::ports:
   "Open port 9618 for condor":
     ensure: present
     zone: public
     port: 9618
+    protocol: 'tcp'
+  "Open port 9619 for condor-ce":
+    ensure: present
+    zone: public
+    port: 9619
     protocol: 'tcp'
 
 firewalld::services:

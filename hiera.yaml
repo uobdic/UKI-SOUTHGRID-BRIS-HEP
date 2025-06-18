@@ -13,8 +13,9 @@ hierarchy:
       - "firewall/defaults.yaml"
       - "firewall/%{::node_info.firewall}.yaml"
       - "users/site_admins.yaml"
+      - "users/dice_service_accounts.yaml"
+      - "users/poolaccounts.yaml"
       - "users/%{::node_info.users}.yaml"
-      - "users/%{::node_info.service_accounts}.yaml"
       - "users/%{::node_info.admin_accounts}.yaml"
   - name: "Foreman hostgroups"
     mapped_paths: [sorted_path_array, tmp, "hostgroups/%{tmp}.yaml"]

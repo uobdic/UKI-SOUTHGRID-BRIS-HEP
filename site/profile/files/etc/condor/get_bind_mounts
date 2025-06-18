@@ -1,0 +1,59 @@
+#!/usr/bin/env python
+"""This scripts reads user group membership to determine the bind mounts for a container."""
+
+import grp
+import os
+import pwd
+from pathlib import Path
+
+
+def get_current_username():
+    return pwd.getpwuid(os.getuid()).pw_name
+
+
+def get_user_groups(username: str):
+    return [g.gr_name for g in grp.getgrall() if username in g.gr_mem]
+
+
+def get_vos(groups: list[str]):
+    grid_path = Path("/xrootd")
+    supported_vos = [file.name for file in grid_path.iterdir() if file.is_dir()]
+    return list(filter(lambda x: x in supported_vos, groups))
+
+
+def get_local_bind_mounts(username: str):
+    bind_mounts = [
+        "/software:/software",
+        "/shared/scratch:/shared/scratch",
+        "/dice:/dice",
+        "/cephfs/dice:/cephfs/dice",
+    ]
+
+    if Path(f"/users/{username}").exists():
+        bind_mounts.append(f"/users/{username}:/users/{username}")
+    if Path(f"/usersc/{username}").exists():
+        bind_mounts.append(f"/usersc/{username}:/usersc/{username}")
+    return bind_mounts
+
+
+def get_bind_mounts():
+    username = get_current_username()
+    groups = get_user_groups(username)
+    bind_mounts = []
+    vos = get_vos(groups)
+    # print(f"User {username} is member of groups {groups} and VOs {vos}")
+
+    local_user = list(filter(lambda x: "dice" in x, groups))
+    if local_user:
+        bind_mounts += get_local_bind_mounts(username)
+    if vos:
+        for vo in vos:
+            bind_mounts.append(f"/xrootd/{vo}:/xrootd/{vo}")
+
+    return bind_mounts
+
+
+if __name__ == "__main__":
+    bind_mounts = get_bind_mounts()
+    # bind_params = [f"--bind {mount}" for mount in bind_mounts]
+    print(",".join(bind_mounts))

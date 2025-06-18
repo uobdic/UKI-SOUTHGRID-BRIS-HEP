@@ -7,10 +7,9 @@ then
   exit 0
 fi
 
-
 # user might not be set (e.g. when not using getenv in job config)
 USER=`whoami`
-export USER
+
 
 # try to figure out the HOME for the user - default to condor workdir
 if [ -d "/users/$USER" ]
@@ -22,11 +21,18 @@ then
 else
   HOME="$TMPDIR"
 fi
-export HOME
 
 # make sure SINGULARITY_HOME is set to a correct value (e.g a folder owned by the user)
+export USER
+export HOME
 export SINGULARITY_HOME=$HOME
+export APPTAINER_HOME=$HOME
 export HOSTNAME=`hostname -f`
 
-echo "Executing apptainer $1 ${@:2}"
+# determine extra bind mounts
+APPTAINER_BINDPATH=$(/etc/condor/get_bind_mounts)
+export APPTAINER_BINDPATH
+# echo "Using additional bind mounts: ${APPTAINER_BINDPATH}"
+
+# echo "Executing apptainer $1 ${@:2}"
 apptainer $1 ${@:2}
