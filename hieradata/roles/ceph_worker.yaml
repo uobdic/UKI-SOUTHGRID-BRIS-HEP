@@ -57,3 +57,7 @@ firewalld::ports:
     zone: public
     port: 9618
     protocol: 'tcp'
+
+# worker-specific packages
+packages::install:
+  - bc
