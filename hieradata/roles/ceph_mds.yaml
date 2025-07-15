@@ -1,8 +1,9 @@
 ---
 classes:
-  - profile::cephfs
   - packages::manage
   - podman
+  - profile::cephfs
+  - profile::login
   - profile::users::poolaccounts
 
 profile::monitored::use_prometheus: false
@@ -20,4 +21,3 @@ profile::cephfs::mounts:
     device: dice-user@.dicefs=/dice
   '/xrootd':
     device: dice-user@.dicefs=/xrootd
-
