@@ -1,5 +1,84 @@
 # Configure NFS server
 #
 class profile::nfs::server {
-  # Placeholder
+  # Hiera data
+  # ====================================================================
+
+  $extra_packages = lookup('profile::nfs::server::extra_packages', { default_value => [], merge_type => 'deep', value_type => Array, })
+  $extra_services = lookup('profile::nfs::server::extra_services', { default_value => [], merge_type => 'deep', value_type => Array, })
+  $idmap_domain   = lookup('profile::nfs::idmap_domain', { default_value => 'nfs', value_type => String, })
+
+  $exports        = lookup('profile::nfs::server::exports', {
+    default_value => [],
+    merge_type => 'deep',
+    value_type => Hash[String, Struct[{
+      clients          => Array[String],
+      options          => Array[String],
+      automount        => Optional[Boolean],
+      clientpath       => Optional[Stdlib::Absolutepath],
+      homedirs_context => Optional[Boolean],
+    }]],
+  })
+
+  # Prepare the system
+  # ====================================================================
+
+  stdlib::ensure_packages($extra_packages)
+
+  class { 'nfs':
+    client_enabled      => true,  # All NFS servers should also have the client enabled
+    server_enabled      => true,
+    nfs_v4              => true,
+    nfs_v4_export_root  => '/export',
+    nfs_v4_idmap_domain => $idmap_domain,
+  }
+
+  ensure_resources('service', $extra_services, { ensure => 'running', enable => true, require => Class['nfs'] })
+
+  # Client mounts
+  # ====================================================================
+
+  include profile::nfs::client::mounts
+
+  # Exports
+  # ====================================================================
+
+  $exports.each |$path, $parameters| {
+    profile::nfs::server::export { $path:
+      clients          => $parameters['clients'],
+      options          => $parameters['options'],
+      automount        => pick($parameters['automount'], false),
+      clientpath       => $parameters['clientpath'],
+      homedirs_context => pick($parameters['homedirs_context'], false),
+    }
+  }
+
+  # Firewall
+  # ====================================================================
+
+  $all_clients = $exports.values.map |$export| { $export['clients'] }.flatten.unique
+
+  $all_clients.each |$client| {
+    $rule_defaults = {
+      source  => $client,
+      zone    => 'public',
+      action  => 'accept',
+      require => Class['nfs'],
+    }
+
+    $services = [
+      # 'lockd',    # Not configugured on existing server
+      'mountd',    # tcp|udp 20048
+      'nfs',       # tcp 2049
+      'rquotad',   # tcp|udp 875
+      'rpc-bind',  # tcp|udp 111
+      # 'statd',    # Not configugured on existing server
+    ]
+    $services.each |$service| {
+      firewalld_rich_rule { "Accept ${service} from ${client}":
+        service => $service,
+        *       => $rule_defaults,
+      }
+    }
+  }
 }
