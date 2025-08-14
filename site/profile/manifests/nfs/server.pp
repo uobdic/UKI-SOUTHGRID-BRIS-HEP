@@ -49,7 +49,9 @@ class profile::nfs::server {
   # ====================================================================
 
   $exports.each |$path, $parameters| {
-    $options = union($default_options, $parameters['options']).join(',')
+    $user_options = pick_default($parameters['options'], [])
+
+    $options = union($default_options, $user_options)
 
     profile::nfs::server::export { $path:
       clients          => $parameters['clients'],
