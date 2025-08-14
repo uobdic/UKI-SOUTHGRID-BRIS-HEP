@@ -111,7 +111,7 @@ mod 'veeam_restore_client',
   :ref => '1.5.5'
 
 # NFS
-mod 'derdanne-nfs', '2.1.11'
+mod 'puppet-nfs', '3.0.0'
 
 # autofs
 mod 'puppet-autofs', '9.0.0'
