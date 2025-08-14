@@ -27,11 +27,11 @@ class profile::nfs::server {
   stdlib::ensure_packages($extra_packages)
 
   class { 'nfs':
-    client_enabled      => true,  # All NFS servers should also have the client enabled
-    server_enabled      => true,
-    nfs_v4              => true,
-    nfs_v4_export_root  => '/export',
-    nfs_v4_idmap_domain => $idmap_domain,
+    client_enabled         => true,  # All NFS servers should also have the client enabled
+    server_enabled         => true,
+    nfs_v4                 => true,
+    nfsv4_bindmount_enable => false,  # We don't use the bind mounts
+    nfs_v4_idmap_domain    => $idmap_domain,
   }
 
   service { $extra_services:
