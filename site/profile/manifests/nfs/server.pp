@@ -34,7 +34,11 @@ class profile::nfs::server {
     nfs_v4_idmap_domain => $idmap_domain,
   }
 
-  ensure_resources('service', $extra_services, { ensure => 'running', enable => true, require => Class['nfs'] })
+  service { $extra_services:
+    ensure  => running,
+    require => Class['nfs'],
+    enable  => true,
+  }
 
   # Client mounts
   # ====================================================================
