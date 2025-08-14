@@ -4,12 +4,12 @@ class profile::nfs::client::mounts {
   # Hiera data
   # ====================================================================
 
-  $default_options = lookup('profile::nfs::client::default_options', { default_value => [], merge_type => 'deep', value_type => Array, })
+  $default_options = lookup('profile::nfs::client::default_options', { default_value => [], merge => 'deep', value_type => Array, })
 
   $mounts = lookup('profile::nfs::client::mounts', {
     default_value => {},
-    merge_type => 'deep',
-    value_type => Hash[Stdlib::Absolutepath, Struct[{
+    merge         => 'deep',
+    value_type    => Hash[Stdlib::Absolutepath, Struct[{
       server   => String,
       share    => String,
       ensure   => Optional[Enum['absent', 'mounted', 'present', 'unmounted']],
