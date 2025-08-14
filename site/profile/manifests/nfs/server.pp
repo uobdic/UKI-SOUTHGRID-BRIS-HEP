@@ -10,8 +10,8 @@ class profile::nfs::server {
 
   $exports        = lookup('profile::nfs::server::exports', {
     default_value => [],
-    merge_type => 'deep',
-    value_type => Hash[String, Struct[{
+    merge         => 'deep',
+    value_type    => Hash[String, Struct[{
       clients          => Array[String],
       options          => Array[String],
       automount        => Optional[Boolean],
