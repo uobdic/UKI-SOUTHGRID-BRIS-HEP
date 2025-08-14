@@ -23,7 +23,7 @@ class profile::nfs::client::mounts {
 
   $mounts.each |$path, $parameters| {
     # Make sure the user options don't include 'ro' or 'rw' as these are handled separately
-    $user_options = difference($parameters['options'], ['ro','rw'])
+    $user_options = difference($parameters['options'], ['ro', 'rw'])
 
     # Merge default options, user options, and read-write handling
     $options = union(
