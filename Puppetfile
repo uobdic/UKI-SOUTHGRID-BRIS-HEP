@@ -77,7 +77,7 @@ mod 'htcondor_ce',
 # secondary control repo
 mod 'site_private',
   :git => 'git@gitlab.services.bris.ac.uk:pp-computing/site_private.git',
-  :ref => '4c59ee56f92d60e9b7b6f9bd527ffe35a5aa74cc'
+  :ref => '15-enable-nfs-from-nsqi-pcs'
 
 mod 'puppet-cron', '2.0.0'
 
