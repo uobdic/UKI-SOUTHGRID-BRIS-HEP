@@ -4,16 +4,17 @@ class profile::nfs::server {
   # Hiera data
   # ====================================================================
 
-  $extra_packages = lookup('profile::nfs::server::extra_packages', { default_value => [], merge => 'deep', value_type => Array, })
-  $extra_services = lookup('profile::nfs::server::extra_services', { default_value => [], merge => 'deep', value_type => Array, })
-  $idmap_domain   = lookup('profile::nfs::idmap_domain', { default_value => 'nfs', value_type => String, })
+  $default_options = lookup('profile::nfs::server::default_options', { default_value => [], merge => 'deep', value_type => Array, })
+  $extra_packages  = lookup('profile::nfs::server::extra_packages', { default_value => [], merge => 'deep', value_type => Array, })
+  $extra_services  = lookup('profile::nfs::server::extra_services', { default_value => [], merge => 'deep', value_type => Array, })
+  $idmap_domain    = lookup('profile::nfs::idmap_domain', { default_value => 'nfs', value_type => String, })
 
   $exports        = lookup('profile::nfs::server::exports', {
     default_value => [],
     merge         => 'deep',
     value_type    => Hash[String, Struct[{
       clients          => Array[String],
-      options          => Array[String],
+      options          => Optional[Array[String]],
       automount        => Optional[Boolean],
       clientpath       => Optional[Stdlib::Absolutepath],
       homedirs_context => Optional[Boolean],
@@ -44,9 +45,11 @@ class profile::nfs::server {
   # ====================================================================
 
   $exports.each |$path, $parameters| {
+    $options = union($default_options, $parameters['options']).join(',')
+
     profile::nfs::server::export { $path:
       clients          => $parameters['clients'],
-      options          => $parameters['options'],
+      options          => $options,
       automount        => pick($parameters['automount'], false),
       clientpath       => $parameters['clientpath'],
       homedirs_context => pick($parameters['homedirs_context'], false),
