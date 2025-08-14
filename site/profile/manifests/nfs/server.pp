@@ -4,8 +4,8 @@ class profile::nfs::server {
   # Hiera data
   # ====================================================================
 
-  $extra_packages = lookup('profile::nfs::server::extra_packages', { default_value => [], merge_type => 'deep', value_type => Array, })
-  $extra_services = lookup('profile::nfs::server::extra_services', { default_value => [], merge_type => 'deep', value_type => Array, })
+  $extra_packages = lookup('profile::nfs::server::extra_packages', { default_value => [], merge => 'deep', value_type => Array, })
+  $extra_services = lookup('profile::nfs::server::extra_services', { default_value => [], merge => 'deep', value_type => Array, })
   $idmap_domain   = lookup('profile::nfs::idmap_domain', { default_value => 'nfs', value_type => String, })
 
   $exports        = lookup('profile::nfs::server::exports', {
