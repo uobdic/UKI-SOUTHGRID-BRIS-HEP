@@ -4,8 +4,9 @@ class profile::carbonblack {
   # Lookup data
   # ====================================================================
 
-  $enable_carbonblack = lookup('profile::carbonblack::enable', { 'type' => Boolean, 'default_value' => true, })
-  $carbonblack_baseurl = lookup('profile::carbonblack::baseurl', { 'type' => Stdlib::HTTPSUrl, })
+  $baseurl    = lookup('profile::carbonblack::baseurl', { 'type' => Stdlib::HTTPSUrl, })
+  $disguising = lookup('profile::carbonblack::disguising', { 'type' => String, 'default_value' => '' })
+  $enable     = lookup('profile::carbonblack::enable', { 'type' => Boolean, 'default_value' => true, })
 
   # Calculate variables
   # ====================================================================
@@ -25,12 +26,27 @@ class profile::carbonblack {
     # Actions
     # ==================================================================
 
-    # Un-disguise Rocky now that CB XDR supports it
-    if "${facts['os']['name']}-${facts['os']['release']['major']}" == 'Rocky-8' {
-      file_line { 'undisguise /etc/os-release on Rocky hosts':
-        path  => '/etc/os-release',
-        match => '^ID="rhel"',
-        line  => "ID=\"rocky\"",
+    # Un-disguise Alma and Rocky now that CB XDR supports them
+    case "${facts['os']['name']}-${facts['os']['release']['major']}" {
+      /^(AlmaLinux|Rocky)-(8|9)$/: {
+        $downcased_os_name = downcase($facts['os']['name'])
+        file_line { "undisguise /etc/os-release on ${facts['os']['name']} hosts":
+          path  => '/etc/os-release',
+          match => '^ID="rhel"',
+          line  => "ID=\"${downcased_os_name}\"",
+        }
+      }
+      default: {
+        # Still allow other distros to disguise
+        if $disguising {
+          $downcased_disguising = downcase($disguising)
+          file_line { 'fixup /etc/os-release':
+            path   => '/etc/os-release',
+            match  => "^ID=\"${downcased_disguising}\"",
+            line   => 'ID="rhel"',
+            notify => Exec['install cbagent'],
+          }
+        }
       }
     }
 
@@ -57,10 +73,10 @@ class profile::carbonblack {
     # not supported, but we're going to use it anyway to allow setting
     # the dependencies when required!)
     class { 'cbagent' :
-      ensure  => bool2str($enable_carbonblack, 'running', 'absent'),
+      ensure  => bool2str($enable, 'running', 'absent'),
       # Pull CB script and archive from server
       # (This checksums the files to ensure they are valid)
-      baseurl => $carbonblack_baseurl,
+      baseurl => $baseurl,
     }
 
     if $facts['os']['family'] == 'Debian' {
