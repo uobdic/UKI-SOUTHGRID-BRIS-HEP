@@ -1,6 +1,5 @@
 # the base profile should include component modules that will be on all nodes
 class profile::base {
-
   if $facts['os']['family'] == 'RedHat' {
     if member(['8', '9'], $::facts['os']['release']['major']) {
       # RHEL 8 or 9
@@ -81,9 +80,5 @@ class profile::base {
         'ceph', 'fuse.ceph',
       ],
     }
-  }
-  $disable_cbsensor = lookup('profile::base::disable_cbsensor', Boolean, undef, false)
-  unless $disable_cbsensor {
-    class { 'cbsensor': }
   }
 }

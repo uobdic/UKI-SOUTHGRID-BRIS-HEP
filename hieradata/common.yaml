@@ -1,12 +1,13 @@
 ---
 message: "This is our common yaml file"
 classes:
- - site::basic
- - packages::manage
- - 'profile::base'
- - 'profile::monitored'
- - profile::users::admin
-# - 'profile::firewall::setup'
+  - packages::manage
+  - profile::base
+  - profile::carbonblack
+  # - profile::firewall::setup
+  - profile::monitored
+  - profile::users::admin
+  - site::basic
 
 packages::install:
   - kernel-devel
