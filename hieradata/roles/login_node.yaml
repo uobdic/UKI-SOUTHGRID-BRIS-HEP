@@ -1,0 +1,44 @@
+classes:
+  - podman
+  - profile::cvmfs
+  - profile::cephfs
+  - packages::manage
+  - profile::apptainer
+  - profile::heposlibs
+  - profile::nfs_mounts
+
+packages::install:
+  - nano
+  - wget
+
+cvmfs::cvmfs_cache_base: '/var/cache/cvmfs'
+
+profile::cephfs::keys:
+  - dice-user
+
+profile::cephfs::mounts:
+  '/condor':
+    device: dice-user@.dicefs=/condor
+  '/dice':
+    device: dice-user@.dicefs=/dice
+  '/xrootd':
+    device: dice-user@.dicefs=/xrootd
+
+profile::nfs_mounts::mounts:
+  '/shared/scratch':
+    path: /exports/scratch
+    read_only: false
+    group: users
+  '/users':
+    path: /exports/users
+    read_only: false
+  '/software':
+    path: /exports/software
+    read_only: false
+    group: users
+  '/opt/astro':
+    server: echidna.star.bris.ac.uk
+    path: /data/echidna1
+    read_only: true
+    group: dice-astro
+
