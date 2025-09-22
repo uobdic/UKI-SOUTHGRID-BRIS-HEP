@@ -4,9 +4,9 @@ class profile::carbonblack {
   # Lookup data
   # ====================================================================
 
-  $baseurl    = lookup('profile::carbonblack::baseurl', { 'type' => Stdlib::HTTPSUrl, })
-  $disguising = lookup('profile::carbonblack::disguising', { 'type' => String, 'default_value' => '' })
-  $enable     = lookup('profile::carbonblack::enable', { 'type' => Boolean, 'default_value' => true, })
+  $baseurl    = lookup('profile::carbonblack::baseurl', { 'value_type' => Stdlib::HTTPSUrl, })
+  $disguising = lookup('profile::carbonblack::disguising', { 'value_type' => String, 'default_value' => '' })
+  $enable     = lookup('profile::carbonblack::enable', { 'value_type' => Boolean, 'default_value' => true, })
 
   # Calculate variables
   # ====================================================================
