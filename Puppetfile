@@ -77,7 +77,7 @@ mod 'htcondor_ce',
 # secondary control repo
 mod 'site_private',
   :git => 'git@gitlab.services.bris.ac.uk:pp-computing/site_private.git',
-  :ref => '19-remove-disguising-from-carbon-black-now-it-supports-rocky-and-alma'
+  :ref => '5c16d285c360a10feecd2b6b11b796de466d67be'
 
 mod 'puppet-cron', '2.0.0'
 
