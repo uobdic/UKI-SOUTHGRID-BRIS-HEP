@@ -40,18 +40,18 @@ class profile::users (
   if $fqdn == 'sts.dice.priv' {
     $users.each |$key, $value| {
       unless $value['ensure'] == 'absent' {
-        file { ["/exports/users/${key}", "/exports/software/${key}", "/exports/scratch/${key}", "/cephfs/dice/users/${key}"]:
+        file { ["/exports/users/${key}", "/exports/software/${key}", "/exports/scratch/${key}", "/dice/users/${key}"]:
           ensure => directory,
           owner  => $key,
           group  => $acc_defaults['group'],
           mode   => '0700',
         }
-        # set quote for cephfs
+        # set quota for cephfs
         $quota = lookup("profile::users::${key}::cephfs_quota", Integer, 'deep', $default_cephfs_quota)
-        exec { "set_cephfs_quota /cephfs/dice/users/${key}":
-          command => "/usr/bin/setfattr -n ceph.quota.max_bytes -v ${$quota} /cephfs/dice/users/${key}",
-          unless  => "/usr/bin/getfattr -n ceph.quota.max_bytes /cephfs/dice/users/${key}",
-          require => File["/cephfs/dice/users/${key}"],
+        exec { "set_cephfs_quota /dice/users/${key}":
+          command => "/usr/bin/setfattr -n ceph.quota.max_bytes -v ${$quota} /dice/users/${key}",
+          unless  => "/usr/bin/getfattr -n ceph.quota.max_bytes /dice/users/${key}",
+          require => File["/dice/users/${key}"],
         }
         # make sure .ssh/authorized_keys is created for each user
         file { "/exports/users/${key}/.ssh":
