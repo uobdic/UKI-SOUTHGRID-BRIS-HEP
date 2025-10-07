@@ -1,0 +1,63 @@
+<%- | Enum['rpm', 'deb'] $rpm_or_deb | -%>
+#!/usr/bin/env bash
+# remove-cb - removes CarbonBlack from a server
+#             (useful in testing)
+
+# Modified from
+# https://gitlab.services.bris.ac.uk/services-operations-public/cbsensor/-/blob/remove-cb/remove-cb
+# ..to run from within Puppet and support Ubuntu as well as EL.
+
+cbdir="/var/opt/carbonblack/install"
+uninstaller="/opt/carbonblack/response/bin/sensoruninstall.sh"
+cbainstaller="/var/cache/cbagent/install.sh"
+
+<% if $rpm_or_deb == 'deb' { -%>
+remove_pkg() { 
+    dpkg -P "$1"
+}
+
+check_pkg() {
+    dpkg -l "$1"
+}
+<% } else { -%>
+remove_pkg() { 
+    rpm -e "$1"
+}
+
+check_pkg() {
+    rpm -q --quiet "$1"
+}
+<% } -%>
+
+
+unload() {
+    kmod=$(awk "/^$1/ { print \$1 }" /proc/modules)
+    [[ "$kmod" ]] || return
+    rmmod "$kmod" || rmmod "$kmod"
+}
+
+set -x
+
+# Remove cbsensor - part 1
+[[ -d "$cbdir"       ]] && rm -rf "$cbdir"
+systemctl stop cbdaemon
+[[ -x "$uninstaller" ]] && "$uninstaller"
+pkill -x cbdaemon
+
+# (Temporarily) remove cbagent if installed
+if check_pkg cb-psc-sensor; then
+    systemctl stop cbagentd
+    remove_pkg cb-psc-sensor
+    unload event_collector
+fi
+
+# Continue removing cbsensor - part 2
+unload cbsensor
+remove_pkg cbsensor
+remove_pkg cbsysd
+remove_pkg cbkmod
+
+# Reinstall cbagent
+[[ -f "$cbainstaller" ]] && rm -f "$cbainstaller"   # trigger a reinstall
+
+exit 0

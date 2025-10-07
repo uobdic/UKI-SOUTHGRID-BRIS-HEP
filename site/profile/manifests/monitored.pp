@@ -18,7 +18,7 @@ class profile::monitored (
   $role = lookup('site::node_info::role', String, 'deep', 'unknown')
   if $use_prometheus {
     # some nodes already have prometheus due to their services
-    unless $role =~ /ceph/ {
+    unless $role =~ /ceph/ or $role == 'xrootd_gateway' {
       include profile::monitored::prometheus
     }
   }
