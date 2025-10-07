@@ -86,13 +86,9 @@ mod 'treydock-perfsonar', '4.0.0'
 mod 'jamtur01/httpauth', '0.0.6'
 
 # IT services
-mod 'cbsensor',
-  :git => 'https://gitlab.services.bristol.ac.uk/services-operations-public/cbsensor.git',
-  :tag => '3.4.0'
-
 mod 'cbagent',
   :git => 'https://gitlab.services.bristol.ac.uk/services-operations-public/cbagent.git',
-  :tag => '0.0.1'
+  :tag => '0.0.2'
 
 mod 'sysusers',
   :git => 'https://gitlab.services.bristol.ac.uk/services-operations-public/sysusers.git',
