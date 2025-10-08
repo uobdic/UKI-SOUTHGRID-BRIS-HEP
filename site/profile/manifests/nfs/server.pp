@@ -48,12 +48,19 @@ class profile::nfs::server {
   # Exports
   # ====================================================================
 
+  file { '/etc/exports.d':
+    ensure  => directory,
+    purge   => true,
+    recurse => true,
+  }
+
   $exports.each |$path, $parameters| {
     $user_options = pick_default($parameters['options'], [])
 
     $options = union($default_options, $user_options)
 
     profile::nfs::server::export { $path:
+      require          => File['/etc/exports.d'],
       clients          => $parameters['clients'],
       options          => $options,
       automount        => pick($parameters['automount'], false),
