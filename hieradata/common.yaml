@@ -90,9 +90,10 @@ site::node_info:
 
 cbsensor::version: "v7"
 
-apptainer::version: '1.4.3'
+apptainer::version: 'latest'
 apptainer::install_setuid: false
 apptainer::use_nvidia_container_cli: 'no'
+apptainer::install_method: 'os'
 apptainer::bind_paths:
   - '/etc/localtime'
   - '/etc/hosts'
