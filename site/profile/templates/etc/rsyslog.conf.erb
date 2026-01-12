@@ -42,7 +42,7 @@ $IncludeConfig /etc/rsyslog.d/*.conf
 :msg, contains, "veth" stop
 
 # limit the rate of "do_mount_indirect" messages to 1 per 10 minutes
-if ($msg contains "do_mount_indirect") then { Action(type="omfile" dirCreateMode="0700" FileCreateMode="0644" File="/var/log/do_mount_indirect.log" execOnlyOnceEveryInterval=600) stop }
+# if ($msg contains "do_mount_indirect") then { Action(type="omfile" dirCreateMode="0700" FileCreateMode="0644" File="/var/log/do_mount_indirect.log" execOnlyOnceEveryInterval=600) stop }
 
 # Log all kernel messages to the console.
 # Logging much else clutters up the screen.
