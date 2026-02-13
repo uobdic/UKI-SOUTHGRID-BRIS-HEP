@@ -4,8 +4,8 @@ forge 'http://forge.puppetlabs.com'
 mod 'puppetlabs-accounts', '8.2.0'
 mod 'puppetlabs-concat', '9.0.2'
 mod 'puppetlabs-firewall', '8.0.1'
-mod 'puppetlabs/inifile', :latest
-mod 'puppetlabs/ntp', :latest
+mod 'puppetlabs/inifile', '6.2.0'
+mod 'puppetlabs/ntp', '11.1.0'
 mod 'puppet-chrony', '3.0.0'
 mod 'puppet-selinux', '4.1.0'
 mod 'puppetlabs-stdlib', '9.6.0'
