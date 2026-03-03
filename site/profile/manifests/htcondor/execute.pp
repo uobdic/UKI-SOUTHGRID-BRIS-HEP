@@ -53,44 +53,9 @@ class profile::htcondor::execute (
   ### HEP OS libs are managed by profile::heposlibs
 
   $node_info = lookup('site::node_info', Hash, 'first', {})
-  $baseline_block = $facts['site_info']['benchmark_baseline'] ? {
-    undef   => {},
-    default => $facts['site_info']['benchmark_baseline'],
-  }
-  $baseline_type = $baseline_block['type'] ? {
-    undef   => 'hepscore23',
-    default => $baseline_block['type'],
-  }
-
-  $baseline_per_core = $baseline_block['per_core'] ? {
-    undef   => ($facts['site_info']['hepscore_baseline'] ? {
-        undef   => 20,
-        default => $facts['site_info']['hepscore_baseline'],
-    }),
-    default => $baseline_block['per_core'],
-  }
-
-  # Node benchmark values (prefer structured node_info.benchmark.<type>)
-  $node_benchmark_by_type = ($node_info['benchmark'] and $node_info['benchmark'][$baseline_type]) ? {
-    true    => $node_info['benchmark'][$baseline_type],
-    default => {},
-  }
-
-  $node_hepscore_per_core = $node_benchmark_by_type['per_core'] ? {
-    undef   => ($node_info['hepscore_per_core'] ? {
-        undef   => 0,
-        default => $node_info['hepscore_per_core'],
-    }),
-    default => $node_benchmark_by_type['per_core'],
-  }
-
-  $node_hepscore_total = $node_benchmark_by_type['total'] ? {
-    undef   => ($node_info['hepscore_total'] ? {
-        undef   => 0,
-        default => $node_info['hepscore_total'],
-    }),
-    default => $node_benchmark_by_type['total'],
-  }
+  $node_bench = $node_info['benchmark'][$baseline_type]
+  $node_hepscore_per_core = $node_bench['per_core']
+  $node_hepscore_total    = $node_bench['total']
 
   # Scaling factor (avoid division by zero)
   $accounting_scale_factor = $baseline_per_core ? {
@@ -99,15 +64,13 @@ class profile::htcondor::execute (
   }
 
   # These go into the worker config via ERB
-  $apel_scaling = sprintf('%.6f', $accounting_scale_factor)
+  $apel_scaling          = sprintf('%.6f', $accounting_scale_factor)
   $hepscore_per_core_str = sprintf('%.3f', $node_hepscore_per_core)
 
-  # Optional extra absolute specs (only if present)
-  # - HEPSCORE always emitted
-  # - SI2K and HEPSPEC emitted if you later populate them in node_info
-  $si2k_val = $node_info['benchmark'] and $node_info['benchmark']['si2k'] and $node_info['benchmark']['si2k']['per_core'] ? {
-    true    => $node_info['benchmark']['si2k']['per_core'],
-    default => undef,
+  # Optional SI2K
+  $si2k_val = $node_info['benchmark']['si2k']['per_core'] ? {
+    undef   => undef,
+    default => $node_info['benchmark']['si2k']['per_core'],
   }
 
   $hepspec_val = $node_info['benchmark'] and $node_info['benchmark']['hepspec06'] and $node_info['benchmark']['hepspec06']['per_core'] ? {
@@ -115,12 +78,8 @@ class profile::htcondor::execute (
     default => undef,
   }
 
-  if $si2k_val and $hepspec_val {
-    $apel_specs = "[HEPSCORE=${hepscore_per_core_str}; SI2K=${si2k_val}; HEPSPEC=${hepspec_val}]"
-  } elsif $si2k_val {
+  if $si2k_val {
     $apel_specs = "[HEPSCORE=${hepscore_per_core_str}; SI2K=${si2k_val}]"
-  } elsif $hepspec_val {
-    $apel_specs = "[HEPSCORE=${hepscore_per_core_str}; HEPSPEC=${hepspec_val}]"
   } else {
     $apel_specs = "[HEPSCORE=${hepscore_per_core_str}]"
   }
