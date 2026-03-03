@@ -30,10 +30,3 @@ ACCOUNTING_HEPSCORE_PER_CORE = <%= @hepscore_per_core_str %>
 
 STARTD_ATTRS = $(STARTD_ATTRS), ACCOUNTING_SCALE_FACTOR, ACCOUNTING_HEPSCORE_PER_CORE, ApelScaling, ApelSpecs
 
-# define a performance factor compared to the average
-ApelScaling = 1.414
-STARTD_ATTRS = $(STARTD_ATTRS) ApelScaling
-
-# define absolute performance for specific benchmarks
-ApelSpecs = [HEPSPEC=14.37; SI2K=2793]
-STARTD_ATTRS = $(STARTD_ATTRS) ApelSpecs
