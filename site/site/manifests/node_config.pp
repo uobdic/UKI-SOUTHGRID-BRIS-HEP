@@ -47,12 +47,12 @@ class site::node_config {
   }
 
   if $dice {
-    file { '/etc/dice':
-      ensure => 'directory',
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0755',
-    }
+    ensure_resource('file', '/etc/dice', {
+        ensure=> directory,
+        owner  => 'root',
+        group  => 'root',
+        mode   => '0755',
+    })
 
     file { '/etc/dice/config.yaml':
       ensure  => 'file',
