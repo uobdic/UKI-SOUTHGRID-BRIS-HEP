@@ -1,41 +1,34 @@
 <%- | 
   String $path,
-  String $group,                         # primary group for read/traverse
+  String $group,
   Array[String] $extra_read_groups,
   Array[String] $writers,
   Boolean $allow_writers
 | -%>
-<%# 
-  This template emits ACL lines in a stable order that matches:
-    getfacl -c --absolute-names --no-effective <path>
-  so we can diff it reliably for idempotency.
--%>
 user::rwx
-group::r-x
-mask::<%= $allow_writers ? { true => 'rwx', false => 'r-x' } %>
-other::---
-
-group:<%= $group %>:r-x
-<% $extra_read_groups.each |$g| { -%>
-group:<%= $g %>:r-x
-<% } -%>
 <% if $allow_writers { -%>
 <% $writers.each |$u| { -%>
 user:<%= $u %>:rwx
 <% } -%>
 <% } -%>
+group::r-x
+group:<%= $group %>:r-x
+<% $extra_read_groups.each |$g| { -%>
+group:<%= $g %>:r-x
+<% } -%>
+mask::<%= $allow_writers ? { true => 'rwx', false => 'r-x' } %>
+other::---
 
 default:user::rwx
-default:group::r-x
-default:mask::<%= $allow_writers ? { true => 'rwx', false => 'r-x' } %>
-default:other::---
-
-default:group:<%= $group %>:r-x
-<% $extra_read_groups.each |$g| { -%>
-default:group:<%= $g %>:r-x
-<% } -%>
 <% if $allow_writers { -%>
 <% $writers.each |$u| { -%>
 default:user:<%= $u %>:rwx
 <% } -%>
 <% } -%>
+default:group::r-x
+default:group:<%= $group %>:r-x
+<% $extra_read_groups.each |$g| { -%>
+default:group:<%= $g %>:r-x
+<% } -%>
+default:mask::<%= $allow_writers ? { true => 'rwx', false => 'r-x' } %>
+default:other::---
