@@ -101,6 +101,11 @@ define profile::projects::project (
     default => $experiments[$maybe_experiment]['group'],
   }
 
+  $experiment_root = $experiment_group ? {
+    undef   => undef,
+    default => "${root}/${maybe_experiment}",
+  }
+
   $effective_read_group = $read_group ? {
     undef   => $experiment_group,
     default => $read_group,
@@ -116,13 +121,17 @@ define profile::projects::project (
   $quota_bytes = $quota_gib_2 * 1024 * 1024 * 1024
 
   $parent = dirname($path)
-  ensure_resource('file', $parent, {
-      ensure  => directory,
-      owner   => 'root',
-      group   => $project_group,
-      mode    => $defaults.get('mode_root', '2750'),
-      require => File[$root],
-  })
+  # Only ensure the parent directory if it's not the experiment umbrella itself.
+# Experiment umbrellas are managed by profile::projects::experiment.
+  if $experiment_root == undef or $parent != $experiment_root {
+    ensure_resource('file', $parent, {
+        ensure  => directory,
+        owner   => 'root',
+        group   => $project_group,
+        mode    => $defaults.get('mode_root', '2750'),
+        require => File[$root],
+    })
+  }
 
   file { $path:
     ensure  => directory,
