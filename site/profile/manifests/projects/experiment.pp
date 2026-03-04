@@ -46,7 +46,8 @@ define profile::projects::experiment (
   String $mode = '2750',
 ) {
   $path = "${root}/${title}"
-  $aclfile = "/etc/dice/acl/projects/experiment_${title}.acl"
+  $token = regsubst($title, '[^A-Za-z0-9._-]', '_', 'G')
+  $aclfile = "/etc/dice/acl/projects/project_${token}.acl"
 
   file { $path:
     ensure  => directory,

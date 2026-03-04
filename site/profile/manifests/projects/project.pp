@@ -146,7 +146,8 @@ define profile::projects::project (
     unless  => "/usr/bin/getfattr -n ceph.quota.max_bytes ${path} 2>/dev/null | /bin/grep -q ${quota_bytes}",
     require => File[$path],
   }
-  $aclfile = "/etc/dice/acl/projects/project_${title}.acl"
+  $token = regsubst($title, '[^A-Za-z0-9._-]', '_', 'G')
+  $aclfile = "/etc/dice/acl/projects/project_${token}.acl"
   $allow_writers = ! $writers.empty
 
   file { $aclfile:

@@ -106,11 +106,21 @@ class profile::projects (
     group  => 'root',
     mode   => '0755',
   }
+  ensure_resource('file', '/etc/dice', { ensure=> directory })
+  file { '/etc/dice/acl':
+    ensure  => directory,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    require => File['/etc/dice'],
+  }
+
   file { '/etc/dice/acl/projects':
-    ensure => directory,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
+    ensure  => directory,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    require => File['/etc/dice/acl'],
   }
 
   $experiments.each |String $name, Hash $cfg| {
