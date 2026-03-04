@@ -106,7 +106,6 @@ class profile::projects (
     group  => 'root',
     mode   => '0755',
   }
-  ensure_resource('file', '/etc/dice', { ensure=> directory })
   file { '/etc/dice/acl':
     ensure  => directory,
     owner   => 'root',
