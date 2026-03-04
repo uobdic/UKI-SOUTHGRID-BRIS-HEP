@@ -138,3 +138,6 @@ mod 'edgej-filepath', '1.1.0'
 
 mod 'simp-simplib', '4.12.2'
 mod 'simp-sssd', '7.10.0'
+
+# ACL
+mod 'puppet-posix_acl', '3.1.0'
