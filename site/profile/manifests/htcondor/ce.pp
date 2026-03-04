@@ -17,7 +17,7 @@ class profile::htcondor::ce {
   }
 
   exec { 'condor_reconfig':
-    command     => '/usr/sbin/condor_reconfig',
+    command     => 'condor_reconfig',
     refreshonly => true,
     path        => ['/usr/sbin','/usr/bin','/sbin','/bin'],
   }
@@ -33,7 +33,7 @@ class profile::htcondor::ce {
   }
 
   exec { 'condor_ce_reconfig':
-    command     => '/usr/sbin/condor_ce_reconfig',
+    command     => 'condor_ce_reconfig',
     refreshonly => true,
     path        => ['/usr/sbin','/usr/bin','/sbin','/bin'],
   }
