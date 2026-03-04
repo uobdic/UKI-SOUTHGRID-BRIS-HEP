@@ -178,11 +178,12 @@ define profile::projects::project (
   + $writer_default
 
   posix_acl { $path:
-    action     => 'exact',
-    provider   => posixacl,
-    recursive  => false,
-    permission => $perm,
-    require    => File[$path],
+    action         => 'exact',
+    provider       => posixacl,
+    recursive      => false,
+    permission     => $perm,
+    require        => File[$path],
+    ignore_missing => notify,
   }
 
   file { "${path}/${defaults.get('readme_filename', 'README.md')}":
@@ -200,6 +201,6 @@ define profile::projects::project (
         'extra_read_groups'    => $extra_read_groups,
         'writers'              => $writers,
     }),
-    require => File[$path],
+    require => [File[$path], Posix_acl[$path]],
   }
 }
