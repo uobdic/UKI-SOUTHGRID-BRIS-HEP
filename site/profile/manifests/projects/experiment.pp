@@ -42,7 +42,7 @@
 define profile::projects::experiment (
   String $root,
   String $group,
-  Optional[String] $description = '',
+  Optional[String] $description = undef,
   String $mode = '2750',
 ) {
   $path = "${root}/${title}"
@@ -79,7 +79,7 @@ define profile::projects::experiment (
 
       "default:group:${group}:r-x",
     ],
-    require => File[$path],
+    require    => File[$path],
   }
 
   if $description != '' {

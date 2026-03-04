@@ -1,0 +1,53 @@
+<%- | 
+  String $title,
+  Optional[String] $description,
+  String $sponsor,
+  Integer $quota_gib,
+  Integer $quota_bytes,
+  Optional[String] $effective_read_group,
+  Array[String] $extra_read_groups,
+  Array[String] $writers
+| -%>
+# <%= $title %>
+
+## Purpose
+<%= $description ? {
+  undef   => 'No description provided.',
+  default => $description
+} %>
+
+## Sponsor (owner)
+
+<%= $sponsor %>
+
+## Quota
+
+<%= $quota_gib %> GiB (<%= $quota_bytes %> bytes)
+
+## Read access
+
+Primary read group:
+<%= $effective_read_group ? {
+  undef   => '(none)',
+  default => $effective_read_group
+} %>
+
+Extra read groups:
+<%= $extra_read_groups.empty ? {
+  true  => '(none)',
+  false => join($extra_read_groups, ', ')
+} %>
+
+## Write access (ACL)
+
+<%= $writers.empty ? {
+  true  => '(none)',
+  false => join($writers, ', ')
+} %>
+
+---
+
+This directory is managed by Puppet.
+
+ACLs are enforced using `posix_acl`, and default ACLs ensure new files
+inherit the correct permissions.

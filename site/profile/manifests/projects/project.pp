@@ -86,8 +86,8 @@ define profile::projects::project (
   String $sponsor,
   Integer $quota_gib,
   Array[String] $writers,
-  Optional[String] $description = '',
   Hash $experiments,
+  Optional[String] $description = undef,
   Optional[String] $read_group = undef,
   Array[String] $extra_read_groups = [],
 ) {
@@ -106,6 +106,11 @@ define profile::projects::project (
     default => $read_group,
   }
 
+  $project_group = $effective_read_group ? {
+    undef   => 'root',
+    default => $effective_read_group,
+  }
+
   $min_gib     = $defaults.get('quota_gib_min', 10)
   $quota_gib_2 = $quota_gib < $min_gib ? { true => $min_gib, false => $quota_gib }
   $quota_bytes = $quota_gib_2 * 1024 * 1024 * 1024
@@ -114,7 +119,7 @@ define profile::projects::project (
   file { $parent:
     ensure  => directory,
     owner   => 'root',
-    group   => $effective_read_group ? { undef => 'root', default => $effective_read_group },
+    group   => $project_group,
     mode    => $defaults.get('mode_root', '2750'),
     require => File[$root],
   }
@@ -122,7 +127,7 @@ define profile::projects::project (
   file { $path:
     ensure  => directory,
     owner   => $sponsor,
-    group   => $effective_read_group ? { undef => 'root', default => $effective_read_group },
+    group   => $project_group,
     mode    => $defaults.get('mode_root', '2750'),
     require => File[$parent],
   }
@@ -133,46 +138,44 @@ define profile::projects::project (
     require => File[$path],
   }
 
-  # Build ACL permission list
-  $perm = [
-    # baseline
+  # Build ACL permission list without '+=' (Puppet variables are immutable)
+  $base_perm = [
     'user::rwx',
     'group::r-x',
     'mask::rwx',
     'other::---',
   ]
 
-  if $effective_read_group {
-    $perm += ["group:${effective_read_group}:r-x"]
+  $read_group_perm = $effective_read_group ? {
+    undef   => [],
+    default => ["group:${effective_read_group}:r-x"],
   }
 
-  $extra_read_groups.each |String $g| {
-    $perm += ["group:${g}:r-x"]
-  }
+  $extra_read_perm = $extra_read_groups.map |String $g| { "group:${g}:r-x" }
 
-  $writers.each |String $u| {
-    $perm += ["user:${u}:rwx"]
-  }
+  $writer_perm = $writers.map |String $u| { "user:${u}:rwx" }
 
-  # defaults (inheritance)
-  $perm += [
+  $base_default = [
     'default:user::rwx',
     'default:group::r-x',
     'default:mask::rwx',
     'default:other::---',
   ]
 
-  if $effective_read_group {
-    $perm += ["default:group:${effective_read_group}:r-x"]
-  }
+  $read_group_default = ["default:group:${project_group}:r-x"]
 
-  $extra_read_groups.each |String $g| {
-    $perm += ["default:group:${g}:r-x"]
-  }
+  $extra_read_default = $extra_read_groups.map |String $g| { "default:group:${g}:r-x" }
 
-  $writers.each |String $u| {
-    $perm += ["default:user:${u}:rwx"]
-  }
+  $writer_default = $writers.map |String $u| { "default:user:${u}:rwx" }
+
+  $perm = $base_perm
+  + $read_group_perm
+  + $extra_read_perm
+  + $writer_perm
+  + $base_default
+  + $read_group_default
+  + $extra_read_default
+  + $writer_default
 
   posix_acl { $path:
     action     => 'exact',
@@ -182,36 +185,21 @@ define profile::projects::project (
     require    => File[$path],
   }
 
-  $readme = @("README")
-    # ${title}
-
-**Purpose**
-${description}
-
-**Sponsor (owner)**
-- ${sponsor}
-
-**Quota**
-- ${quota_gib_2} GiB (${quota_bytes} bytes)
-
-**Read access**
-- Primary read group: ${effective_read_group ? { undef => '(none)', default => $effective_read_group }}
-- Extra read groups: ${extra_read_groups.empty ? { true => '(none)', false => join($extra_read_groups, ', ') }}
-
-**Write access (ACL)**
-- ${writers.empty ? { true => '(none)', false => join($writers, ', ') }}
-
-**Notes**
-- ACLs are managed with Puppet using posix_acl (exact mode) on the project root.
-- Default ACLs are set so new children inherit access settings.
-  | README
-
   file { "${path}/${defaults.get('readme_filename', 'README.md')}":
     ensure  => file,
     owner   => $sponsor,
-    group   => $effective_read_group ? { undef => 'root', default => $effective_read_group },
+    group   => $project_group,
     mode    => '0644',
-    content => $readme,
+    content => epp('profile/projects/readme.md.epp', {
+        'title'                => $title,
+        'description'          => $description,
+        'sponsor'              => $sponsor,
+        'quota_gib'            => $quota_gib_2,
+        'quota_bytes'          => $quota_bytes,
+        'effective_read_group' => $effective_read_group,
+        'extra_read_groups'    => $extra_read_groups,
+        'writers'              => $writers,
+    }),
     require => File[$path],
   }
 }
