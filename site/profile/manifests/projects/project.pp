@@ -116,13 +116,13 @@ define profile::projects::project (
   $quota_bytes = $quota_gib_2 * 1024 * 1024 * 1024
 
   $parent = dirname($path)
-  file { $parent:
-    ensure  => directory,
-    owner   => 'root',
-    group   => $project_group,
-    mode    => $defaults.get('mode_root', '2750'),
-    require => File[$root],
-  }
+  ensure_resource('file', $parent, {
+      ensure  => directory,
+      owner   => 'root',
+      group   => $project_group,
+      mode    => $defaults.get('mode_root', '2750'),
+      require => File[$root],
+  })
 
   file { $path:
     ensure  => directory,
