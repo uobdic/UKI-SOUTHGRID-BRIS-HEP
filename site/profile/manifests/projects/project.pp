@@ -151,7 +151,7 @@ define profile::projects::project (
   $base_perm = [
     'user::rwx',
     'group::r-x',
-    'mask::rwx',
+    'mask::r-x',
     'other::---',
   ]
 
@@ -167,7 +167,7 @@ define profile::projects::project (
   $base_default = [
     'default:user::rwx',
     'default:group::r-x',
-    'default:mask::rwx',
+    'default:mask::r-x',
     'default:other::---',
   ]
 
