@@ -67,14 +67,14 @@ define profile::projects::experiment (
     permission => [
       'user::rwx',
       'group::r-x',
-      'mask::rwx',
+      'mask::r-x',
       'other::---',
 
       "group:${group}:r-x",
 
       'default:user::rwx',
       'default:group::r-x',
-      'default:mask::rwx',
+      'default:mask::r-x',
       'default:other::---',
 
       "default:group:${group}:r-x",
