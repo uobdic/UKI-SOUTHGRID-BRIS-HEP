@@ -127,7 +127,7 @@ class profile::projects (
       root        => $root,
       group       => $cfg['group'],
       description => $cfg.get('description', ''),
-      mode        => $cfg.get('mode', $defaults.get('mode_root', '2750')),
+      mode        => '2750',
     }
   }
 
