@@ -46,6 +46,7 @@ define profile::projects::experiment (
   String $mode = '2750',
 ) {
   $path = "${root}/${title}"
+  $aclfile = "/etc/dice/acl/projects/experiment_${title}.acl"
 
   file { $path:
     ensure  => directory,
@@ -55,31 +56,26 @@ define profile::projects::experiment (
     require => File[$root],
   }
 
-  # Strict, predictable ACL baseline:
-  # - keep owner full
-  # - keep owning group r-x (directory traverse)
-  # - remove world
-  # - add named group entry for the experiment group (belt-and-braces if group ownership changes)
-  posix_acl { $path:
-    action     => 'exact',
-    provider   => posixacl,
-    recursive  => false,
-    permission => [
-      'user::rwx',
-      'group::r-x',
-      'mask::r-x',
-      'other::---',
+  file { $aclfile:
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => epp('profile/projects/acl.epp', {
+        'path'              => $path,
+        'group'             => $group,
+        'extra_read_groups' => [],
+        'writers'           => [],
+        'allow_writers'     => false,   # umbrellas: read-only
+    }),
+    require => File['/etc/dice/acl/projects'],
+  }
 
-      "group:${group}:r-x",
-
-      'default:user::rwx',
-      'default:group::r-x',
-      'default:mask::r-x',
-      'default:other::---',
-
-      "default:group:${group}:r-x",
-    ],
-    require    => File[$path],
+  exec { "apply_acl_${aclfile}":
+    command => "/usr/bin/setfacl --set-file ${aclfile} ${path}",
+    unless  => "/usr/bin/getfacl -c --absolute-names --no-effective ${path} | /usr/bin/diff -u - ${aclfile} >/dev/null",
+    path    => ['/usr/bin','/bin'],
+    require => [File[$path], File[$aclfile]],
   }
 
   if $description != '' {
@@ -89,7 +85,7 @@ define profile::projects::experiment (
       group   => $group,
       mode    => '0644',
       content => "# ${title}\n\n${description}\n",
-      require => File[$path],
+      require => [File[$path], File[$aclfile]],
     }
   }
 }

@@ -106,6 +106,12 @@ class profile::projects (
     group  => 'root',
     mode   => '0755',
   }
+  file { '/etc/dice/acl/projects':
+    ensure => directory,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
 
   $experiments.each |String $name, Hash $cfg| {
     profile::projects::experiment { $name:

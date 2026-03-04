@@ -146,53 +146,29 @@ define profile::projects::project (
     unless  => "/usr/bin/getfattr -n ceph.quota.max_bytes ${path} 2>/dev/null | /bin/grep -q ${quota_bytes}",
     require => File[$path],
   }
+  $aclfile = "/etc/dice/acl/projects/project_${title}.acl"
+  $allow_writers = ! $writers.empty
 
-  # Build ACL permission list without '+=' (Puppet variables are immutable)
-  $base_perm = [
-    'user::rwx',
-    'group::r-x',
-    'mask::r-x',
-    'other::---',
-  ]
-
-  $read_group_perm = $effective_read_group ? {
-    undef   => [],
-    default => ["group:${effective_read_group}:r-x"],
+  file { $aclfile:
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => epp('profile/projects/acl.epp', {
+        'path'              => $path,
+        'group'             => $project_group,
+        'extra_read_groups' => $extra_read_groups,
+        'writers'           => $writers,
+        'allow_writers'     => $allow_writers,   # projects with writers get rwx mask
+    }),
+    require => File['/etc/dice/acl/projects'],
   }
 
-  $extra_read_perm = $extra_read_groups.map |String $g| { "group:${g}:r-x" }
-
-  $writer_perm = $writers.map |String $u| { "user:${u}:rwx" }
-
-  $base_default = [
-    'default:user::rwx',
-    'default:group::r-x',
-    'default:mask::r-x',
-    'default:other::---',
-  ]
-
-  $read_group_default = ["default:group:${project_group}:r-x"]
-
-  $extra_read_default = $extra_read_groups.map |String $g| { "default:group:${g}:r-x" }
-
-  $writer_default = $writers.map |String $u| { "default:user:${u}:rwx" }
-
-  $perm = $base_perm
-  + $read_group_perm
-  + $extra_read_perm
-  + $writer_perm
-  + $base_default
-  + $read_group_default
-  + $extra_read_default
-  + $writer_default
-
-  posix_acl { $path:
-    action         => 'exact',
-    provider       => posixacl,
-    recursive      => false,
-    permission     => $perm,
-    require        => File[$path],
-    ignore_missing => notify,
+  exec { "apply_acl_${aclfile}":
+    command => "/usr/bin/setfacl --set-file ${aclfile} ${path}",
+    unless  => "/usr/bin/getfacl -c --absolute-names --no-effective ${path} | /usr/bin/diff -u - ${aclfile} >/dev/null",
+    path    => ['/usr/bin','/bin'],
+    require => [File[$path], File[$aclfile]],
   }
 
   file { "${path}/${defaults.get('readme_filename', 'README.md')}":
