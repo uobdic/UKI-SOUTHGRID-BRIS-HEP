@@ -49,5 +49,5 @@ Extra read groups:
 
 This directory is managed by Puppet.
 
-ACLs are enforced using `posix_acl`, and default ACLs ensure new files
+ACLs are enforced using `setfacl`, and default ACLs ensure new files
 inherit the correct permissions.

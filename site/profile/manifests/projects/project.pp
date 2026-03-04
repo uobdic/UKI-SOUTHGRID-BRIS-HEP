@@ -186,6 +186,6 @@ define profile::projects::project (
         'extra_read_groups'    => $extra_read_groups,
         'writers'              => $writers,
     }),
-    require => [File[$path], Posix_acl[$path]],
+    require => [File[$path], File[$aclfile]],
   }
 }
