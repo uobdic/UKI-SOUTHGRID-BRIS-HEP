@@ -47,7 +47,7 @@ define profile::projects::experiment (
 ) {
   $path = "${root}/${title}"
   $token = regsubst($title, '[^A-Za-z0-9._-]', '_', 'G')
-  $aclfile = "/etc/dice/acl/projects/project_${token}.acl"
+  $aclfile = "/etc/dice/acl/projects/experiment_${token}.acl"
 
   file { $path:
     ensure  => directory,
