@@ -30,6 +30,7 @@ hierarchy:
     paths:
       - "cluster/%{::node_info.cluster}.yaml"
       - common.yaml
+      - cephfs_projects.yaml
   - name: 'Secrets'
     datadir: modules/site_private/hieradata
     paths:
