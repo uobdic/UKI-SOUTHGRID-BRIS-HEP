@@ -1,0 +1,31 @@
+[db]
+hostname = localhost
+port = 3306
+name = <%= @apel_db_name %>
+username = <%= @apel_db_user %>
+password = <%= @apel_db_password %>
+
+[site_info]
+site_name = <%= @goc_site_name %>
+lrms_server = <%= @fqdn %>:9619/<%= @fqdn %>-condor
+
+[blah]
+enabled = true
+dir = /var/lib/condor-ce/apel/
+filename_prefix = blah
+subdirs = false
+
+[batch]
+enabled = true
+reparse = false
+type = HTCondor
+parallel = false
+dir = /var/lib/condor-ce/apel/
+filename_prefix = batch
+subdirs = false
+ge_ms_timestamps = false
+
+[logging]
+logfile = /var/log/apelparser.log
+level = INFO
+console = true
