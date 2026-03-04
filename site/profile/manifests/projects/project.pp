@@ -167,7 +167,7 @@ define profile::projects::project (
 
   exec { "apply_acl_${aclfile}":
     command => "/usr/bin/setfacl --set-file ${aclfile} ${path}",
-    unless  => "/usr/bin/getfacl -c --absolute-names --no-effective ${path} | /usr/bin/diff -u - ${aclfile} >/dev/null",
+    unless  => "/usr/bin/getfacl -c --absolute-names --no-effective ${path} | /usr/bin/diff -u -B - ${aclfile} >/dev/null",
     path    => ['/usr/bin','/bin'],
     require => [File[$path], File[$aclfile]],
   }
