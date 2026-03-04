@@ -1,4 +1,4 @@
-class profile::htcondor::ce_apel {
+class profile::htcondor::ce {
   # Ensure output dir exists (safe even if packages create it)
   file { '/var/lib/condor-ce/apel':
     ensure => directory,
