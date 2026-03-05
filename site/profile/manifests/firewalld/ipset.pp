@@ -35,10 +35,6 @@ define profile::firewalld::ipset (
         'entries' => $entries,
     }),
     notify  => Exec['firewalld-reload-for-ipsets'],
-    require => [
-      File[$ipset_file],
-      Exec['firewalld-reload-for-ipsets'],
-    ],
   }
 
   firewalld_rich_rule { "DICE ipset ${title} ${family}":
@@ -48,6 +44,6 @@ define profile::firewalld::ipset (
     source   => { 'ipset' => $ipset_name },
     action   => $action,
     priority => $priority,
-    require  => File[$ipset_file],
+    require  => [File[$ipset_file], Exec['firewalld-reload-for-ipsets'],],
   }
 }
