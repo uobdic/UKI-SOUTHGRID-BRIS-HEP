@@ -23,7 +23,7 @@ define profile::firewalld::ipset (
     'ipv6' => 'inet6',
   }
 
-  $ipset_name = "${ipset_prefix}-${family}"
+  $ipset_name = "${ipset_prefix}-${title}-${family}"
   $ipset_file = "/etc/firewalld/ipsets/${ipset_name}.xml"
 
   file { $ipset_file:
