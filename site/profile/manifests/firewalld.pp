@@ -49,6 +49,8 @@ class profile::firewalld (
     accept_priority => $accept_priority,
   }
 
+  notice("accepts_ipset=${accepts_ipset.length} accepts_rich=${accepts_rich.length}")
+  notice("drops_ipset=${drops_ipset.length} drops_rich=${drops_rich.length}")
   # 2) Everything else -> normal rich rules (as you do today)
   $accept_defaults = { ensure => present, zone => $zone, action => 'accept' }
   $drop_defaults   = { ensure => present, zone => $zone, action => 'drop' }

@@ -23,7 +23,7 @@ define profile::firewalld::ipset (
     'ipv6' => 'inet6',
   }
 
-  $ipset_name = "${ipset_prefix}-${title}-${family}"
+  $ipset_name = "${ipset_prefix}-${family}"
   $ipset_file = "/etc/firewalld/ipsets/${ipset_name}.xml"
 
   file { $ipset_file:
@@ -35,7 +35,10 @@ define profile::firewalld::ipset (
         'entries' => $entries,
     }),
     notify  => Exec['firewalld-reload-for-ipsets'],
-    require => File['/etc/firewalld/ipsets'],
+    require => [
+      File[$ipset_file],
+      Exec['firewalld-reload-for-ipsets'],
+    ],
   }
 
   firewalld_rich_rule { "DICE ipset ${title} ${family}":

@@ -96,6 +96,8 @@ define profile::firewalld::ipsets (
       ipset_prefix => $ipset_prefix,
     }
   }
+  notice("DICE firewalld: drop_v6_nets count=${drop_v6_nets.length} values=${drop_v6_nets}")
+  notice("DICE firewalld: accept_v6_nets count=${accept_v6_nets.length} values=${accept_v6_nets}")
 
   # Notes file with human context (titles + CIDRs)
   file { $notes_path:
