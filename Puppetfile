@@ -21,7 +21,7 @@ mod 'puppet/fetchcrl', :latest
 mod 'jhoblitt/mcelog', :latest
 mod 'jhoblitt-ipmi', '5.3.1'
 mod 'saz/memcached', :latest
-mod 'puppet-firewalld', '5.0.0'
+mod 'puppet-firewalld', '5.1.0'
 mod 'puppet-network', '2.2.0'
 # voxpupuli, see https://wikis.bris.ac.uk/display/BristolT2/Puppet+modules#Puppetmodules-Network
 #mod 'adrien/network', :latest
