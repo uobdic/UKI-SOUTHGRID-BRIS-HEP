@@ -1,21 +1,17 @@
 # profile::firewalld
 #
-# Efficient source allow/deny lists for firewalld using ipsets + a small number of rich rules.
+# Partitions firewalld rules into:
+#  - Source-only rules (family+source only) -> enforced via ipsets + 2–4 rich rules total
+#  - Everything else (icmp/ports/services/complex matches) -> enforced as normal firewalld_rich_rule resources
 #
-# Data model (Hiera):
-#   profile::firewalld::accepts:
-#     "Human-readable reason (CIDR)":
-#       family: ipv4|ipv6   # optional (defaults to ipv4)
-#       source: "1.2.3.0/24" or "2a03:2880::/29"   # required
-#       priority: 100       # optional (used only for notes; ipset rules use fixed priorities)
-#
-#   profile::firewalld::drops: (same structure)
-#
-# Parameters:
-#   - zone: Firewalld zone to attach the ipset rich rules to (default: public)
-#   - notes_path: Where to write a human-readable list of entries with reasons
-#   - ipset_prefix: Prefix for created ipset names/files (default: dice)
-#   - drop_priority / accept_priority: Rich rule priorities for the ipset-based rules
+# Hiera input:
+#   profile::firewalld::accepts / profile::firewalld::drops
+# Each is a hash:
+#   "Human readable title":
+#     family: ipv4|ipv6    (optional, defaults to ipv4)
+#     source: CIDR         (optional depending on rule)
+#     priority: int        (optional)
+#     port/service/protocol/... (optional)
 #
 class profile::firewalld (
   Hash   $accepts        = lookup('profile::firewalld::accepts', Hash, 'deep', {}),
@@ -28,13 +24,35 @@ class profile::firewalld (
 ) {
   include firewalld
 
+  $accepts_ipset = $accepts.filter |$title, $rule| {
+    $rule =~ Hash and profile::firewalld_ipset_candidate($rule)
+  }
+  $accepts_rich = $accepts.filter |$title, $rule| {
+    !($rule =~ Hash and profile::firewalld_ipset_candidate($rule))
+  }
+
+  $drops_ipset = $drops.filter |$title, $rule| {
+    $rule =~ Hash and profile::firewalld_ipset_candidate($rule)
+  }
+  $drops_rich = $drops.filter |$title, $rule| {
+    !($rule =~ Hash and profile::firewalld_ipset_candidate($rule))
+  }
+
+  # 1) Source-only rules -> ipsets + small number of rich rules
   profile::firewalld::ipsets { 'ipset-lists':
-    accepts         => $accepts,
-    drops           => $drops,
+    accepts         => $accepts_ipset,
+    drops           => $drops_ipset,
     zone            => $zone,
     notes_path      => $notes_path,
     ipset_prefix    => $ipset_prefix,
     drop_priority   => $drop_priority,
     accept_priority => $accept_priority,
   }
+
+  # 2) Everything else -> normal rich rules (as you do today)
+  $accept_defaults = { ensure => present, zone => $zone, action => 'accept' }
+  $drop_defaults   = { ensure => present, zone => $zone, action => 'drop' }
+
+  create_resources('firewalld_rich_rule', $accepts_rich, $accept_defaults)
+  create_resources('firewalld_rich_rule', $drops_rich,   $drop_defaults)
 }
