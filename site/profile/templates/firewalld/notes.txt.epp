@@ -7,11 +7,11 @@
 # This file preserves the original reason/title from Hiera.
 
 ## Drops
-<%- $drop_entries.sort_by |$e| { [$e['family'], $e['source']] }.each |$e| { -%>
+<%- $drop_entries.each |$e| { -%>
 <%= $e['family'] %>  <%= $e['source'] %>  -  <%= $e['title'] %>
 <%- } -%>
 
 ## Accepts
-<%- $accept_entries.sort_by |$e| { [$e['family'], $e['source']] }.each |$e| { -%>
+<%- $accept_entries.each |$e| { -%>
 <%= $e['family'] %>  <%= $e['source'] %>  -  <%= $e['title'] %>
 <%- } -%>
