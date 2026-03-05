@@ -1,0 +1,17 @@
+<%- | Array[Hash] $accept_entries, Array[Hash] $drop_entries, String $zone, String $ipset_prefix, Integer $drop_priority, Integer $accept_priority | -%>
+# Managed by Puppet (DICE)
+# Enforcement:
+#   - firewalld ipsets: /etc/firewalld/ipsets/<%= $ipset_prefix %>-{accept,drop}-{ipv4,ipv6}.xml (only when non-empty)
+#   - rich rules: 1 per ipset (priority drop=<%= $drop_priority %>, accept=<%= $accept_priority %>) in zone "<%= $zone %>"
+#
+# This file preserves the original reason/title from Hiera.
+
+## Drops
+<%- $drop_entries.sort_by |$e| { [$e['family'], $e['source']] }.each |$e| { -%>
+<%= $e['family'] %>  <%= $e['source'] %>  -  <%= $e['title'] %>
+<%- } -%>
+
+## Accepts
+<%- $accept_entries.sort_by |$e| { [$e['family'], $e['source']] }.each |$e| { -%>
+<%= $e['family'] %>  <%= $e['source'] %>  -  <%= $e['title'] %>
+<%- } -%>
