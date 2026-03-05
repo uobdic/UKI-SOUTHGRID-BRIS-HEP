@@ -53,43 +53,49 @@ define profile::firewalld::ipsets (
     path        => ['/usr/bin', '/bin'],
   }
 
-  # Helper: manage one ipset + one rich rule referencing it
-  $manage_ipset = |String $name, String $family, Array[String] $nets, String $action, Integer $priority| {
-    $xml_family = $family ? { 'ipv4' => 'inet', 'ipv6' => 'inet6' }
-    $ipset_name = "${ipset_prefix}-${name}-${family}"         # e.g. dice-accept-ipv4
-    $ipset_file = "/etc/firewalld/ipsets/${ipset_name}.xml"
-
-    file { $ipset_file:
-      ensure  => file,
-      mode    => '0644',
-      content => epp('profile/firewalld/ipset.xml.epp', {
-          'name'    => $ipset_name,
-          'family'  => $xml_family,
-          'entries' => $nets,
-      }),
-      notify  => Exec['firewalld-reload-for-ipsets'],
-      require => File['/etc/firewalld/ipsets'],
-    }
-
-    # Use ipset as the rich rule source (puppet-firewalld supports source hash with ipset key)
-    firewalld_rich_rule { "DICE ipset ${name} ${family}":
-      ensure   => present,
-      zone     => $zone,
-      family   => $family,
-      source   => { 'ipset' => $ipset_name },
-      action   => $action,
-      priority => $priority,
-      require  => File[$ipset_file],
+  if !empty($drop_v4_nets) {
+    profile::firewalld::ipset { 'drop':
+      entries      => $drop_v4_nets,
+      family       => 'ipv4',
+      action       => 'drop',
+      zone         => $zone,
+      priority     => $drop_priority,
+      ipset_prefix => $ipset_prefix,
     }
   }
 
-  # IPv4 (only if there are entries)
-  if !empty($drop_v4_nets) { $manage_ipset('drop',   'ipv4', $drop_v4_nets,   'drop',   $drop_priority) }
-  if !empty($accept_v4_nets) { $manage_ipset('accept', 'ipv4', $accept_v4_nets, 'accept', $accept_priority) }
+  if !empty($accept_v4_nets) {
+    profile::firewalld::ipset { 'accept':
+      entries      => $accept_v4_nets,
+      family       => 'ipv4',
+      action       => 'accept',
+      zone         => $zone,
+      priority     => $accept_priority,
+      ipset_prefix => $ipset_prefix,
+    }
+  }
 
-  # IPv6 (may be empty on internal nodes)
-  if !empty($drop_v6_nets) { $manage_ipset('drop',   'ipv6', $drop_v6_nets,   'drop',   $drop_priority) }
-  if !empty($accept_v6_nets) { $manage_ipset('accept', 'ipv6', $accept_v6_nets, 'accept', $accept_priority) }
+  if !empty($drop_v6_nets) {
+    profile::firewalld::ipset { 'drop-v6':
+      entries      => $drop_v6_nets,
+      family       => 'ipv6',
+      action       => 'drop',
+      zone         => $zone,
+      priority     => $drop_priority,
+      ipset_prefix => $ipset_prefix,
+    }
+  }
+
+  if !empty($accept_v6_nets) {
+    profile::firewalld::ipset { 'accept-v6':
+      entries      => $accept_v6_nets,
+      family       => 'ipv6',
+      action       => 'accept',
+      zone         => $zone,
+      priority     => $accept_priority,
+      ipset_prefix => $ipset_prefix,
+    }
+  }
 
   # Notes file with human context (titles + CIDRs)
   file { $notes_path:
