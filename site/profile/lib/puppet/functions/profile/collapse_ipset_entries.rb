@@ -9,16 +9,22 @@ Puppet::Functions.create_function(:'profile::collapse_ipset_entries') do
   end
 
   def collapse_entries(entries)
-    nets = entries.map do |s|
-      begin
-        IPAddr.new(s).to_string + "/" + s.split("/")[1]
-      rescue StandardError
-        s
-      end
+    normalized = entries.map do |s|
+      ip, prefix = s.split('/', 2)
+      ipaddr = IPAddr.new(ip)
+
+      prefix_len =
+        if prefix.nil? || prefix.empty?
+          ipaddr.ipv4? ? 32 : 128
+        else
+          Integer(prefix)
+        end
+
+      "#{ipaddr.to_string}/#{prefix_len}"
     end.uniq
 
-    parsed = nets.map do |s|
-      ip, prefix = s.split("/", 2)
+    parsed = normalized.map do |s|
+      ip, prefix = s.split('/', 2)
       {
         original: s,
         ipaddr: IPAddr.new(ip),
@@ -26,9 +32,12 @@ Puppet::Functions.create_function(:'profile::collapse_ipset_entries') do
       }
     end
 
-    # sort broader networks first
     parsed.sort_by! do |n|
-      [n[:ipaddr].ipv4? ? 4 : 6, n[:ipaddr].to_i, n[:prefix]]
+      [
+        n[:ipaddr].ipv4? ? 4 : 6,
+        n[:ipaddr].to_i,
+        n[:prefix],
+      ]
     end
 
     kept = []
@@ -36,8 +45,6 @@ Puppet::Functions.create_function(:'profile::collapse_ipset_entries') do
     parsed.each do |candidate|
       covered = kept.any? do |existing|
         next false unless existing[:ipaddr].ipv4? == candidate[:ipaddr].ipv4?
-
-        mask_bits = existing[:ipaddr].ipv4? ? 32 : 128
         next false if existing[:prefix] > candidate[:prefix]
 
         existing_net = IPAddr.new("#{existing[:ipaddr].to_string}/#{existing[:prefix]}")
