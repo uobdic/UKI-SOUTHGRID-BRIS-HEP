@@ -35,10 +35,15 @@ define profile::firewalld::ipsets (
     }
   }
 
-  $accept_v4_nets = $accept_entries.filter |$e| { $e['family'] == 'ipv4' }.map |$e| { $e['source'] }.unique.sort
-  $accept_v6_nets = $accept_entries.filter |$e| { $e['family'] == 'ipv6' }.map |$e| { $e['source'] }.unique.sort
-  $drop_v4_nets   = $drop_entries.filter   |$e| { $e['family'] == 'ipv4' }.map |$e| { $e['source'] }.unique.sort
-  $drop_v6_nets   = $drop_entries.filter   |$e| { $e['family'] == 'ipv6' }.map |$e| { $e['source'] }.unique.sort
+  $accept_v4_nets_raw = $accept_entries.filter |$e| { $e['family'] == 'ipv4' }.map |$e| { $e['source'] }.unique.sort
+  $accept_v6_nets_raw = $accept_entries.filter |$e| { $e['family'] == 'ipv6' }.map |$e| { $e['source'] }.unique.sort
+  $drop_v4_nets_raw   = $drop_entries.filter   |$e| { $e['family'] == 'ipv4' }.map |$e| { $e['source'] }.unique.sort
+  $drop_v6_nets_raw   = $drop_entries.filter   |$e| { $e['family'] == 'ipv6' }.map |$e| { $e['source'] }.unique.sort
+
+  $accept_v4_nets = profile::collapse_ipset_entries($accept_v4_nets_raw)
+  $accept_v6_nets = profile::collapse_ipset_entries($accept_v6_nets_raw)
+  $drop_v4_nets   = profile::collapse_ipset_entries($drop_v4_nets_raw)
+  $drop_v6_nets   = profile::collapse_ipset_entries($drop_v6_nets_raw)
 
   # Ensure directory exists
   file { '/etc/firewalld/ipsets':
@@ -96,8 +101,6 @@ define profile::firewalld::ipsets (
       ipset_prefix => $ipset_prefix,
     }
   }
-  notice("DICE firewalld: drop_v6_nets count=${drop_v6_nets.length} values=${drop_v6_nets}")
-  notice("DICE firewalld: accept_v6_nets count=${accept_v6_nets.length} values=${accept_v6_nets}")
 
   # Notes file with human context (titles + CIDRs)
   file { $notes_path:
