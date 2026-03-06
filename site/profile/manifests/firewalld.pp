@@ -14,8 +14,6 @@
 #     port/service/protocol/... (optional)
 #
 class profile::firewalld (
-  Hash   $accepts        = lookup('profile::firewalld::accepts', Hash, 'deep', {}),
-  Hash   $drops          = lookup('profile::firewalld::drops',   Hash, 'deep', {}),
   String $zone           = 'public',
   String $notes_path     = '/etc/dice/firewalld_notes.txt',
   String $ipset_prefix   = 'dice',
@@ -23,6 +21,9 @@ class profile::firewalld (
   Integer $accept_priority = 60,
 ) {
   include firewalld
+
+  $accepts = lookup('profile::firewalld::accepts', Hash, 'deep', {})
+  $drops   = lookup('profile::firewalld::drops',   Hash, 'deep', {})
 
   $accepts_ipset = $accepts.filter |$title, $rule| {
     $rule =~ Hash and profile::firewalld_ipset_candidate($rule)
@@ -49,8 +50,8 @@ class profile::firewalld (
     accept_priority => $accept_priority,
   }
 
-  notice("accepts_ipset=${accepts_ipset.length} accepts_rich=${accepts_rich.length}")
-  notice("drops_ipset=${drops_ipset.length} drops_rich=${drops_rich.length}")
+  warning("accepts_ipset=${accepts_ipset.length} accepts_rich=${accepts_rich.length}")
+  warning("drops_ipset=${drops_ipset.length} drops_rich=${drops_rich.length}")
   # 2) Everything else -> normal rich rules (as you do today)
   $accept_defaults = { ensure => present, zone => $zone, action => 'accept' }
   $drop_defaults   = { ensure => present, zone => $zone, action => 'drop' }
