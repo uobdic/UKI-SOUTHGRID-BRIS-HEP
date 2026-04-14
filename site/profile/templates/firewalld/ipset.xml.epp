@@ -1,0 +1,10 @@
+<%- | String $name, String $family, Array[String] $entries | -%>
+<?xml version="1.0" encoding="utf-8"?>
+<ipset type="hash:net">
+  <short><%= $name %></short>
+  <description>Managed by Puppet (DICE)</description>
+  <option name="family" value="<%= $family %>"/>
+<%- $entries.each |$net| { -%>
+  <entry><%= $net %></entry>
+<%- } -%>
+</ipset>
