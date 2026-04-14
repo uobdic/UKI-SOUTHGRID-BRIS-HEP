@@ -77,7 +77,7 @@ mod 'htcondor_ce',
 # secondary control repo
 mod 'site_private',
   :git => 'git@gitlab.services.bris.ac.uk:pp-computing/site_private.git',
-  :ref => 'master'
+  :ref => '15-enable-nfs-from-nsqi-pcs'
 
 mod 'puppet-cron', '2.0.0'
 
@@ -107,7 +107,7 @@ mod 'veeam_restore_client',
   :ref => '1.5.5'
 
 # NFS
-mod 'derdanne-nfs', '2.1.11'
+mod 'puppet-nfs', '3.0.0'
 
 # autofs
 mod 'puppet-autofs', '9.0.0'
