@@ -22,7 +22,6 @@ class profile::htcondor::ce_apel_publisher (
 
   # Directories used by APEL stack
   file { [
-      '/var/lib/condor-ce/apel',
       '/var/spool/apel',
       '/var/spool/apel/outgoing',
       '/var/log/apel',
