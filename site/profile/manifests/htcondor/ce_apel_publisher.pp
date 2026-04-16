@@ -15,6 +15,7 @@ class profile::htcondor::ce_apel_publisher (
       'apel-parsers',
       'apel-ssm',
       'python3-dirq',
+      'python3-argo-ams-library',
       'mariadb-server',
     ]:
       ensure => installed,
@@ -46,23 +47,22 @@ class profile::htcondor::ce_apel_publisher (
     require => Package['mariadb-server'],
   }
 
-  exec { 'apel-set-mariadb-root-password':
-    command => "/usr/bin/mysqladmin -u root password '${apel_db_root_password.unwrap}'",
-    path    => ['/usr/bin','/usr/sbin','/bin','/sbin'],
-    onlyif  => "/usr/bin/mysql -u root -e 'SELECT 1' >/dev/null 2>&1",
-    require => Service['mariadb'],
+  service { 'mariadb':
+    ensure  => running,
+    enable  => true,
+    require => Package['mariadb-server'],
   }
 
   exec { 'apel-create-db-and-user':
-    command => "/usr/bin/mysql -u root -p'${apel_db_root_password.unwrap}' -e \"CREATE DATABASE IF NOT EXISTS ${apel_db_name}; CREATE USER IF NOT EXISTS '${apel_db_user}'@'localhost' IDENTIFIED BY '${apel_db_password.unwrap}'; GRANT ALL ON ${apel_db_name}.* TO '${apel_db_user}'@'localhost'; FLUSH PRIVILEGES;\"",
+    command => "/usr/bin/mysql -e \"CREATE DATABASE IF NOT EXISTS ${apel_db_name}; CREATE USER IF NOT EXISTS '${apel_db_user}'@'localhost' IDENTIFIED BY '${apel_db_password.unwrap}'; ALTER USER '${apel_db_user}'@'localhost' IDENTIFIED BY '${apel_db_password.unwrap}'; GRANT ALL ON ${apel_db_name}.* TO '${apel_db_user}'@'localhost'; FLUSH PRIVILEGES;\"",
     path    => ['/usr/bin','/usr/sbin','/bin','/sbin'],
-    require => Exec['apel-set-mariadb-root-password'],
+    require => Service['mariadb'],
   }
 
   exec { 'apel-load-schema':
-    command => "/usr/bin/mysql -u root -p'${apel_db_root_password.unwrap}' ${apel_db_name} < /usr/share/apel/client.sql",
+    command => "/usr/bin/mysql ${apel_db_name} < /usr/share/apel/client.sql",
     path    => ['/usr/bin','/usr/sbin','/bin','/sbin'],
-    unless  => "/usr/bin/mysql -u root -p'${apel_db_root_password.unwrap}' ${apel_db_name} -e 'SHOW TABLES LIKE \"StorageRecords\";' | /bin/grep -q StorageRecords",
+    unless  => "/usr/bin/mysql ${apel_db_name} -e 'SHOW TABLES LIKE \"StorageRecords\";' | /bin/grep -q StorageRecords",
     require => [Package['apel-parsers'], Exec['apel-create-db-and-user']],
   }
 
@@ -94,12 +94,5 @@ class profile::htcondor::ce_apel_publisher (
   }
 
   # Expose vars to ERB templates
-  # (ERB sees instance variables like @apel_mysql_db, etc.)
-  $_apel_mysql_db       = $apel_db_name
-  $_apel_mysql_user     = $apel_db_user
   $_apel_mysql_password = $apel_db_password.unwrap
-  $_apel_enable_ssm     = $apel_enable_ssm
-  $_hepspec06           = $hepspec06
-  $_goc_site_name       = $goc_site_name
-  $_fqdn                = $fqdn
 }
