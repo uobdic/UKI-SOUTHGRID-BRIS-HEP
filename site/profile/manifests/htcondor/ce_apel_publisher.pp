@@ -47,12 +47,6 @@ class profile::htcondor::ce_apel_publisher (
     require => Package['mariadb-server'],
   }
 
-  service { 'mariadb':
-    ensure  => running,
-    enable  => true,
-    require => Package['mariadb-server'],
-  }
-
   exec { 'apel-create-db-and-user':
     command => "/usr/bin/mysql -e \"CREATE DATABASE IF NOT EXISTS ${apel_db_name}; CREATE USER IF NOT EXISTS '${apel_db_user}'@'localhost' IDENTIFIED BY '${apel_db_password.unwrap}'; ALTER USER '${apel_db_user}'@'localhost' IDENTIFIED BY '${apel_db_password.unwrap}'; GRANT ALL ON ${apel_db_name}.* TO '${apel_db_user}'@'localhost'; FLUSH PRIVILEGES;\"",
     path    => ['/usr/bin','/usr/sbin','/bin','/sbin'],
@@ -80,7 +74,13 @@ class profile::htcondor::ce_apel_publisher (
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => template('profile/etc/apel/parser.cfg.erb'),
+    content => epp('profile/etc/apel/parser.cfg.epp', {
+        'apel_db_name'     => $apel_db_name,
+        'apel_db_user'     => $apel_db_user,
+        'apel_db_password' => $apel_db_password,
+        'goc_site_name'    => $goc_site_name,
+        'fqdn'             => $fqdn,
+    }),
     require => Package['apel-parsers'],
   }
 
@@ -92,7 +92,4 @@ class profile::htcondor::ce_apel_publisher (
     content => template('profile/etc/apel/sender.cfg.erb'),
     require => Package['apel-ssm'],
   }
-
-  # Expose vars to ERB templates
-  $_apel_mysql_password = $apel_db_password.unwrap
 }
