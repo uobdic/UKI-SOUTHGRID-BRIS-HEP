@@ -65,7 +65,15 @@ class profile::htcondor::ce_apel_publisher (
     owner   => 'root',
     group   => 'root',
     mode    => '0640',
-    content => template('profile/etc/apel/client.cfg.erb'),
+    content => epp('profile/etc/apel/client.cfg.epp', {
+        'apel_db_name'     => $apel_db_name,
+        'apel_db_user'     => $apel_db_user,
+        'apel_db_password' => $apel_db_password,
+        'goc_site_name'    => $goc_site_name,
+        'fqdn'             => $fqdn,
+        'hepspec06'        => $hepspec06,
+        'apel_enable_ssm'  => $apel_enable_ssm,
+    }),
     require => Package['apel-parsers'],
   }
 
