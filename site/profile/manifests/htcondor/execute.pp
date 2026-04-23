@@ -90,7 +90,18 @@ class profile::htcondor::execute (
     owner   => 'condor',
     group   => 'condor',
     mode    => '0644',
-    content => template('profile/etc/condor/20_worker.conf.erb'),
+    content => epp('profile/etc/condor/20_worker.conf.epp', {
+      'accounting_scale_factor' => $accounting_scale_factor,
+      'apel_scaling'            => $apel_scaling,
+      'apel_specs'              => $apel_specs,
+      'baseline_per_core'       => $baseline_per_core,
+      'baseline_type'           => $baseline_type,
+      'execute_dir'             => $execute_dir,
+      'hepscore_per_core_str'   => $hepscore_per_core_str,
+      'num_cpus'                => $num_cpus,
+      'num_gpus'                => $num_gpus,
+      'reserved_memory'         => $reserved_memory,
+    }),
     notify  => Exec['/usr/sbin/condor_reconfig'],
   }
 }
