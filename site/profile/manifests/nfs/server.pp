@@ -10,7 +10,7 @@ class profile::nfs::server {
   $idmap_domain    = lookup('profile::nfs::idmap_domain', { default_value => 'nfs', value_type => String, })
 
   $exports        = lookup('profile::nfs::server::exports', {
-    default_value => [],
+    default_value => {},
     merge         => 'deep',
     value_type    => Hash[String, Struct[{
       clients          => Array[String],
