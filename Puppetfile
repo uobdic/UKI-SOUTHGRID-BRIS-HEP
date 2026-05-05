@@ -77,7 +77,7 @@ mod 'htcondor_ce',
 # secondary control repo
 mod 'site_private',
   :git => 'git@gitlab.services.bris.ac.uk:pp-computing/site_private.git',
-  :ref => '5c16d285c360a10feecd2b6b11b796de466d67be'
+  :ref => '4276425f5488cf816b50d57933c6f9f28f69cd84'
 
 mod 'puppet-cron', '2.0.0'
 
