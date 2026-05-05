@@ -1,0 +1,37 @@
+[db]
+hostname = localhost
+port = 3306
+name = <%= $apel_db_name %>
+username = <%= $apel_db_user %>
+password = <%= $apel_db_password %>
+
+[spec_updater]
+enabled = false
+site_name = <%= $goc_site_name %>
+ldap_host = lcgbdii.phy.bris.ac.uk
+ldap_port = 2170
+
+lrms_server = <%= $fqdn %>:9619/<%= $fqdn %>-condor
+spec_type = HEPSPEC
+spec_value = <%= $hepspec06 %>
+manual_spec1 = <%= $fqdn %>:9619/<%= $fqdn %>-condor,HEPSPEC,<%= $hepspec06 %>
+
+[joiner]
+enabled = true
+local_jobs = false
+
+[unloader]
+enabled = true
+dir_location = /var/spool/apel/
+send_summaries = false
+withhold_dns = false
+interval = latest
+send_ur = false
+
+[ssm]
+enabled = <%= $apel_enable_ssm %>
+
+[logging]
+logfile = /var/log/apel/client.log
+level = INFO
+console = true

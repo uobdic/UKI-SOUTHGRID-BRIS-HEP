@@ -14,16 +14,6 @@ class profile::htcondor::execute (
   $execute_dir = "${execute_dir_base}/${facts['networking']['fqdn']}"
   $worker_cfg = '/etc/condor/config.d/20_worker.cfg'
 
-  # create the worker config file
-  file { $worker_cfg:
-    ensure  => file,
-    owner   => 'condor',
-    group   => 'condor',
-    mode    => '0644',
-    content => template('profile/etc/condor/20_worker.conf.erb'),
-    notify  => Exec['/usr/sbin/condor_reconfig'],
-  }
-
   file { $execute_dir:
     ensure => directory,
     owner  => 'condor',
@@ -61,4 +51,46 @@ class profile::htcondor::execute (
   }
 
   ### HEP OS libs are managed by profile::heposlibs
+
+  $node_info = lookup('site::node_info', Hash, 'first', {})
+  $node_bench = $node_info['benchmark'][$baseline_type]
+  $node_hepscore_per_core = $node_bench['per_core']
+  $node_hepscore_total    = $node_bench['total']
+
+  # Scaling factor (avoid division by zero)
+  $accounting_scale_factor = $baseline_per_core ? {
+    0       => 1.0,
+    default => ($node_hepscore_per_core / $baseline_per_core),
+  }
+
+  # These go into the worker config via ERB
+  $apel_scaling          = sprintf('%.6f', $accounting_scale_factor)
+  $hepscore_per_core_str = sprintf('%.3f', $node_hepscore_per_core)
+
+  # Optional SI2K
+  $si2k_val = $node_info['benchmark']['si2k']['per_core'] ? {
+    undef   => undef,
+    default => $node_info['benchmark']['si2k']['per_core'],
+  }
+
+  $hepspec_val = $node_info['benchmark'] and $node_info['benchmark']['hepspec06'] and $node_info['benchmark']['hepspec06']['per_core'] ? {
+    true    => $node_info['benchmark']['hepspec06']['per_core'],
+    default => undef,
+  }
+
+  if $si2k_val {
+    $apel_specs = "[HEPSCORE=${hepscore_per_core_str}; SI2K=${si2k_val}]"
+  } else {
+    $apel_specs = "[HEPSCORE=${hepscore_per_core_str}]"
+  }
+
+  # create the worker config file
+  file { $worker_cfg:
+    ensure  => file,
+    owner   => 'condor',
+    group   => 'condor',
+    mode    => '0644',
+    content => template('profile/etc/condor/20_worker.conf.erb'),
+    notify  => Exec['/usr/sbin/condor_reconfig'],
+  }
 }

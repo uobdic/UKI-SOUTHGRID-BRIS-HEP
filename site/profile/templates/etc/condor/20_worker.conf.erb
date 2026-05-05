@@ -12,3 +12,22 @@ CGROUP_MEMORY_LIMIT_POLICY = soft
 
 # Disable PID namespaces since they do not work with cgroup
 USE_PID_NAMESPACES = False
+
+###############################################################################
+# Accounting / APEL / Benchmark attributes
+###############################################################################
+
+# Site-relative performance scaling (e.g. relative to site baseline 20 per core)
+# Baseline: <%= @baseline_type %> per_core=<%= @baseline_per_core %>
+ACCOUNTING_SCALE_FACTOR = <%= @accounting_scale_factor %>
+
+# Alternative names used by some older tooling / conventions
+ApelScaling = <%= @apel_scaling %>
+
+# Absolute benchmark values (at minimum HEPSCORE per-core; optionally others)
+ApelSpecs = <%= @apel_specs %>
+
+ACCOUNTING_HEPSCORE_PER_CORE = <%= @hepscore_per_core_str %>
+
+STARTD_ATTRS = $(STARTD_ATTRS), ACCOUNTING_SCALE_FACTOR, ACCOUNTING_HEPSCORE_PER_CORE, ApelScaling, ApelSpecs
+

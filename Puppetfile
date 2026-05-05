@@ -4,8 +4,8 @@ forge 'http://forge.puppetlabs.com'
 mod 'puppetlabs-accounts', '8.2.0'
 mod 'puppetlabs-concat', '9.0.2'
 mod 'puppetlabs-firewall', '8.0.1'
-mod 'puppetlabs/inifile', :latest
-mod 'puppetlabs/ntp', :latest
+mod 'puppetlabs/inifile', '6.2.0'
+mod 'puppetlabs/ntp', '11.1.0'
 mod 'puppet-chrony', '3.0.0'
 mod 'puppet-selinux', '4.1.0'
 mod 'puppetlabs-stdlib', '9.6.0'
@@ -21,7 +21,7 @@ mod 'puppet/fetchcrl', :latest
 mod 'jhoblitt/mcelog', :latest
 mod 'jhoblitt-ipmi', '5.3.1'
 mod 'saz/memcached', :latest
-mod 'puppet-firewalld', '5.0.0'
+mod 'puppet-firewalld', '5.1.0'
 mod 'puppet-network', '2.2.0'
 # voxpupuli, see https://wikis.bris.ac.uk/display/BristolT2/Puppet+modules#Puppetmodules-Network
 #mod 'adrien/network', :latest
@@ -107,7 +107,7 @@ mod 'veeam_restore_client',
   :ref => '1.5.5'
 
 # NFS
-mod 'derdanne-nfs', '2.1.11'
+mod 'puppet-nfs', '3.0.0'
 
 # autofs
 mod 'puppet-autofs', '9.0.0'
@@ -138,3 +138,6 @@ mod 'edgej-filepath', '1.1.0'
 
 mod 'simp-simplib', '4.12.2'
 mod 'simp-sssd', '7.10.0'
+
+# ACL - stay away, it is really inconsistent with mask
+# mod 'puppet-posix_acl', '3.1.0'

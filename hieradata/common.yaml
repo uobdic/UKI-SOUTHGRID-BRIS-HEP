@@ -31,9 +31,14 @@ ntp::restrict:
 site::site_info:
   gocdb_name: 'UKI-SOUTHGRID-BRIS-HEP'
   # for CPU scaling
-  hepspec06_baseline: 10
-  specfp2000_baseline: 2500
-  specint2000_baseline: 2500
+  benchmark_baseline:
+    type: hepscore23
+    per_core: 20 # published integer baseline
+    total: 26680 # optional sanity/reference
+  # legacy values
+  hepspec06_baseline: 20
+  specfp2000_baseline: 3887
+  specint2000_baseline: 3887
   cms_name: 'T2_UK_SGrid_Bristol'
   storage_element: 'lcgse01.phy.bris.ac.uk'
   argus_server: 'lcgarg.phy.bris.ac.uk'
@@ -90,9 +95,10 @@ site::node_info:
 
 cbsensor::version: "v7"
 
-apptainer::version: '1.4.1'
+apptainer::version: 'latest'
 apptainer::install_setuid: false
 apptainer::use_nvidia_container_cli: 'no'
+apptainer::install_method: 'os'
 apptainer::bind_paths:
   - '/etc/localtime'
   - '/etc/hosts'
