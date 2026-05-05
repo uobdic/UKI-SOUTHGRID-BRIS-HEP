@@ -72,6 +72,8 @@ class profile::nfs::server {
   # Firewall
   # ====================================================================
 
+  # TODO: Change to IP sets to support hostnames
+
   $all_clients = $exports.values.map |$export| { $export['clients'] }.flatten.unique
 
   $all_clients.each |$client| {
