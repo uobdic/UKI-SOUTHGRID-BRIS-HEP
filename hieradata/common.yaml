@@ -8,6 +8,7 @@ classes:
   - profile::monitored
   - profile::users::admin
   - site::basic
+  - profile::security
 
 packages::install:
   - kernel-devel
