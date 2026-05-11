@@ -106,6 +106,7 @@ class profile::projects (
     group  => 'root',
     mode   => '0755',
   }
+
   file { '/etc/dice/acl':
     ensure  => directory,
     owner   => 'root',
@@ -127,7 +128,7 @@ class profile::projects (
       root        => $root,
       group       => $cfg['group'],
       description => $cfg.get('description', ''),
-      mode        => '2750',
+      mode        => $cfg.get('mode', '2750'),
     }
   }
 

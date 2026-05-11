@@ -94,11 +94,22 @@ define profile::projects::project (
   $path = "${root}/${title}"
 
   $segments = split($title, '/')
-  $maybe_experiment = $segments[0]
 
-  $experiment_group = $experiments[$maybe_experiment] ? {
+  # Only treat the first path component as an experiment if this is
+  # actually an experiment/project-style path, e.g. CMS/ttbar.
+  #
+  # Top-level projects are therefore not assumed to belong to an experiment.
+  $maybe_experiment = $segments.length > 1 ? {
+    true    => $segments[0],
+    default => undef,
+  }
+
+  $experiment_group = $maybe_experiment ? {
     undef   => undef,
-    default => $experiments[$maybe_experiment]['group'],
+    default => $experiments[$maybe_experiment] ? {
+      undef   => undef,
+      default => $experiments[$maybe_experiment]['group'],
+    },
   }
 
   $experiment_root = $experiment_group ? {
@@ -121,9 +132,13 @@ define profile::projects::project (
   $quota_bytes = $quota_gib_2 * 1024 * 1024 * 1024
 
   $parent = dirname($path)
+
   # Only ensure the parent directory if it's not the experiment umbrella itself.
-# Experiment umbrellas are managed by profile::projects::experiment.
-  if $experiment_root == undef or $parent != $experiment_root {
+  # Experiment umbrellas are managed by profile::projects::experiment.
+  #
+  # For top-level projects, $parent will be $root, so this block is skipped
+  # because File[$root] is already managed by profile::projects.
+  if $parent != $root and ($experiment_root == undef or $parent != $experiment_root) {
     ensure_resource('file', $parent, {
         ensure  => directory,
         owner   => 'root',
@@ -146,6 +161,7 @@ define profile::projects::project (
     unless  => "/usr/bin/getfattr -n ceph.quota.max_bytes ${path} 2>/dev/null | /bin/grep -q ${quota_bytes}",
     require => File[$path],
   }
+
   $token = regsubst($title, '[^A-Za-z0-9._-]', '_', 'G')
   $aclfile = "/etc/dice/acl/projects/project_${token}.acl"
   $allow_writers = ! $writers.empty
@@ -160,7 +176,7 @@ define profile::projects::project (
         'group'             => $project_group,
         'extra_read_groups' => $extra_read_groups,
         'writers'           => $writers,
-        'allow_writers'     => $allow_writers,   # projects with writers get rwx mask
+        'allow_writers'     => $allow_writers,
     }),
     require => File['/etc/dice/acl/projects'],
   }
