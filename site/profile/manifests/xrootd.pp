@@ -38,7 +38,7 @@ class profile::xrootd (
     default      => ["xrootd@${instance}", "cmsd@${instance}"],
   }
   $versionlock_entries = $xrootd_packages.map |String $package_name| {
-    "${package_name}-0:${xrootd_version}.*"
+    "${package_name}-1:${xrootd_version}.*"
   }
   $xrootd_service_notify = $manage_services ? {
     true    => Service[$services],
