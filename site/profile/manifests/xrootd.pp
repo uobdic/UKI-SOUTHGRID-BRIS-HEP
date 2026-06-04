@@ -2,7 +2,7 @@
 
 class profile::xrootd (
   Enum['server', 'redirector', 'standalone'] $role = 'server',
-  String $xrootd_version = '5.8.3-1.el9',
+  String $xrootd_version = '6.0.3-1.el9',
   String $osg_release_version = '24-main',
   Integer $xrootd_uid = 1094,
   Integer $xrootd_gid = 1094,
