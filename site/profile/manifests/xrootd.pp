@@ -212,18 +212,6 @@ class profile::xrootd (
     require => File['/etc/grid-security'],
   }
 
-  file { '/etc/grid-security/hostcert.pem':
-    ensure  => link,
-    target  => '/etc/grid-security/xrd/hostcert.pem',
-    require => File['/etc/grid-security/xrd'],
-  }
-
-  file { '/etc/grid-security/hostkey.pem':
-    ensure  => link,
-    target  => '/etc/grid-security/xrd/hostkey.pem',
-    require => File['/etc/grid-security/xrd'],
-  }
-
   file { '/etc/xrootd/macaroon-secret':
     ensure  => link,
     target  => "${secrets_root}/etc/xrootd/macaroon-secret",
