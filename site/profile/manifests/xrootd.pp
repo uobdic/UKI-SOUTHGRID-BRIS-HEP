@@ -112,7 +112,6 @@ class profile::xrootd (
   }
 
   file { [
-      '/etc/grid-security',
       '/etc/lcmaps',
       '/etc/osg',
       '/etc/xrootd',
