@@ -1,7 +1,7 @@
 ---
 classes:
   - profile::firewalld
-  - profile::xrootd::gateway
+  - profile::xrootd::server
   - profile::cephfs
 
 cvmfs::cvmfs_cache_base: '/var/cache/cvmfs'
