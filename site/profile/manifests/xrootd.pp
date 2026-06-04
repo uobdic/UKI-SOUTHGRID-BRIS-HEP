@@ -141,7 +141,6 @@ class profile::xrootd (
 
   file { [
       '/var/run/xrootd',
-      '/var/spool/xrootd',
       '/var/log/xrootd',
     ]:
       ensure => directory,
