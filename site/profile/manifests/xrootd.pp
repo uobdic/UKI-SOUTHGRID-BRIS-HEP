@@ -4,8 +4,6 @@ class profile::xrootd (
   Enum['server', 'redirector', 'standalone'] $role = 'server',
   String $xrootd_version = '6.0.3-1.el9',
   String $osg_release_version = '24-main',
-  Integer $xrootd_uid = 1094,
-  Integer $xrootd_gid = 1094,
   String $secrets_root = '/.secrets',
   Array[String] $xrootd_packages = [
     'xrootd',
@@ -110,23 +108,7 @@ class profile::xrootd (
     require         => [
       Yumrepo['xrootd-stable'],
       Package[$osg_release_package_name],
-      User['xrootd'],
     ],
-  }
-
-  group { 'xrootd':
-    ensure => present,
-    gid    => $xrootd_gid,
-  }
-
-  user { 'xrootd':
-    ensure     => present,
-    uid        => $xrootd_uid,
-    gid        => 'xrootd',
-    shell      => '/bin/sh',
-    home       => '/var/spool/xrootd',
-    managehome => false,
-    require    => Group['xrootd'],
   }
 
   file { [
@@ -163,11 +145,10 @@ class profile::xrootd (
       '/var/spool/xrootd',
       '/var/log/xrootd',
     ]:
-      ensure  => directory,
-      owner   => 'xrootd',
-      group   => 'xrootd',
-      mode    => '0755',
-      require => User['xrootd'],
+      ensure => directory,
+      owner  => 'xrootd',
+      group  => 'xrootd',
+      mode   => '0755',
   }
 
   $xrootd_scripts.each |String $script| {
