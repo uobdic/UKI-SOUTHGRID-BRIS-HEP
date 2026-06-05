@@ -130,8 +130,17 @@ class profile::xrootd (
     require => File['/etc/xrootd'],
   }
 
+  
   file { [
       '/var/run/xrootd',
+    ]:
+      ensure => directory,
+      owner  => 'xrootd',
+      group  => 'xrootd',
+      mode   => '0750',
+  }
+
+  file { [
       '/var/log/xrootd',
     ]:
       ensure => directory,
