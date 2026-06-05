@@ -8,7 +8,6 @@ class profile::xrootd (
   Array[String] $xrootd_packages = [
     'xrootd',
     'xrootd-client',
-    'xrootd-cmstfc',
     'xrootd-scitokens',
     'xrootd-selinux',
     'xrootd-server',
@@ -107,6 +106,15 @@ class profile::xrootd (
 
   package { $xrootd_packages:
     ensure          => $xrootd_version,
+    install_options => ['--enablerepo=xrootd-stable', '--enablerepo=osg-contrib'],
+    require         => [
+      Yumrepo['xrootd-stable'],
+      Package[$osg_release_package_name],
+    ],
+  }
+
+  package { 'xrootd-cmstfc':
+    ensure          => installed,
     install_options => ['--enablerepo=xrootd-stable', '--enablerepo=osg-contrib'],
     require         => [
       Yumrepo['xrootd-stable'],
