@@ -17,6 +17,9 @@ class profile::xrootd (
   ],
   Array[String] $support_packages = [
     'cronie',
+    'ca-certificates',
+    'ca-policy-egi-core',
+    'ca-policy-lcg',
     'fetch-crl',
     'iproute',
     'less',
@@ -219,7 +222,7 @@ class profile::xrootd (
   }
 
   $grid_security_links = {
-    '/etc/grid-security/vomsdir'          => '/cvmfs/grid.cern.ch/etc/grid-security/vomsdir',
+    # '/etc/grid-security/vomsdir'          => '/cvmfs/grid.cern.ch/etc/grid-security/vomsdir', # we cannot do this since voms rpm needs to overwrite it.
     '/etc/grid-security/vomses'           => '/cvmfs/grid.cern.ch/etc/grid-security/vomses',
   }
 
