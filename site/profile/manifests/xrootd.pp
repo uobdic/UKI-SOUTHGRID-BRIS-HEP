@@ -1,9 +1,7 @@
 # Main entry point for xrootd configuration.
-
 class profile::xrootd (
   Enum['server', 'redirector', 'standalone'] $role = 'server',
   String $xrootd_version = '6.0.3-1.el9',
-  String $osg_release_version = '24-main',
   String $secrets_root = '/.secrets',
   Array[String] $xrootd_packages = [
     'xrootd',
@@ -29,8 +27,6 @@ class profile::xrootd (
   Boolean $manage_services = true,
 ) {
   $os_major = $facts['os']['release']['major']
-  $osg_release_package_name = "osg-${osg_release_version}-el${os_major}-release"
-  $osg_release_package_source = "https://repo.opensciencegrid.org/osg/${osg_release_version}/${osg_release_package_name}-latest.rpm"
   $instance = $role ? {
     'standalone' => 'standalone',
     default      => 'clustered',
@@ -79,10 +75,6 @@ class profile::xrootd (
   $lcmaps_files = [
     'lcmaps.db',
   ]
-  $osg_image_config_files = [
-    '10-fetch-crl.sh',
-    '12-xrd-certs-init.sh',
-  ]
 
   yumrepo { 'xrootd-stable':
     ensure   => present,
@@ -94,37 +86,28 @@ class profile::xrootd (
     protect  => 0,
   }
 
-  package { $osg_release_package_name:
-    ensure => present,
-    source => $osg_release_package_source,
-  }
-
   package { $support_packages:
     ensure  => present,
-    require => Package[$osg_release_package_name],
   }
 
   package { $xrootd_packages:
     ensure          => $xrootd_version,
-    install_options => ['--enablerepo=xrootd-stable', '--disablerepo=osg*'],
+    install_options => ['--enablerepo=xrootd-stable'],
     require         => [
       Yumrepo['xrootd-stable'],
-      Package[$osg_release_package_name],
     ],
   }
 
   package { 'xrootd-cmstfc':
     ensure          => installed,
-    install_options => ['--enablerepo=xrootd-stable', '--enablerepo=osg-contrib'],
+    install_options => ['--enablerepo=xrootd-stable'],
     require         => [
       Yumrepo['xrootd-stable'],
-      Package[$osg_release_package_name],
     ],
   }
 
   file { [
       '/etc/lcmaps',
-      '/etc/osg',
       '/etc/xrootd',
       '/etc/xrootd_info',
     ]:
@@ -132,14 +115,6 @@ class profile::xrootd (
       owner  => 'root',
       group  => 'root',
       mode   => '0755',
-  }
-
-  file { '/etc/osg/image-config.d':
-    ensure  => directory,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
-    require => File['/etc/osg'],
   }
 
   file { '/etc/xrootd/config.d':
@@ -203,17 +178,6 @@ class profile::xrootd (
       group   => 'root',
       mode    => '0644',
       require => File['/etc/lcmaps'],
-    }
-  }
-
-  $osg_image_config_files.each |String $file_name| {
-    file { "/etc/osg/image-config.d/${file_name}":
-      ensure  => file,
-      source  => "puppet:///modules/profile/etc/osg/image-config.d/${file_name}",
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644',
-      require => File['/etc/osg/image-config.d'],
     }
   }
 
