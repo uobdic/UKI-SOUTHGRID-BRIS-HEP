@@ -35,6 +35,11 @@ class profile::xrootd (
     'standalone' => ["xrootd@${instance}"],
     default      => ["xrootd@${instance}", "cmsd@${instance}"],
   }
+
+  if $role == 'server' {
+    include profile::xrootd::shoveler
+  }
+
   $versionlock_entries = $xrootd_packages.map |String $package_name| {
     "${package_name}-1:${xrootd_version}.*"
   }
