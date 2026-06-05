@@ -106,7 +106,7 @@ class profile::xrootd (
 
   package { $xrootd_packages:
     ensure          => $xrootd_version,
-    install_options => ['--enablerepo=xrootd-stable', '--enablerepo=osg-contrib'],
+    install_options => ['--enablerepo=xrootd-stable', '--disablerepo=osg*'],
     require         => [
       Yumrepo['xrootd-stable'],
       Package[$osg_release_package_name],
