@@ -219,7 +219,6 @@ class profile::xrootd (
   }
 
   $grid_security_links = {
-    '/etc/grid-security/certificates'     => '/cvmfs/grid.cern.ch/etc/grid-security/certificates',
     '/etc/grid-security/vomsdir'          => '/cvmfs/grid.cern.ch/etc/grid-security/vomsdir',
     '/etc/grid-security/vomses'           => '/cvmfs/grid.cern.ch/etc/grid-security/vomses',
   }
@@ -272,5 +271,14 @@ class profile::xrootd (
         File['/etc/xrootd/macaroon-secret'],
       ],
     }
+  }
+
+  cron { 'fetch-crl':
+    ensure  => present,
+    command => '/usr/sbin/fetch-crl',
+    user    => 'root',
+    hour    => 1,
+    minute  => 5,
+    require => Package['fetch-crl'],
   }
 }
