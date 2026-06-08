@@ -38,6 +38,7 @@ class profile::xrootd (
 
   if $role == 'server' {
     include profile::xrootd::shoveler
+    include profile::xrootd::storage_accounting
   }
 
   $versionlock_entries = $xrootd_packages.map |String $package_name| {
