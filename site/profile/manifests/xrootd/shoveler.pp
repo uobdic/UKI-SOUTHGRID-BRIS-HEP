@@ -5,7 +5,7 @@ class profile::xrootd::shoveler (
   Integer $listen_port         = 9993,
   Boolean $verify              = true,
   Boolean $metrics_enable      = true,
-  Integer $metrics_port        = 8000,
+  Integer $metrics_port        = 9994,
   String  $queue_directory     = '/var/spool/shoveler-queue',
   String  $ssl_cert_dir        = '/etc/grid-security/certificates',
   Optional[String] $stomp_cert = undef,
@@ -16,12 +16,11 @@ class profile::xrootd::shoveler (
   }
 
   file { [
-      '/var/spool/xrootd-monitoring-collector',
       $queue_directory,
     ]:
       ensure => directory,
-      owner  => 'xrootd',
-      group  => 'xrootd',
+      owner  => 'xrootd-monitoring-shoveler',
+      group  => 'xrootd-monitoring-shoveler',
       mode   => '0755',
   }
 
