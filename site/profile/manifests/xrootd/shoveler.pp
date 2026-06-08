@@ -8,20 +8,35 @@ class profile::xrootd::shoveler (
   Integer $metrics_port        = 9994,
   String  $queue_directory     = '/var/spool/shoveler-queue',
   String  $ssl_cert_dir        = '/etc/grid-security/certificates',
-  Optional[String] $stomp_cert = '/etc/grid-security/hostcert.pem',
-  Optional[String] $stomp_key  = '/etc/grid-security/hostkey.pem',
+  String $stomp_cert = '/etc/grid-security/shoveler/hostcert.pem',
+  String $stomp_key  = '/etc/grid-security/shoveler/hostkey.pem',
 ) {
   package { 'xrootd-monitoring-shoveler':
     ensure => installed,
   }
 
   file { [
+      '/etc/grid-security/shoveler',
       $queue_directory,
     ]:
       ensure => directory,
       owner  => 'xrootd-monitoring-shoveler',
       group  => 'xrootd-monitoring-shoveler',
       mode   => '0755',
+  }
+
+  exec { 'copy-shoveler-hostcert':
+    command => '/usr/bin/install -o root -g xrootd-monitoring-shoveler -m 0644 /etc/grid-security/hostcert.pem /etc/grid-security/shoveler/hostcert.pem',
+    unless  => '/usr/bin/test /etc/grid-security/shoveler/hostcert.pem -nt /etc/grid-security/hostcert.pem',
+    require => File['/etc/grid-security/shoveler'],
+    notify  => Service['xrootd-monitoring-shoveler'],
+  }
+
+  exec { 'copy-shoveler-hostkey':
+    command => '/usr/bin/install -o root -g xrootd-monitoring-shoveler -m 0640 /etc/grid-security/hostkey.pem /etc/grid-security/shoveler/hostkey.pem',
+    unless  => '/usr/bin/test /etc/grid-security/shoveler/hostkey.pem -nt /etc/grid-security/hostkey.pem',
+    require => File['/etc/grid-security/shoveler'],
+    notify  => Service['xrootd-monitoring-shoveler'],
   }
 
   file { '/etc/sysconfig/xrootd-monitoring-shoveler':
