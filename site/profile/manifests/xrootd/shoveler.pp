@@ -1,6 +1,6 @@
 class profile::xrootd::shoveler (
   String  $stomp_url           = 'dashb-lb-mb.cern.ch:61123',
-  String  $stomp_topic         = '/topic/xrootd.shoveler',
+  String  $stomp_topic         = '/topic/xrootd.shoveler.cms',
   String  $listen_ip           = '0.0.0.0',
   Integer $listen_port         = 9993,
   Boolean $verify              = true,
@@ -8,8 +8,8 @@ class profile::xrootd::shoveler (
   Integer $metrics_port        = 9994,
   String  $queue_directory     = '/var/spool/shoveler-queue',
   String  $ssl_cert_dir        = '/etc/grid-security/certificates',
-  Optional[String] $stomp_cert = undef,
-  Optional[String] $stomp_key  = undef,
+  Optional[String] $stomp_cert = '/etc/grid-security/hostcert.pem',
+  Optional[String] $stomp_key  = '/etc/grid-security/hostkey.pem',
 ) {
   package { 'xrootd-monitoring-shoveler':
     ensure => installed,
