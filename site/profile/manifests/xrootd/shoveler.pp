@@ -1,6 +1,6 @@
 class profile::xrootd::shoveler (
   String  $stomp_url           = 'dashb-lb-mb.cern.ch:61123',
-  String  $stomp_topic         = '/topic/xrootd.shoveler.cms',
+  String  $stomp_topic         = '/topic/xrootd.shoveler',
   String  $listen_ip           = '0.0.0.0',
   Integer $listen_port         = 9993,
   Boolean $verify              = true,
