@@ -1,10 +1,22 @@
-EXECUTE = <%= @execute_dir %>
+<%- |
+  Float   $accounting_scale_factor,
+  String  $apel_scaling,
+  String  $apel_specs,
+  Integer $baseline_per_core,
+  String  $baseline_type,
+  String  $execute_dir,
+  String  $hepscore_per_core_str,
+  Integer $num_cpus,
+  Integer $num_gpus,
+  Integer $reserved_memory,
+| -%>
+EXECUTE = <%= $execute_dir %>
 
-NUM_CPUS = <%= @num_cpus %>
-RESERVED_MEMORY = <%= @reserved_memory %>
+NUM_CPUS = <%= $num_cpus %>
+RESERVED_MEMORY = <%= $reserved_memory %>
 
 # Enable GPU support (TODO)
-# MACHINE_RESOURCE_GPUS = <%= @num_gpus %>
+# MACHINE_RESOURCE_GPUS = <%= $num_gpus %>
 
 # Enable CGROUP
 BASE_CGROUP = /system.slice/condor.service
@@ -18,16 +30,15 @@ USE_PID_NAMESPACES = False
 ###############################################################################
 
 # Site-relative performance scaling (e.g. relative to site baseline 20 per core)
-# Baseline: <%= @baseline_type %> per_core=<%= @baseline_per_core %>
-ACCOUNTING_SCALE_FACTOR = <%= @accounting_scale_factor %>
+# Baseline: <%= $baseline_type %> per_core=<%= $baseline_per_core %>
+ACCOUNTING_SCALE_FACTOR = <%= $accounting_scale_factor %>
 
 # Alternative names used by some older tooling / conventions
-ApelScaling = <%= @apel_scaling %>
+ApelScaling = <%= $apel_scaling %>
 
 # Absolute benchmark values (at minimum HEPSCORE per-core; optionally others)
-ApelSpecs = <%= @apel_specs %>
+ApelSpecs = <%= $apel_specs %>
 
-ACCOUNTING_HEPSCORE_PER_CORE = <%= @hepscore_per_core_str %>
+ACCOUNTING_HEPSCORE_PER_CORE = <%= $hepscore_per_core_str %>
 
 STARTD_ATTRS = $(STARTD_ATTRS), ACCOUNTING_SCALE_FACTOR, ACCOUNTING_HEPSCORE_PER_CORE, ApelScaling, ApelSpecs
-

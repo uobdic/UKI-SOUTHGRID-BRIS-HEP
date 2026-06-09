@@ -7,7 +7,7 @@ class profile::apptainer {
     $bind_paths = lookup('apptainer::bind_paths')
     file { '/etc/condor/config.d/50-container.conf':
       ensure  => file,
-      content => template('profile/etc/condor/50-container.conf.erb'),
+      content => epp('profile/etc/condor/50-container.conf.epp', { 'bind_paths' => $bind_paths }),
     }
     file { '/etc/condor/container_wrapper':
       ensure => file,
