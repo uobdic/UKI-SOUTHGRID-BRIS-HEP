@@ -13,7 +13,7 @@ class profile::htcondor::submit (
   file { '/etc/condor/config.d/12_resource_limits.conf':
     ensure  => file,
     content => epp("${module_name}/etc/condor/12_resource_limits.conf.epp", {
-      'periodic_remove_requirements' => $periodic_remove_requirements,
+        'periodic_remove_requirements' => $periodic_remove_requirements,
     }),
     notify  => Exec['/usr/sbin/condor_reconfig'],
   }
