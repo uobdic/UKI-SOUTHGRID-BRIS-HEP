@@ -2,12 +2,12 @@
   Float   $accounting_scale_factor,
   String  $apel_scaling,
   String  $apel_specs,
-  Float   $baseline_per_core,
+  Integer $baseline_per_core,
   String  $baseline_type,
   String  $execute_dir,
   String  $hepscore_per_core_str,
   Integer $num_cpus,
-  # Integer $num_gpus,
+  Integer $num_gpus,
   Integer $reserved_memory,
 | -%>
 EXECUTE = <%= $execute_dir %>

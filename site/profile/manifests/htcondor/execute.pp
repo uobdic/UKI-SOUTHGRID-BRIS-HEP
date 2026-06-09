@@ -52,30 +52,59 @@ class profile::htcondor::execute (
 
   ### HEP OS libs are managed by profile::heposlibs
 
+  # Benchmark/accounting values from Hiera only.
+  $site_info = lookup('site::site_info', Hash, 'first', {})
   $node_info = lookup('site::node_info', Hash, 'first', {})
-  $node_bench = $node_info['benchmark'][$baseline_type]
-  $node_hepscore_per_core = $node_bench['per_core']
-  $node_hepscore_total    = $node_bench['total']
 
-  # Scaling factor (avoid division by zero)
+  $baseline_block = $site_info.dig('benchmark_baseline') ? {
+    undef   => {},
+    default => $site_info.dig('benchmark_baseline'),
+  }
+
+  $baseline_type = $baseline_block.dig('type') ? {
+    undef   => 'hepscore23',
+    default => $baseline_block.dig('type'),
+  }
+
+  $baseline_per_core = $baseline_block.dig('per_core') ? {
+    undef   => 20,
+    default => $baseline_block.dig('per_core'),
+  }
+
+  $node_bench = $node_info.dig('benchmark', $baseline_type) ? {
+    undef   => {},
+    default => $node_info.dig('benchmark', $baseline_type),
+  }
+
+  # Missing node benchmark is allowed. Use neutral accounting scaling.
+  $node_hepscore_per_core = $node_bench.dig('per_core') ? {
+    undef   => $baseline_per_core,
+    default => $node_bench.dig('per_core'),
+  }
+
+  $node_hepscore_total = $node_bench.dig('total') ? {
+    undef   => 0,
+    default => $node_bench.dig('total'),
+  }
+
+  # Scaling factor: neutral if baseline is missing/zero.
   $accounting_scale_factor = $baseline_per_core ? {
     0       => 1.0,
     default => ($node_hepscore_per_core / $baseline_per_core),
   }
 
-  # These go into the worker config via ERB
   $apel_scaling          = sprintf('%.6f', $accounting_scale_factor)
   $hepscore_per_core_str = sprintf('%.3f', $node_hepscore_per_core)
 
-  # Optional SI2K
-  $si2k_val = $node_info['benchmark']['si2k']['per_core'] ? {
+  # Optional legacy specs
+  $si2k_val = $node_info.dig('benchmark', 'si2k', 'per_core') ? {
     undef   => undef,
-    default => $node_info['benchmark']['si2k']['per_core'],
+    default => $node_info.dig('benchmark', 'si2k', 'per_core'),
   }
 
-  $hepspec_val = $node_info['benchmark'] and $node_info['benchmark']['hepspec06'] and $node_info['benchmark']['hepspec06']['per_core'] ? {
-    true    => $node_info['benchmark']['hepspec06']['per_core'],
-    default => undef,
+  $hepspec_val = $node_info.dig('benchmark', 'hepspec06', 'per_core') ? {
+    undef   => undef,
+    default => $node_info.dig('benchmark', 'hepspec06', 'per_core'),
   }
 
   if $si2k_val {
@@ -91,16 +120,16 @@ class profile::htcondor::execute (
     group   => 'condor',
     mode    => '0644',
     content => epp('profile/etc/condor/20_worker.conf.epp', {
-      'accounting_scale_factor' => $accounting_scale_factor,
-      'apel_scaling'            => $apel_scaling,
-      'apel_specs'              => $apel_specs,
-      'baseline_per_core'       => $baseline_per_core,
-      'baseline_type'           => $baseline_type,
-      'execute_dir'             => $execute_dir,
-      'hepscore_per_core_str'   => $hepscore_per_core_str,
-      'num_cpus'                => $num_cpus,
-      'num_gpus'                => $num_gpus,
-      'reserved_memory'         => $reserved_memory,
+        'accounting_scale_factor' => $accounting_scale_factor,
+        'apel_scaling'            => $apel_scaling,
+        'apel_specs'              => $apel_specs,
+        'baseline_per_core'       => $baseline_per_core,
+        'baseline_type'           => $baseline_type,
+        'execute_dir'             => $execute_dir,
+        'hepscore_per_core_str'   => $hepscore_per_core_str,
+        'num_cpus'                => $num_cpus,
+        'num_gpus'                => $num_gpus,
+        'reserved_memory'         => $reserved_memory,
     }),
     notify  => Exec['/usr/sbin/condor_reconfig'],
   }
