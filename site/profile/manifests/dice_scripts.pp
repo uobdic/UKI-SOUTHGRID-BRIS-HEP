@@ -2,12 +2,7 @@ class profile::dice_scripts (
   Boolean $manage_scripts = false,
   Boolean $manage_cron    = false,
 ) {
-  file { '/etc/dice':
-    ensure => directory,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-  }
+  # /etc/dice already created in site::node_config
 
   # configs deployed everywhere
   file { '/etc/dice/nfs-storage-accounting.yaml':
