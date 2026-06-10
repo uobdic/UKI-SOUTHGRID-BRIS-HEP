@@ -19,6 +19,15 @@ class profile::dice_scripts (
     require => File['/etc/dice'],
   }
 
+  file { '/etc/dice/cephfs-storage-accounting.yaml':
+    ensure  => file,
+    source  => 'puppet:///modules/profile/etc/dice/cephfs-storage-accounting.yaml',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => File['/etc/dice'],
+  }
+
   if $manage_scripts {
     file { '/software/dice/scripts':
       ensure => directory,
@@ -30,6 +39,15 @@ class profile::dice_scripts (
     file { '/software/dice/scripts/publish-nfs-storage-accounting.py':
       ensure  => file,
       source  => 'puppet:///modules/profile/etc/dice/publish-nfs-storage-accounting.py',
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      require => File['/software/dice/scripts'],
+    }
+
+    file { '/software/dice/scripts/publish-cephfs-storage-accounting.py':
+      ensure  => file,
+      source  => 'puppet:///modules/profile/etc/dice/publish-cephfs-storage-accounting.py',
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
@@ -47,6 +65,18 @@ class profile::dice_scripts (
       require => [
         File['/etc/dice/nfs-storage-accounting.yaml'],
         File['/software/dice/scripts/publish-nfs-storage-accounting.py'],
+      ],
+    }
+
+    cron { 'publish-cephfs-storage-accounting':
+      ensure  => present,
+      user    => 'root',
+      hour    => 3,
+      minute  => 21,
+      command => '/software/dice/scripts/publish-cephfs-storage-accounting.py -c /etc/dice/cephfs-storage-accounting.yaml',
+      require => [
+        File['/etc/dice/cephfs-storage-accounting.yaml'],
+        File['/software/dice/scripts/publish-cephfs-storage-accounting.py'],
       ],
     }
   }
