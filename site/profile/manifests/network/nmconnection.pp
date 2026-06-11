@@ -8,7 +8,7 @@ class profile::network::nmconnection {
   }
 
   if $network.dig('connection') {
-    profile::network::nmconnection::interface { $network['connection']:
+    profile::network::nminterface { $network['connection']:
       ipv4        => $network['ipv4'],
       ipv6        => $network.dig('ipv6'),
       gateway4    => $network.dig('gateway4') ? {

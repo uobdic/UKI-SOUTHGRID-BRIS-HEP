@@ -1,5 +1,5 @@
 # profile/manifests/network/nmconnection/interface.pp
-define profile::network::nmconnection::interface (
+define profile::network::nminterface (
   String $ipv4,
   Optional[String] $ipv6 = undef,
   String $gateway4,
@@ -36,6 +36,7 @@ define profile::network::nmconnection::interface (
         'mtu'        => $mtu,
         'dns4'        => $dns4,
         'dns6'        => $dns6,
+    }),
     notify  => Exec["nmcli-reload-${title}"],
   }
 
