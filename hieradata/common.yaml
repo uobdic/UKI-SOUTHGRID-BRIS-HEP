@@ -9,6 +9,7 @@ classes:
   - profile::users::admin
   - site::basic
   - profile::security
+  - profile::network::nmconnection
 
 packages::install:
   - kernel-devel
