@@ -100,9 +100,11 @@ site::network_defaults:
   gateway6: 2001:630:e4:2811::1
   ipv6_prefix: 2001:630:e4:2811
   mtu: 1500
-  dns:
+  dns4:
     - 137.222.0.39
     - 137.222.0.36
+  dns6:
+    - 2001:630:e4:1::1
 
 cbsensor::version: "v7"
 

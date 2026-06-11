@@ -5,7 +5,8 @@ define profile::network::nmconnection::interface (
   String $gateway4,
   String $gateway6,
   Integer $mtu,
-  Array[String] $dns,
+  Array[String] $dns4,
+  Array[String] $dns6,
   String $ipv6_prefix,
 ) {
   $ipv4_addr = split($ipv4, '/')[0]
@@ -33,7 +34,8 @@ define profile::network::nmconnection::interface (
         'gateway4'   => $gateway4,
         'gateway6'   => $gateway6,
         'mtu'        => $mtu,
-        'dns'        => $dns,
+        'dns4'        => $dns4,
+        'dns6'        => $dns6,
     notify  => Exec["nmcli-reload-${title}"],
   }
 

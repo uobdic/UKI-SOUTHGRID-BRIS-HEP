@@ -23,9 +23,13 @@ class profile::network::nmconnection {
         undef   => $defaults['mtu'],
         default => $network['mtu'],
       },
-      dns         => $network.dig('dns') ? {
-        undef   => $defaults['dns'],
-        default => $network['dns'],
+      dns4        => $network.dig('dns4') ? {
+        undef   => $defaults['dns4'],
+        default => $network['dns4'],
+      },
+      dns6        => $network.dig('dns6') ? {
+        undef   => $defaults['dns6'],
+        default => $network['dns6'],
       },
       ipv6_prefix => $network.dig('ipv6_prefix') ? {
         undef   => $defaults.dig('ipv6_prefix'),
