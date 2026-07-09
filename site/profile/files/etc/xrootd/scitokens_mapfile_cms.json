@@ -1,0 +1,4 @@
+[
+ {"group": "/cms/prod", "result": "cmsprod"},
+ {"group": "/cms", "result": "cmsuser"}
+]
