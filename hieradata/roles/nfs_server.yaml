@@ -5,5 +5,7 @@
 classes:
   - profile::nfs::server
 
+profile::dice_scripts::manage_scripts: true
+profile::dice_scripts::manage_cron: true
 # Data
 # ======================================================================

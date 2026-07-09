@@ -10,6 +10,7 @@ classes:
   - site::basic
   - profile::security
   - profile::network::nmconnection
+  - profile::dice_scripts
 
 packages::install:
   - kernel-devel
