@@ -1,0 +1,66 @@
+output_root: /software/dice/accounting/cephfs
+
+includes:
+  - name: admin
+    path: /dice/admin
+    max_child_depth: 2
+
+  - name: data
+    path: /dice/data
+    max_child_depth: 2
+
+  - name: software
+    path: /dice/software
+    max_child_depth: 2
+
+  - name: tmp
+    path: /dice/tmp
+    max_child_depth: 2
+
+  - name: users
+    path: /dice/users
+    max_child_depth: 2
+
+  - name: CMS
+    path: /dice/projects/CMS
+    max_child_depth: 2
+
+  - name: DUNE
+    path: /dice/projects/DUNE
+    max_child_depth: 2
+
+  - name: FAST-HEP
+    path: /dice/projects/FAST-HEP
+    max_child_depth: 1
+
+  - name: FAST-ML
+    path: /dice/projects/FAST-ML
+    max_child_depth: 1
+
+  - name: IAC
+    path: /dice/projects/IAC
+    max_child_depth: 2
+
+  - name: L1T
+    path: /dice/projects/L1T
+    max_child_depth: 1
+
+  - name: LHCb
+    path: /dice/projects/LHCb
+    max_child_depth: 2
+
+  - name: LZ
+    path: /dice/projects/LZ
+    max_child_depth: 1
+
+  - name: archive
+    path: /dice/projects/archive
+    max_child_depth: 1
+
+  - name: masterclass
+    path: /dice/projects/masterclass
+    max_child_depth: 1
+
+  - name: mu3e
+    path: /dice/projects/mu3e
+    max_child_depth: 2
