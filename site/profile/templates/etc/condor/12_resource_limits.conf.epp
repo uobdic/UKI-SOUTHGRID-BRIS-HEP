@@ -6,9 +6,9 @@
 
 <% if $periodic_remove_requirements { -%>
 # Remove jobs that exceed their resource limits
-<% $periodic_remove_requirements.sort.each | $name, $value | { -%>
-<%= $name %> = ( <%= $value %> )
+<% $periodic_remove_requirements.keys.sort.each | $name | { -%>
+<%= $name %> = ( <%= $periodic_remove_requirements[$name] %> )
 <% } %>
 
-SYSTEM_PERIODIC_REMOVE = <%=$periodic_remove_requirements.keys.sort.join(" || ") %>
+SYSTEM_PERIODIC_REMOVE = <%= $periodic_remove_requirements.keys.sort.join(" || ") %>
 <% } %>
