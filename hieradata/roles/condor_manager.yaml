@@ -19,6 +19,7 @@ profile::cephfs::keys:
 profile::cephfs::mounts:
   '/condor':
     device: condor@.dicefs=/condor
+    ensure: absent
 
 firewalld::ports:
   "Open standard condor ports":
