@@ -50,13 +50,29 @@ class profile::cephfs (
     require => [Package[$ceph_mount_dependency]],
   }
 
+  $active_mounts = $mounts.filter |$mount_location, $options| {
+    $options['ensure'] != 'absent'
+  }
+
+  $absent_mounts = $mounts.filter |$mount_location, $options| {
+    $options['ensure'] == 'absent'
+  }
+
+  $active_mounts_normalised = $active_mounts.map |$mount_location, $options| {
+    $mount_location => $options.filter |$key, $value| {
+      $key != 'ensure'
+    }
+  }.reduce({}) |$result, $entry| {
+    $result + $entry
+  }
+
   # create the mounts
-  if !$mounts.empty {
+  if !$active_mounts_normalised.empty {
     # main mount point
     file { '/cephfs':
       ensure => directory,
     }
-    $mount_locations = keys($mounts)
+    $mount_locations = keys($active_mounts_normalised)
     file { $mount_locations:
       ensure => directory,
     }
@@ -81,9 +97,9 @@ class profile::cephfs (
         'ensure'   => 'mounted',
         'options'  => 'noatime,_netdev',
       }
-      create_resources('mount', $mounts, $defaults)
+      create_resources('mount', $active_mounts_normalised, $defaults)
     } else {
-      $mounts.map |$mount, $options| {
+      $active_mounts_normalised.map |$mount, $options| {
         # default options are of the form "dice-user@.dicefs=/dice"
         # we want to extract the client ID before the '@' sign
         $client_id = $options['device'].split('@')[0]
@@ -96,6 +112,31 @@ class profile::cephfs (
           require => [File['/etc/ceph/ceph.conf'], File[$mount]],
         }
       }
+    }
+  }
+
+  # remove mounts that are marked as absent
+  $absent_mounts.each |$mount_location, $options| {
+    $mount_name = $mount_location[1, -1]
+    $bind_location = "/cephfs/${mount_name}"
+
+    mount { $bind_location:
+      ensure => absent,
+    }
+
+    file { $bind_location:
+      ensure  => absent,
+      require => Mount[$bind_location],
+    }
+
+    mount { $mount_location:
+      ensure  => absent,
+      require => Mount[$bind_location],
+    }
+
+    file { $mount_location:
+      ensure  => absent,
+      require => Mount[$mount_location],
     }
   }
 }
