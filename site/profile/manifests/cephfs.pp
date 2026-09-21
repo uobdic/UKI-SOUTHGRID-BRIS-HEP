@@ -59,8 +59,10 @@ class profile::cephfs (
   }
 
   $active_mounts_normalised = $active_mounts.map |$mount_location, $options| {
-    $mount_location => $options.filter |$key, $value| {
-      $key != 'ensure'
+    {
+      $mount_location => $options.filter |$key, $value| {
+        $key != 'ensure'
+      }
     }
   }.reduce({}) |$result, $entry| {
     $result + $entry
