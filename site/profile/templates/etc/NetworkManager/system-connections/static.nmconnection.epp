@@ -1,0 +1,35 @@
+<%- |
+  String $connection,
+  String $ipv4,
+  String $gateway4,
+  Array[String] $dns4,
+  Array[String] $dns6,
+  Integer $mtu,
+  Optional[String] $ipv6 = undef,
+  Optional[String] $gateway6 = undef,
+| -%>
+[connection]
+id=<%= $connection %>
+type=ethernet
+interface-name=<%= $connection %>
+autoconnect=true
+
+[ethernet]
+mtu=<%= $mtu %>
+
+[ipv4]
+address1=<%= $ipv4 %>,<%= $gateway4 %>
+dns=<%= $dns4.join(';') %>;
+method=manual
+
+<% if $ipv6 and $gateway6 { -%>
+[ipv6]
+addr-gen-mode=eui64
+address1=<%= $ipv6 %>,<%= $gateway6 %>
+<% if !empty($dns6) { -%>
+dns=<%= $dns6.join(';') %>;
+<% } -%>
+method=manual
+
+<% } -%>
+[proxy]

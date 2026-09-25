@@ -9,6 +9,7 @@ classes:
   - profile::users::admin
   - site::basic
   - profile::security
+  - profile::network::nmconnection
   - profile::dice_scripts
 
 packages::install:
@@ -94,6 +95,18 @@ network::global::ipv6networking: true
 
 site::node_info:
   service_accounts: service_accounts
+
+
+site::network_defaults:
+  gateway4: 10.129.5.250
+  gateway6: 2001:630:e4:2811::1
+  ipv6_prefix: 2001:630:e4:2811
+  mtu: 1500
+  dns4:
+    - 137.222.0.39
+    - 137.222.0.36
+  dns6:
+    - 2001:630:e4:1::1
 
 cbsensor::version: "v7"
 
