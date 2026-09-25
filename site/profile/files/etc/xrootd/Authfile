@@ -1,0 +1,337 @@
+###############################################################################################
+## PRODUCTION
+## docs: https://opensciencegrid.org/docs/data/xrootd/xrootd-authorization/#authorization-file
+###############################################################################################
+
+###############################################################################################
+### NOTE: all directories must end with a '/' otherwise regex is used? BAD!!!
+###############################################################################################
+
+## The following gives the user named "xrootd" full access to all the files
+## under /xrootd.
+## There must be at least one such user in order to create the
+## private dirs for users willing to store their data in the facility
+u xrootd /xrootd/ a \
+         /store/ a \
+         /dpm/phy.bris.ac.uk/home/ a
+
+u * /xrootd/public rl
+
+###############################################################################################
+### alice
+###############################################################################################
+# Topics to summarize permissions
+t writealicedata /xrootd/alice/       a
+t readalicedata  /xrootd/alice/       lr
+
+# "/alice/Role=production" has full access to managed alice data and read for alice
+
+= aliceprod o: alice g: /alice r: production
+x aliceprod  writealicedata readalicedata
+
+# "/alice/Role=lcgadmin" has full access to managed alice data and read for alice
+= alicesgm o: alice g: /alice r: lcgadmin
+x alicesgm writealicedata
+
+###############################################################################################
+### ATLAS
+###############################################################################################
+# Topics to summarize permissions
+t writeatlasdata /xrootd/atlas/       a
+t readatlasdata  /xrootd/atlas/       lr
+
+# "/atlas/Role=production" has full access to managed ATLAS data and read for ATLAS
+
+= atlasprod o: atlas g: /atlas r: production
+x atlasprod  writeatlasdata readatlasdata
+
+# "/atlas/Role=lcgadmin" has full access to managed ATLAS data and read for ATLAS
+= atlassgm o: atlas g: /atlas r: lcgadmin
+x atlassgm writeatlasdata
+
+
+###############################################################################################
+### CMS
+###############################################################################################
+# Topics to summarize permissions
+t writecmsdata /xrootd/cms/store/backfill/       a \
+               /xrootd/cms/store/data/           a \
+               /xrootd/cms/store/express/        a \
+               /xrootd/cms/store/generator/      a \
+               /xrootd/cms/store/group/rucio/    a \
+               /xrootd/cms/store/hidata/         a \
+               /xrootd/cms/store/himc/           a \
+               /xrootd/cms/store/hirelval/       a \
+               /xrootd/cms/store/mc/             a \
+               /xrootd/cms/store/relval/         a \
+               /xrootd/cms/store/results/        a \
+               /xrootd/cms/store/temp/           a \
+               /xrootd/cms/store/test/loadtest/  a \
+               /xrootd/cms/store/test/rucio/     a \
+               /xrootd/cms/store/unmerged/       a \
+               /xrootd/cms/store/unmerged/SAM/   a \
+               /xrootd/cms/store/user/rucio/     a \
+               /store/backfill/       a \
+               /store/data/           a \
+               /store/express/        a \
+               /store/generator/      a \
+               /store/group/rucio/    a \
+               /store/hidata/         a \
+               /store/himc/           a \
+               /store/hirelval/       a \
+               /store/mc/             a \
+               /store/relval/         a \
+               /store/results/        a \
+               /store/temp/           a \
+               /store/test/loadtest/  a \
+               /store/test/rucio/     a \
+               /store/unmerged/       a \
+               /store/user/rucio/     a
+
+t readcmsdata  /xrootd/cms/                lr \
+               /store/                     lr
+
+# "/cms/Role=production" has full access to managed CMS data and read for CMS
+= cmsprod o: cms g: /cms r: production
+x cmsprod  writecmsdata readcmsdata
+
+# "/cms/Role=lcgadmin" can write into /store/user/sam and /store/unmerged/SAM.
+= cmssgm o: cms g: /cms r: lcgadmin
+x cmssgm /xrootd/cms/store/user/sam/ a \
+         /xrootd/cms/store/unmerged/SAM/ a \
+         /xrootd/cms/store/temp/user/ a \
+         /store/user/sam/ a \
+         /store/unmerged/SAM/ a \
+         /store/temp/user/ a \
+         readcmsdata
+
+# CMS users have full access to their own directory and temp, and read for CMS
+# While xrootd allows the user to *attempt* any operation - even in other user's
+# home directories
+g /cms  /xrootd/cms/store/user a \
+        /xrootd/cms/store/temp/ a \
+        /store/user a \
+        /store/temp/ a \
+        readcmsdata
+# = cmsusr o: cms g: /cms
+#
+# # CMS users can read CMS data and have full access to their HOME folders
+# x cmsusr /xrootd/cms/store/user/ a \
+#          readcmsdata
+
+# CMS scitoken
+= cmsprodtkn o: https://cms-auth.web.cern.ch/ g: /cms
+x cmsprodtkn writecmsdata readcmsdata
+
+= cmssgmtkn o: https://cms-auth.web.cern.ch/ g: /cms
+x cmssgmtkn /xrootd/cms/store/user/sam/ a \
+         /xrootd/cms/store/unmerged/SAM/ a \
+         /xrootd/cms/store/temp/user/ a \
+         /store/user/sam/ a \
+         /store/unmerged/SAM/ a \
+         /store/temp/user/ a \
+         readcmsdata
+
+
+###############################################################################################
+### dteam
+###############################################################################################
+# Topics to summarize permissions
+t writedteamdata /xrootd/dteam/       a
+t readdteamdata  /xrootd/dteam/       lr
+
+# "/dteam/Role=production" has full access to managed dteam data and read for dteam
+= dteamprod o: dteam g: /dteam r: production
+x dteamprod  writedteamdata readdteamdata
+
+# "/dteam/Role=lcgadmin"
+= dteamsgm o: dteam g: /dteam r: lcgadmin
+x dteamsgm writedteamdata
+
+g /dteam /xrootd/dteam/user/ a \
+         /xrootd/dteam/temp/ a \
+         /xrootd/dteam/test/ a \
+         readdteamdata
+
+###############################################################################################
+### DUNE
+###############################################################################################
+# Topics to summarize permissions
+t writedunedata /xrootd/dune/      a \
+                /xrootd/dune/temp/ a
+
+t readdunedata /xrootd/dune/      lr
+
+# "/dune/Role=production" has full access to managed DUNE data and read for DUNE
+= duneprod o: dune g: /dune r: production
+x duneprod  writedunedata readdunedata
+
+# no entry in grid-mapfile
+= dunesgm o: dune g: /dune r: lcgadmin
+# "/dune/Role=lcgadmin"
+x dunesgm writedunedata readdunedata
+
+g /dune /xrootd/dune/user/ a \
+        /xrootd/dune/temp/ a \
+        readdunedata
+
+###############################################################################################
+### GridPP
+###############################################################################################
+# Topics to summarize permissions
+t writegridppdata /xrootd/gridpp/       a
+t readgridppdata  /xrootd/gridpp/       lr
+
+# "/gridpp/Role=production" has full access to GridPP data and read for GridPP
+= gridppprod o: gridpp g: /gridpp r: production
+x gridppprod  writegridppdata readgridppdata
+
+# "/gridpp/Role=lcgadmin"
+= gridppsgm o: gridpp g: /gridpp r: lcgadmin
+x gridppsgm writegridppdata readgridppdata
+
+g /gridpp /xrootd/gridpp/user/ a \
+          /xrootd/gridpp/temp/ a \
+          readgridppdata
+
+
+###############################################################################################
+### ilc
+###############################################################################################
+# Topics to summarize permissions
+t writeilcdata /xrootd/ilc/       a
+t readilcdata  /xrootd/ilc/       lr
+
+# "/ilc/Role=production" has full access to ilc data and read for ilc
+= ilcprod o: ilc g: /ilc r: production
+x ilcprod  writeilcdata readilcdata
+
+# "/ilc/Role=lcgadmin"
+= ilcsgm o: ilc g: /ilc r: lcgadmin
+x ilcsgm writeilcdata readilcdata
+
+g /ilc /xrootd/ilc/user/ a \
+          /xrootd/ilc/temp/ a \
+          readilcdata
+
+###############################################################################################
+### LSST
+###############################################################################################
+# Topics to summarize permissions
+t writelsstdata /xrootd/lsst/       a
+t readlsstdata  /xrootd/lsst/       lr
+
+# "/lsst/Role=production" has full access to lsst data and read for lsst
+= lsstprod o: lsst g: /lsst r: production
+x lsstprod  writelsstdata readlsstdata
+
+# "/lsst/Role=lcgadmin"
+= lsstsgm o: lsst g: /lsst r: lcgadmin
+x lsstsgm writelsstdata readlsstdata
+
+g /lsst /xrootd/lsst/user/ a \
+          /xrootd/lsst/temp/ a \
+          readlsstdata
+
+
+###############################################################################################
+### LUX-Zeplin
+###############################################################################################
+# Topics to summarize permissions
+t writelzdata /xrootd/lz/data/     a \
+              /xrootd/lz/mc/       a \
+              /xrootd/lz/temp/     a \
+              /dpm/phy.bris.ac.uk/home/lz/ a
+
+t readlzdata /xrootd/lz/      lr \
+             /dpm/phy.bris.ac.uk/home/lz/ lr
+
+# "/lz/Role=production" has full access to managed LZ data and read for LZ
+= lzprod o: lz g: /lz r: production
+x lzprod writelzdata readlzdata
+
+# no entry in grid-mapfile
+= lzsgm o: lz g: /lz r: lcgadmin
+# "/lz/Role=lcgadmin"
+x lzsgm writelzdata readlzdata
+
+g /lz /xrootd/lz/user/ a \
+      /xrootd/lz/temp/ a \
+      readlzdata
+
+###############################################################################################
+### Mu3e
+###############################################################################################
+# Topics to summarize permissions
+t writemu3edata /xrootd/mu3e/     a
+
+t readmu3edata /xrootd/mu3e/      lr
+
+# "/mu3e/Role=production" has full access to managed MU3E data and read for MU3E
+= mu3eprod o: mu3e g: /mu3e r: production
+x mu3eprod  writemu3edata readmu3edata
+
+# no entry in grid-mapfile
+= mu3esgm o: mu3e g: /mu3e r: lcgadmin
+# "/mu3e/Role=lcgadmin"
+x mu3esgm writemu3edata readmu3edata
+
+g /mu3e /xrootd/mu3e/user/ a \
+        /xrootd/mu3e/temp/ a \
+        readmu3edata
+
+###############################################################################################
+### ops
+###############################################################################################
+# Topics to summarize permissions
+t writeopsdata /xrootd/ops/     a
+t readopsdata  /xrootd/ops/     lr
+
+# "/ops/Role=production" has full access to managed OPS data and read for OPS
+= opsprod o: ops g: /ops r: production
+x opsprod  writeopsdata readopsdata
+
+# "/ops/Role=lcgadmin"
+= opssgm o: ops g: /ops r: lcgadmin
+x opssgm writeopsdata readopsdata
+g /ops writeopsdata readopsdata
+
+# g /ops /xrootd/ops/user/ a \
+#        /xrootd/ops/temp/ a \
+#        readopsdata
+
+###############################################################################################
+### wlcg
+###############################################################################################
+# Topics to summarize permissions
+t writewlcgdata /xrootd/wlcg/       a
+t readwlcgdata  /xrootd/wlcg/       lr
+
+# "/wlcg/Role=production" has full access to managed wlcg data and read for wlcg
+= wlcgprod o: wlcg g: /wlcg r: production
+x wlcgprod  writewlcgdata readwlcgdata
+
+# "/wlcg/Role=lcgadmin"
+= wlcgsgm o: wlcg g: /wlcg r: lcgadmin
+x wlcgsgm writewlcgdata readwlcgdata
+
+g /wlcg /xrootd/wlcg/user/ a \
+       /xrootd/wlcg/temp/ a \
+       readwlcgdata
+
+# compound identity to support for group based authorization from WLCG JWT token
+= wlcgtknprt_token o: https://wlcg.cloud.cnaf.infn.it/ g: /wlcg/test
+= wlcgtknusr_token o: https://wlcg.cloud.cnaf.infn.it/ g: /wlcg
+# compound identity to support for mapping X.509 VOMS identity
+= wlcgtknprt_x509 o: wlcg g: /wlcg r: test
+= wlcgtknusr_x509 o: wlcg g: /wlcg
+# templates for accessing normal and protected resources
+t wlcgtknprt /xrootd/wlcg a
+t wlcgtknusr /xrootd/wlcg/protected rl-diknw /xrootd/wlcg a
+# configure access for users that comes with X.509 or WLCG JWT token with wlcg.groups
+# (with "x" first matching compound identity is used to grant privileges)
+x wlcgtknprt_token wlcgtknprt
+x wlcgtknusr_token wlcgtknusr
+x wlcgtknprt_x509 wlcgtknprt
+x wlcgtknusr_x509 wlcgtknusr
+# WLCG JWT token scope based access is not handled in this configuration file

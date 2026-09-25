@@ -1,0 +1,14 @@
+{
+    "/xrootd/alice": "alice",
+    "/xrootd/atlas": "atlas",
+    "/xrootd/cms": "cms",
+    "/xrootd/dteam": "dteam",
+    "/xrootd/dune": "dune",
+    "/xrootd/gridpp": "gridpp",
+    "/xrootd/ilc": "ilc",
+    "/xrootd/lsst": "lsst",
+    "/xrootd/lz": "lz",
+    "/xrootd/mu3e": "mu3e",
+    "/xrootd/ops": "ops",
+    "/xrootd/wlcg": "wlcg"
+}

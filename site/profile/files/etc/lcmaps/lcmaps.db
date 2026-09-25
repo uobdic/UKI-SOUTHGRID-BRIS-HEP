@@ -1,0 +1,18 @@
+vomsmapfile = "lcmaps_voms.mod"
+
+vomsmapfile2 = "lcmaps_voms_localaccount.mod"
+              "-gridmap /etc/grid-security/voms-mapfile"
+
+verifyproxynokey = "lcmaps_verify_proxy.mod"
+          "--allow-limited-proxy"
+          "--discard_private_key_absence"
+          " -certdir /etc/grid-security/certificates"
+
+
+good = "lcmaps_dummy_good.mod"
+bad = "lcmaps_dummy_bad.mod"
+
+mapping_policy:
+verifyproxynokey -> vomsmapfile2 | bad
+vomsmapfile2 -> good
+
