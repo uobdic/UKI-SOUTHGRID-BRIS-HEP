@@ -141,14 +141,6 @@ class profile::xrootd (
       mode   => '0750',
   }
 
-  file { '/var/spool/xrootd':
-    ensure  => directory,
-    owner   => 'xrootd',
-    group   => 'xrootd',
-    mode    => '0700',
-    require => Package['xrootd-server'],
-  }
-
   file { [
       '/var/log/xrootd',
     ]:
@@ -297,6 +289,7 @@ class profile::xrootd (
       require   => [
         Package['xrootd-server'],
         File['/var/run/xrootd'],
+        # The service account profile manages the xrootd home directory.
         File['/var/spool/xrootd'],
         File['/var/log/xrootd'],
         File['/etc/xrootd/macaroon-secret'],
