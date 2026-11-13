@@ -25,6 +25,8 @@ class profile::xrootd (
     'which',
   ],
   Boolean $manage_services = true,
+  String $storage_catalogue = '/cvmfs/cms.cern.ch/SITECONF/T3_UK_SGrid_Bristol/PhEDEx/storage.xml',
+  String $voms_dir = '/cvmfs/grid.cern.ch/etc/grid-security/vomsdir',
 ) {
   $os_major = $facts['os']['release']['major']
   $instance = $role ? {
@@ -66,7 +68,6 @@ class profile::xrootd (
     'scitokens_mapfile_cms.json',
     'scitokens_mapfile_wlcg.json',
     'set_permissions_hdfs.py',
-    'storage.xml',
     'xrootd-clustered.cfg',
     'xrootd-standalone.cfg',
   ]
@@ -169,6 +170,42 @@ class profile::xrootd (
       group   => 'root',
       mode    => '0644',
       require => File['/etc/xrootd'],
+      notify  => $xrootd_service_notify,
+    }
+  }
+
+  file { '/etc/xrootd/storage.xml':
+    ensure   => file,
+    source   => $storage_catalogue,
+    owner    => 'root',
+    group    => 'root',
+    mode     => '0644',
+    checksum => sha256,
+    require  => File['/etc/xrootd'],
+    notify   => $xrootd_service_notify,
+  }
+
+  if $instance == 'clustered' {
+    file { '/etc/xrootd/clustered':
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
+    }
+
+    file { '/etc/xrootd/clustered/environment':
+      ensure => file,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0644',
+      notify => $xrootd_service_notify,
+    }
+
+    file_line { 'XRootD clustered VOMS directory':
+      path    => '/etc/xrootd/clustered/environment',
+      match   => '^\s*(export\s+)?X509_VOMS_DIR\s*=',
+      line    => "X509_VOMS_DIR=${voms_dir}",
+      require => File['/etc/xrootd/clustered/environment'],
       notify  => $xrootd_service_notify,
     }
   }
