@@ -26,6 +26,7 @@ profile::cephfs::keys:
 profile::cephfs::mounts:
   '/condor':
     device: condor@.dicefs=/condor
+    ensure: absent
   '/dice':
     device: dice-user@.dicefs=/dice
   '/xrootd':

@@ -141,6 +141,14 @@ class profile::xrootd (
       mode   => '0750',
   }
 
+  file { '/var/spool/xrootd':
+    ensure  => directory,
+    owner   => 'xrootd',
+    group   => 'xrootd',
+    mode    => '0700',
+    require => Package['xrootd-server'],
+  }
+
   file { [
       '/var/log/xrootd',
     ]:
@@ -196,10 +204,43 @@ class profile::xrootd (
     }
   }
 
-  file { '/etc/grid-security/xrd':
-    ensure  => link,
-    target  => "${secrets_root}/etc/grid-security/xrd",
-    require => File['/etc/grid-security'],
+  if $role == 'server' {
+    $fqdn = $facts['networking']['fqdn']
+    $cert_store = lookup('profile::grid_cert::cert_store', String, 'first', 'dice_store/certificates')
+
+    file { '/etc/grid-security/xrd':
+      ensure  => directory,
+      links   => manage,
+      owner   => 'xrootd',
+      group   => 'xrootd',
+      mode    => '0750',
+      require => Package['xrootd-server'],
+    }
+
+    file { '/etc/grid-security/xrd/hostcert.pem':
+      ensure => file,
+      source => "puppet:///${cert_store}/${fqdn}_hostcert.pem",
+      owner  => 'xrootd',
+      group  => 'xrootd',
+      mode   => '0644',
+      notify => $xrootd_service_notify,
+    }
+
+    file { '/etc/grid-security/xrd/hostkey.pem':
+      ensure    => file,
+      source    => "puppet:///${cert_store}/${fqdn}_hostkey.pem",
+      owner     => 'xrootd',
+      group     => 'xrootd',
+      mode      => '0600',
+      show_diff => false,
+      notify    => $xrootd_service_notify,
+    }
+  } else {
+    file { '/etc/grid-security/xrd':
+      ensure  => link,
+      target  => "${secrets_root}/etc/grid-security/xrd",
+      require => File['/etc/grid-security'],
+    }
   }
 
   file { '/etc/xrootd/macaroon-secret':

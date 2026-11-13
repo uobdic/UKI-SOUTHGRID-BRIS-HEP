@@ -1,0 +1,14 @@
+output_root: /software/dice/accounting/nfs
+
+shares:
+  - name: scratch
+    quota_mount: /exports/scratch
+    quota_types: [user]
+
+  - name: software
+    quota_mount: /exports/software
+    quota_types: [user, project]
+
+  - name: users
+    quota_mount: /exports/users
+    quota_types: [user]
