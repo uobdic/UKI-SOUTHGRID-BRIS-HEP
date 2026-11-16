@@ -1,11 +1,13 @@
 # Main entry point for xrootd configuration.
 class profile::xrootd (
   Enum['server', 'redirector', 'standalone'] $role = 'server',
-  String $xrootd_version = '6.0.3-1.el9',
+  Pattern[/^[0-9]+[.][0-9]+[.][0-9]+-[0-9]+[.]el[0-9]+$/] $xrootd_version = '6.2.1-1.el9',
   String $secrets_root = '/.secrets',
   Array[String] $xrootd_packages = [
     'xrootd',
     'xrootd-client',
+    'xrootd-client-libs',
+    'xrootd-libs',
     'xrootd-scitokens',
     'xrootd-selinux',
     'xrootd-server',
@@ -43,9 +45,7 @@ class profile::xrootd (
     include profile::xrootd::storage_accounting
   }
 
-  $versionlock_entries = $xrootd_packages.map |String $package_name| {
-    "${package_name}-1:${xrootd_version}.*"
-  }
+  $version_pattern = regsubst($xrootd_version, '[.]', '[.]', 'G')
   $xrootd_service_notify = $manage_services ? {
     true    => Service[$services],
     default => [],
@@ -310,11 +310,21 @@ class profile::xrootd (
     ],
   }
 
-  $versionlock_entries.each |String $versionlock_entry| {
-    file_line { "versionlock ${versionlock_entry}":
+  $xrootd_packages.each |String $package_name| {
+    file_line { "remove superseded versionlocks for ${package_name}":
+      ensure            => absent,
+      path              => '/etc/dnf/plugins/versionlock.list',
+      match             => "^${package_name}-1:(?!${version_pattern}[.][*]$)",
+      match_for_absence => true,
+      multiple          => true,
+      require           => File['/etc/dnf/plugins/versionlock.list'],
+    }
+
+    file_line { "versionlock ${package_name}":
       path    => '/etc/dnf/plugins/versionlock.list',
-      line    => $versionlock_entry,
-      require => File['/etc/dnf/plugins/versionlock.list'],
+      line    => "${package_name}-1:${xrootd_version}.*",
+      require => File_line["remove superseded versionlocks for ${package_name}"],
+      before  => Package[$xrootd_packages],
     }
   }
 
