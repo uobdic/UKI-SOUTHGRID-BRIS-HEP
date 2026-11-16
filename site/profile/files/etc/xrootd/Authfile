@@ -285,7 +285,11 @@ g /mu3e /xrootd/mu3e/user/ a \
 ###############################################################################################
 # Topics to summarize permissions
 t writeopsdata /xrootd/ops/     a
-t readopsdata  /xrootd/ops/     lr
+# ARGO WebDAV checks the parent path without a trailing slash.
+# GGUS-Ticket-ID: #681712 https://helpdesk.ggus.eu/#ticket/zoom/1813
+# Keep the subtree rule first. The bare prefix also matches ops-prefixed siblings.
+t readopsdata  /xrootd/ops/     lr \
+               /xrootd/ops      l
 
 # "/ops/Role=production" has full access to managed OPS data and read for OPS
 = opsprod o: ops g: /ops r: production
