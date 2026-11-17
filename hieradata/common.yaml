@@ -52,6 +52,8 @@ site::site_info:
       cvmfs_quota_limit: 10000
     cms.cern.ch:
       cvmfs_quota_limit: 100000
+      # Nikhef does not serve the cms.cern.ch repository.
+      cvmfs_server_url: 'http://cvmfs-stratum-one.cern.ch:8000/cvmfs/@fqrn@;http://cvmfs-egi.gridpp.rl.ac.uk:8000/cvmfs/@fqrn@'
       cvmfs_env_variables:
         CMS_LOCAL_SITE: T3_UK_SGrid_Bristol
     lhcb.cern.ch:
