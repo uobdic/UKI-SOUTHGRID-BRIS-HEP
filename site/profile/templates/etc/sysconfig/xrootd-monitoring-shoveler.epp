@@ -1,0 +1,23 @@
+SSL_CERT_DIR=<%= $ssl_cert_dir %>
+SHOVELER_MQ=stomp
+SHOVELER_STOMP_URL=<%= $stomp_url %>
+SHOVELER_STOMP_TOPIC=<%= $stomp_topic %>
+
+<% if $stomp_cert and $stomp_key { -%>
+SHOVELER_STOMP_CERT=<%= $stomp_cert %>
+SHOVELER_STOMP_CERTKEY=<%= $stomp_key %>
+<% } -%>
+
+SHOVELER_LISTEN_PORT=<%= $listen_port %>
+SHOVELER_LISTEN_IP=<%= $listen_ip %>
+SHOVELER_VERIFY=<%= $verify ? {
+  true    => 'true',
+  default => 'false',
+} %>
+
+SHOVELER_METRICS_ENABLE=<%= $metrics_enable ? {
+  true    => 'true',
+  default => 'false',
+} %>
+SHOVELER_METRICS_PORT=<%= $metrics_port %>
+SHOVELER_QUEUE_DIRECTORY=<%= $queue_directory %>

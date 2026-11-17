@@ -1,0 +1,5 @@
+[
+  {"group": "/wlcg/test", "path": "/protected", "result": "dteamprod"},
+  {"group": "/wlcg", "path": "/", "result": "dteam"}
+]
+

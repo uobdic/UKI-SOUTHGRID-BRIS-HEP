@@ -1,0 +1,89 @@
+service:
+  name: dice-xrootd
+  implementation: CephFS
+  implementationversion: Reef
+  root: /xrootd
+  output: <%= $output %>
+
+endpoints:
+  - name: dice-xrootd-root
+    interfacetype: xrootd
+    endpointurl: root://xrootd.phy.bris.ac.uk:1094
+
+  - name: dice-xrootd-https
+    interfacetype: https
+    endpointurl: https://xrootd.phy.bris.ac.uk:1094
+
+shares:
+  - name: alice
+    vos: [alice]
+    include:
+      - path: /xrootd/alice
+
+  - name: atlas
+    vos: [atlas]
+    include:
+      - path: /xrootd/atlas
+
+  - name: cms
+    vos: [cms]
+    include:
+      - path: /xrootd/cms
+      - path: /xrootd/cms/store
+        discover_depth: 2
+
+  - name: dteam
+    vos: [dteam]
+    include:
+      - path: /xrootd/dteam
+
+  - name: dune
+    vos: [dune]
+    include:
+      - path: /xrootd/dune
+
+  - name: gridpp
+    vos: [gridpp]
+    include:
+      - path: /xrootd/gridpp
+
+  - name: ilc
+    vos: [ilc]
+    include:
+      - path: /xrootd/ilc
+
+  - name: lsst
+    vos: [lsst]
+    include:
+      - path: /xrootd/lsst
+
+  - name: lz
+    vos: [lz]
+    include:
+      - path: /xrootd/lz
+        discover_depth: 2
+
+  - name: mu3e
+    vos: [mu3e]
+    include:
+      - path: /xrootd/mu3e
+
+  - name: ops
+    vos: [ops]
+    include:
+      - path: /xrootd/ops
+
+  - name: public
+    vos: [public]
+    include:
+      - path: /xrootd/public
+
+  - name: test
+    vos: [test]
+    include:
+      - path: /xrootd/test
+
+  - name: wlcg
+    vos: [wlcg]
+    include:
+      - path: /xrootd/wlcg
