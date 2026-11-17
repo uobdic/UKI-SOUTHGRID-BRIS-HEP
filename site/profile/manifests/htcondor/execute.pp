@@ -14,7 +14,15 @@ class profile::htcondor::execute (
   $execute_dir = "${execute_dir_base}/${facts['networking']['fqdn']}"
   $worker_cfg = '/etc/condor/config.d/20_worker.cfg'
 
-  file { $execute_dir:
+  exec { 'create HTCondor scratch directory tree':
+    command => ['/usr/bin/mkdir', '-p', '--', $execute_dir_base],
+    unless  => [['/usr/bin/test', '-d', $execute_dir_base]],
+  } -> file { $execute_dir_base:
+    ensure => directory,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  } -> file { $execute_dir:
     ensure => directory,
     owner  => 'condor',
     group  => 'condor',
