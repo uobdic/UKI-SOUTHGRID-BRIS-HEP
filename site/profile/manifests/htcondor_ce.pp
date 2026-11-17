@@ -23,12 +23,17 @@ class profile::htcondor_ce {
       mode    => '0644',
       source  => 'puppet:///modules/profile/etc/condor-ce/config.d/98-cms-storage-binds.conf',
       require => Class['htcondor_ce'],
-      notify  => Exec['reconfigure-ce-cms-storage-binds'],
+      notify  => Exec['condor_ce_reconfig'],
     }
 
-    exec { 'reconfigure-ce-cms-storage-binds':
-      command     => '/usr/bin/condor_ce_reconfig',
-      refreshonly => true,
+    file { '/etc/condor-ce/config.d/99-scitokens.conf':
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      source  => 'puppet:///modules/profile/etc/condor-ce/config.d/99-scitokens.conf',
+      require => Class['htcondor_ce'],
+      notify  => Exec['condor_ce_reconfig'],
     }
   }
 }
