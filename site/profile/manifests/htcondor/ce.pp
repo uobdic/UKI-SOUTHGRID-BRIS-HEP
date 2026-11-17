@@ -31,10 +31,4 @@ class profile::htcondor::ce {
     require => File['/var/lib/condor-ce/apel'],
     notify  => Exec['condor_ce_reconfig'],
   }
-
-  exec { 'condor_ce_reconfig':
-    command     => 'condor_ce_reconfig',
-    refreshonly => true,
-    path        => ['/usr/sbin','/usr/bin','/sbin','/bin'],
-  }
 }

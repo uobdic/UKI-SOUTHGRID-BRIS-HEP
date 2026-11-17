@@ -15,25 +15,29 @@ class profile::htcondor_ce {
     goc_site_name   => $goc_site_name,
   }
 
-  if $facts['networking']['fqdn'] == 'lcgce02.phy.bris.ac.uk' {
-    file { '/etc/condor-ce/config.d/98-cms-storage-binds.conf':
-      ensure  => file,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644',
-      source  => 'puppet:///modules/profile/etc/condor-ce/config.d/98-cms-storage-binds.conf',
-      require => Class['htcondor_ce'],
-      notify  => Exec['condor_ce_reconfig'],
-    }
+  file { '/etc/condor-ce/config.d/98-cms-storage-binds.conf':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    source  => 'puppet:///modules/profile/etc/condor-ce/config.d/98-cms-storage-binds.conf',
+    require => Class['htcondor_ce'],
+    notify  => Exec['condor_ce_reconfig'],
+  }
 
-    file { '/etc/condor-ce/config.d/99-scitokens.conf':
-      ensure  => file,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644',
-      source  => 'puppet:///modules/profile/etc/condor-ce/config.d/99-scitokens.conf',
-      require => Class['htcondor_ce'],
-      notify  => Exec['condor_ce_reconfig'],
-    }
+  file { '/etc/condor-ce/config.d/99-scitokens.conf':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    source  => 'puppet:///modules/profile/etc/condor-ce/config.d/99-scitokens.conf',
+    require => Class['htcondor_ce'],
+    notify  => Exec['condor_ce_reconfig'],
+  }
+
+  exec { 'condor_ce_reconfig':
+    command     => 'condor_ce_reconfig',
+    refreshonly => true,
+    path        => ['/usr/sbin','/usr/bin','/sbin','/bin'],
   }
 }
