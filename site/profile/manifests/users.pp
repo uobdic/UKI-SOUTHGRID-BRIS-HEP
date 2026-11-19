@@ -1,6 +1,7 @@
 # puppet class to create local users
 class profile::users (
   $shell = '/sbin/nologin',
+  Boolean $nfs_homes = true, # false: local /home, no /users symlinks
 ) {
   $groups     = lookup('profile::users::groups', Hash, 'deep', {})
   $users      = lookup('profile::users::users', Hash, 'deep', {})
@@ -26,7 +27,7 @@ class profile::users (
     'shell'        => $shell,
     'password'     => '!!',
     'create_group' => false,
-    'managehome'   => false,
+    'managehome'   => !$nfs_homes,
     'gid'          => '100',
     'group'        => 'users',
     'tag'          => 'accounts::users',
@@ -35,7 +36,15 @@ class profile::users (
   Group<| tag == 'accounts::groups' |> -> Accounts::User<| tag == 'accounts::users' |>
 
   create_resources('group', $groups, $defaults)
-  create_resources('accounts::user', $users, $acc_defaults)
+  # ssh keys are deployed by accounts only where homes are local; on NFS-home
+  # nodes /users is shared and the keys are managed on sts (see below)
+  $account_users = Hash($users.map |$name, $acct| {
+    $nfs_homes ? {
+      true    => [$name, $acct - 'sshkeys'],
+      default => [$name, $acct],
+    }
+  })
+  create_resources('accounts::user', $account_users, $acc_defaults)
 
   if $fqdn == 'sts.dice.priv' {
     $users.each |$key, $value| {
@@ -65,11 +74,25 @@ class profile::users (
           group  => $acc_defaults['group'],
           mode   => '0600',
         }
+        # deploy ssh keys from hieradata into the exported home
+        $sshkeys = $value['sshkeys'].lest || { [] }
+        $sshkeys.each |$line| {
+          $parts = split($line, ' ')
+          ssh_authorized_key { "${key}:${parts[2]}":
+            ensure  => present,
+            user    => $key,
+            type    => $parts[0],
+            key     => $parts[1],
+            target  => "/exports/users/${key}/.ssh/authorized_keys",
+            require => File["/exports/users/${key}/.ssh/authorized_keys"],
+          }
+        }
       }
     }
   }
   # symlink to the correct location (/home -> /users) for each user
-  unless $fqdn == 'sts.dice.priv' {
+  # (only on nodes that mount /users from NFS)
+  if $nfs_homes and $fqdn != 'sts.dice.priv' {
     $users.each |$key, $value| {
       # remove existing symlinks
       if $value['ensure'] == 'absent' {
