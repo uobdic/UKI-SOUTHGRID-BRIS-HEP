@@ -46,16 +46,12 @@ class profile::auditor (
   }
 
   # Loopback only: the database is never reachable from the network.
+  # The module already owns the postgresql.service drop-in, so the mount
+  # dependency goes into it: PostgreSQL does not start without the data disk.
   class { 'postgresql::server':
-    listen_addresses => 'localhost',
-    require          => Class['postgresql::globals'],
-  }
-
-  # Do not start PostgreSQL unless the data disk is mounted.
-  systemd::dropin_file { 'auditor-requires-data-mount.conf':
-    unit    => 'postgresql.service',
-    content => "[Unit]\nRequiresMountsFor=${data_dir}\n",
-    before  => Class['postgresql::server'],
+    listen_addresses     => 'localhost',
+    extra_systemd_config => "[Unit]\nRequiresMountsFor=${data_dir}\n",
+    require              => Class['postgresql::globals'],
   }
 
   # Cap journal usage on the OS disk.
