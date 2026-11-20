@@ -126,7 +126,7 @@ mod 'puppetlabs-kubernetes', '7.1.0'
 mod 'puppet-prometheus', '12.4.0'
 mod 'maeq-thanos', '1.4.0'
 mod 'puppet-grafana', '11.1.0'
-mod 'puppetlabs-postgresql', '8.2.1'
+mod 'puppetlabs-postgresql', '10.8.0'
 # podman
 mod 'southalc-podman', '0.6.7'
 mod 'southalc-types', '0.3.5'
