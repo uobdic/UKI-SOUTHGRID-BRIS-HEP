@@ -6,12 +6,15 @@
 # @param data_dir
 #   Mount point of the dedicated data disk.
 # @param postgresql_version
-#   PostgreSQL version to install, or undef for the module's default for this OS.
+#   PostgreSQL major version, installed from the PGDG repository.
+# @param auditor_version
+#   Version-release of the auditor RPM from the WLCG repository.
 # @param journal_max_use
 #   SystemMaxUse for journald, to keep logs from filling the OS disk.
 class profile::auditor (
   Stdlib::Absolutepath $data_dir = '/data',
-  Optional[String[1]] $postgresql_version = undef,
+  String[1] $postgresql_version = '17',
+  String[1] $auditor_version = '0.11.2-1',
   String[1] $journal_max_use = '500M',
 ) {
   unless $facts['mountpoints'] and $facts['mountpoints'][$data_dir] {
@@ -40,9 +43,19 @@ class profile::auditor (
     }
   }
 
+  # PGDG packages conflict with the Rocky AppStream postgresql module stream.
+  package { 'postgresql-appstream-module':
+    ensure   => 'disabled',
+    name     => 'postgresql',
+    provider => 'dnfmodule',
+    before   => Class['postgresql::server::install'],
+  }
+
   class { 'postgresql::globals':
-    datadir => $pgdata,
-    version => $postgresql_version,
+    datadir             => $pgdata,
+    version             => $postgresql_version,
+    manage_package_repo => true,
+    manage_dnf_module   => false,
   }
 
   # Loopback only: the database is never reachable from the network.
@@ -69,5 +82,12 @@ class profile::auditor (
   exec { 'auditor-restart-journald':
     command     => '/usr/bin/systemctl restart systemd-journald',
     refreshonly => true,
+  }
+
+  # Auditor core from the WLCG repository.
+  include profile::wlcg_repo
+  package { 'auditor':
+    ensure  => $auditor_version,
+    require => Class['profile::wlcg_repo'],
   }
 }

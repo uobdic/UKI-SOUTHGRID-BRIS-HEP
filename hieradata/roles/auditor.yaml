@@ -6,3 +6,5 @@ classes:
 # private repository.
 profile::auditor::data_dir: /data
 profile::auditor::journal_max_use: 500M
+profile::auditor::postgresql_version: '17'
+profile::auditor::auditor_version: '0.11.2-1'

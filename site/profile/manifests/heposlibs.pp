@@ -1,13 +1,8 @@
 # Class for installing HEP_OSlibs
 class profile::heposlibs {
-  $repo_rpm = 'https://linuxsoft.cern.ch/wlcg/el9/x86_64/wlcg-repo-1.0.0-1.el9.noarch.rpm'
   $package_name = 'HEP_OSlibs'
 
-  package { 'wlcg-repo':
-    ensure   => present,
-    provider => 'rpm',
-    source   => $repo_rpm,
-  }
+  include profile::wlcg_repo
 
   package { $package_name:
     ensure  => present,
