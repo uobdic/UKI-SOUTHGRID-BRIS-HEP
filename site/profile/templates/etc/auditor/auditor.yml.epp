@@ -1,0 +1,31 @@
+<%- | String[1] $addr,
+      Stdlib::Port $port,
+      String[1] $db_name,
+      String[1] $db_user,
+      Sensitive[String[1]] $db_password,
+      String[1] $log_level,
+| -%>
+# Managed by Puppet (profile::auditor). Options:
+# https://alu-schumacher.github.io/AUDITOR/latest/#configuration-files
+application:
+  addr:
+    - "<%= $addr %>"
+  port: <%= $port %>
+database:
+  host: "localhost"
+  port: 5432
+  username: "<%= $db_user %>"
+  password: "<%= $db_password.unwrap %>"
+  database_name: "<%= $db_name %>"
+  require_ssl: false
+metrics:
+  database:
+    frequency: 30
+    metrics:
+      - RecordCount
+      - RecordCountPerSite
+      - RecordCountPerGroup
+      - RecordCountPerUser
+log_level: <%= $log_level %>
+tls_config:
+  use_tls: false
