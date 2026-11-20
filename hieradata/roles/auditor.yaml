@@ -1,0 +1,8 @@
+---
+classes:
+  - profile::auditor
+
+# Auditor accounting VM defaults. Node-specific and secret settings are in the
+# private repository.
+profile::auditor::data_dir: /data
+profile::auditor::journal_max_use: 500M
