@@ -1,6 +1,8 @@
 ---
 classes:
   - profile::auditor
+  - profile::auditor::htcondor_collector
+  - profile::auditor::apel_publisher
 
 # Auditor accounting VM defaults. Node-specific and secret settings are in the
 # private repository.
