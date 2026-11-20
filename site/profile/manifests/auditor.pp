@@ -51,6 +51,12 @@ class profile::auditor (
     before   => Class['postgresql::server::install'],
   }
 
+  # The PGDG key bundled with the postgresql module (0x442DF0F8) is outdated and
+  # fails the signature check on current packages; use the key PGDG publishes.
+  Yumrepo <| title == 'yum.postgresql.org' or title == 'pgdg-common' |> {
+    gpgkey => 'https://download.postgresql.org/pub/repos/yum/keys/PGDG-RPM-GPG-KEY-RHEL',
+  }
+
   class { 'postgresql::globals':
     datadir             => $pgdata,
     version             => $postgresql_version,
