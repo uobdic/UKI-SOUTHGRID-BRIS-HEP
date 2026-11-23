@@ -41,7 +41,7 @@ class profile::htcondor::ce_settings (
   }
 
   # --- /etc/condor-ce/config.d --------------------------------------------
-  ['42-job-router.conf', '59-site-security.conf', '98-cms-storage-binds.conf', '99-local.conf', '99-scitokens.conf'].each |$name| {
+  ['42-job-router.conf', '59-site-security.conf', '98-cms-storage-binds.conf', '99-local.conf', '99-scitokens.conf', '99-vo-attributes.conf'].each |$name| {
     file { "/etc/condor-ce/config.d/${name}":
       ensure => file,
       owner  => 'root',
