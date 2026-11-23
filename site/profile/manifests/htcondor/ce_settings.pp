@@ -11,10 +11,13 @@
 #   Fallback accounting group, last line of the map.
 # @param unmapped_vos_ok
 #   Supported VOs that are deliberately left to the fallback group.
+# @param token_issuer_vos
+#   Token issuer URL to VO name, used to set VoName on routed token-only jobs.
 class profile::htcondor::ce_settings (
   Array[Hash] $accounting_map = [],
   String[1] $default_group = 'group_physics',
   Array[String] $unmapped_vos_ok = [],
+  Hash[String[1], String[1]] $token_issuer_vos = {},
 ) {
   # Warn about supported VOs without an accounting group mapping.
   $site_info = lookup('site::site_info', Hash, 'first', {})
@@ -41,7 +44,7 @@ class profile::htcondor::ce_settings (
   }
 
   # --- /etc/condor-ce/config.d --------------------------------------------
-  ['42-job-router.conf', '59-site-security.conf', '98-cms-storage-binds.conf', '99-local.conf', '99-scitokens.conf', '99-vo-attributes.conf'].each |$name| {
+  ['42-job-router.conf', '59-site-security.conf', '98-cms-storage-binds.conf', '99-local.conf', '99-scitokens.conf'].each |$name| {
     file { "/etc/condor-ce/config.d/${name}":
       ensure => file,
       owner  => 'root',
@@ -50,6 +53,17 @@ class profile::htcondor::ce_settings (
       source => "puppet:///modules/profile/etc/condor-ce/config.d/${name}",
       notify => Exec['condor_ce_reconfig'],
     }
+  }
+
+  file { '/etc/condor-ce/config.d/99-vo-attributes.conf':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => epp('profile/etc/condor-ce/config.d/99-vo-attributes.conf.epp', {
+        'token_issuer_vos' => $token_issuer_vos,
+    }),
+    notify  => Exec['condor_ce_reconfig'],
   }
 
   # --- /etc/condor/config.d (the CE's schedd) -----------------------------
