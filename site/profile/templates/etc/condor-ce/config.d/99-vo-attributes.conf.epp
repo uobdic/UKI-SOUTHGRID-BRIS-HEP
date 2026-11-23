@@ -1,17 +1,18 @@
-<%- | Hash[String[1], String[1]] $token_issuer_vos | -%>
+<%- | Array[Hash] $owner_vos | -%>
 # Managed by Puppet (profile::htcondor::ce_settings).
 #
 # Put the VO attributes on the routed job. The CE job has VoName and
 # x509UserProxyVOName, but they are not carried to the routed job, so Auditor
 # (and anything reading the schedd history) cannot see the VO. The pre-route
 # transform OrigRequests (42-job-router.conf) saves them as orig_*; the
-# post-route transforms below restore them. This file loads after the other
-# configuration, so the transforms run after the other post-route ones.
+# post-route transforms below restore them.
 #
-# Token-only jobs have no x509 attributes: their VoName is derived from the
-# token issuer (profile::htcondor::ce_settings::token_issuer_vos). Jobs from an
-# unlisted issuer get no VoName.
-JOB_ROUTER_POST_ROUTE_TRANSFORM_NAMES = $(JOB_ROUTER_POST_ROUTE_TRANSFORM_NAMES) RestoreVoName RestoreProxyVOName<% $token_issuer_vos.keys.each |$i, $issuer| { %> TokenVoName<%= $i %><% } %>
+# Jobs without a VoName after that (token-only jobs) get one from the local
+# pool account name, which is stable (token issuers are not). The patterns are
+# the ones of the schedd accounting map plus
+# profile::htcondor::ce_settings::owner_vos; the first match wins. Jobs whose
+# owner matches nothing get no VoName.
+JOB_ROUTER_POST_ROUTE_TRANSFORM_NAMES = $(JOB_ROUTER_POST_ROUTE_TRANSFORM_NAMES) RestoreVoName RestoreProxyVOName<% $owner_vos.each |$i, $e| { %> OwnerVoName<%= $i %><% } %>
 
 JOB_ROUTER_TRANSFORM_RestoreVoName @=end
     REQUIREMENTS orig_VoName =!= undefined
@@ -22,11 +23,10 @@ JOB_ROUTER_TRANSFORM_RestoreProxyVOName @=end
     REQUIREMENTS orig_x509UserProxyVOName =!= undefined
     COPY orig_x509UserProxyVOName x509UserProxyVOName
 @end
-<% $token_issuer_vos.keys.each |$i, $issuer| { -%>
+<% $owner_vos.each |$i, $e| { -%>
 
-# <%= $issuer %> -> <%= $token_issuer_vos[$issuer] %>
-JOB_ROUTER_TRANSFORM_TokenVoName<%= $i %> @=end
-    REQUIREMENTS orig_x509UserProxyVOName =?= undefined && orig_AuthTokenIssuer =?= "<%= $issuer %>"
-    SET VoName "<%= $token_issuer_vos[$issuer] %>"
+JOB_ROUTER_TRANSFORM_OwnerVoName<%= $i %> @=end
+    REQUIREMENTS VoName =?= undefined && <%= $e['match'] %>
+    SET VoName "<%= $e['vo'] %>"
 @end
 <% } -%>

@@ -54,8 +54,8 @@ profile::htcondor::ce_settings::accounting_map:
   - {pattern: '/^dteam.*/', group: group_dteam, vo: dteam}
   - {pattern: '/^ops.*/', group: group_ops, vo: ops}
 
-# VoName for token-only jobs, by token issuer (seen on lcgce02 on 23 November 2026).
-# Add further issuers here; jobs from unlisted issuers get no VoName.
-profile::htcondor::ce_settings::token_issuer_vos:
-  'https://cms-auth.cern.ch/': cms
-  'https://cilogon.org/dune': dune
+# VoName for token-only jobs comes from the pool account name (Owner): the
+# accounting_map patterns above plus these, for VOs whose jobs are not given an
+# accounting group of their own. Add the other DUNE pool account prefixes here.
+profile::htcondor::ce_settings::owner_vos:
+  - {pattern: '/^dnpil[0-9]+$/', vo: dune}

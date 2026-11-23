@@ -11,13 +11,15 @@
 #   Fallback accounting group, last line of the map.
 # @param unmapped_vos_ok
 #   Supported VOs that are deliberately left to the fallback group.
-# @param token_issuer_vos
-#   Token issuer URL to VO name, used to set VoName on routed token-only jobs.
+# @param owner_vos
+#   Extra entries (`pattern`, `vo`) for deriving VoName from the pool account
+#   name of token-only jobs, for VOs without an accounting group mapping. The
+#   accounting_map entries are used too.
 class profile::htcondor::ce_settings (
   Array[Hash] $accounting_map = [],
   String[1] $default_group = 'group_physics',
   Array[String] $unmapped_vos_ok = [],
-  Hash[String[1], String[1]] $token_issuer_vos = {},
+  Array[Hash] $owner_vos = [],
 ) {
   # Warn about supported VOs without an accounting group mapping.
   $site_info = lookup('site::site_info', Hash, 'first', {})
@@ -55,13 +57,25 @@ class profile::htcondor::ce_settings (
     }
   }
 
+  # VoName from the pool account (Owner): a regex entry is written /re/, anything
+  # else is an exact name.
+  $owner_vo_entries = ($accounting_map + $owner_vos).map |$e| {
+    $p = $e['pattern']
+    $match = $p ? {
+      /^\/.*\/$/ => "regexp(\"${p[1,-2]}\", Owner) =?= true",
+      default     => "Owner == \"${p}\"",
+    }
+    $entry = { 'match' => $match, 'vo' => $e['vo'] }
+    $entry
+  }
+
   file { '/etc/condor-ce/config.d/99-vo-attributes.conf':
     ensure  => file,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
     content => epp('profile/etc/condor-ce/config.d/99-vo-attributes.conf.epp', {
-        'token_issuer_vos' => $token_issuer_vos,
+        'owner_vos' => $owner_vo_entries,
     }),
     notify  => Exec['condor_ce_reconfig'],
   }
