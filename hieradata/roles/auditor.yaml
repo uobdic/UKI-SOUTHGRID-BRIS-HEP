@@ -15,3 +15,9 @@ profile::auditor::htcondor_collector::pool: htc01.dice.priv
 profile::auditor::htcondor_collector::schedd_names:
   - lcgce02.phy.bris.ac.uk
 profile::auditor::htcondor_collector::site_name: UKI-SOUTHGRID-BRIS-HEP
+# Publishing to APEL stays off until an operator has reviewed a dry run.
+profile::auditor::apel_publisher::publish_enabled: false
+profile::auditor::apel_publisher::benchmark_type: HEPscore23
+profile::auditor::apel_publisher::sites_to_report:
+  UKI-SOUTHGRID-BRIS-HEP:
+    - UKI-SOUTHGRID-BRIS-HEP

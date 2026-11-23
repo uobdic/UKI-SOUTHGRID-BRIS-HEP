@@ -1,0 +1,75 @@
+<%- | Hash[String[1], Array[String[1], 1]] $sites_to_report,
+      String[1] $benchmark_type,
+      String[1] $ce,
+      Stdlib::Absolutepath $time_json_path,
+      Integer[1] $report_interval,
+      String[1] $log_level,
+      Stdlib::Absolutepath $log_file,
+      String[1] $messaging_host,
+      Integer[1, 65535] $messaging_port,
+      String[1] $messaging_project,
+      String[1] $messaging_topic,
+      Stdlib::Absolutepath $client_cert,
+      Stdlib::Absolutepath $client_key,
+      String[1] $api_addr,
+      Integer[1, 65535] $api_port | -%>
+# Managed by Puppet (profile::auditor::apel_publisher)
+!Config
+plugin:
+  log_level: <%= $log_level %>
+  log_file: <%= $log_file %>
+  time_json_path: <%= $time_json_path %>
+  report_interval: <%= $report_interval %>
+
+site:
+  sites_to_report:
+<% $sites_to_report.each |$gocdb, $auditor_sites| { -%>
+    <%= $gocdb %>:
+<% $auditor_sites.each |$s| { -%>
+      - <%= $s %>
+<% } -%>
+<% } -%>
+  benchmark_type: <%= $benchmark_type %>
+  ce: <%= $ce %>
+
+messaging:
+  host: <%= $messaging_host %>
+  port: <%= $messaging_port %>
+  client_cert: <%= $client_cert %>
+  client_key: <%= $client_key %>
+  project: <%= $messaging_project %>
+  topic: <%= $messaging_topic %>
+  timeout: 10
+  retry: 3
+
+auditor:
+  ip: <%= $api_addr %>
+  port: <%= $api_port %>
+  timeout: 60
+  site_meta_field: site
+  use_tls: False
+
+summary_fields:
+  mandatory:
+    VO: !MetaField
+      name: group
+    Processors: !ComponentField
+      name: Cores
+    SubmitHost: !MetaField
+      name: submithost
+    NormalisedWallDuration: !NormalisedField
+      score:
+        name: <%= $benchmark_type %>
+        component_name: Cores
+    CpuDuration: !ComponentField
+      name: TotalCPU
+    NormalisedCpuDuration: !NormalisedField
+      base_value: !ComponentField
+        name: TotalCPU
+      score:
+        name: <%= $benchmark_type %>
+        component_name: Cores
+
+  optional:
+    Infrastructure: !ConstantField
+      value: grid
