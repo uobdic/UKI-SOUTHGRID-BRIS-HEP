@@ -40,3 +40,16 @@ profile::cephfs::mounts:
     device: dice-user@.dicefs=/dice
   '/xrootd':
     device: dice-user@.dicefs=/xrootd
+
+# Schedd fallback accounting groups (AssignAccountingGroup), first match wins.
+# Supported VOs without an entry here trigger a warning in the Puppet run.
+profile::htcondor::ce_settings::default_group: group_physics
+profile::htcondor::ce_settings::accounting_map:
+  - {pattern: '/^atlas[0-9]+$/', group: group_atlas, vo: atlas}
+  - {pattern: cmssgm, group: 'group_cms.admin,group_cms.cmssgm', vo: cms}
+  - {pattern: '/^cms.*/', group: group_cms, vo: cms}
+  - {pattern: '/^lhcb.*/', group: group_lhcb, vo: lhcb}
+  - {pattern: '/^lz.*/', group: group_lz, vo: lz}
+  - {pattern: '/^na62.*/', group: group_na62, vo: na62.vo.gridpp.ac.uk}
+  - {pattern: '/^dteam.*/', group: group_dteam, vo: dteam}
+  - {pattern: '/^ops.*/', group: group_ops, vo: ops}
