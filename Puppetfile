@@ -69,10 +69,6 @@ mod 'vosupport',
 mod 'argus',
   :git => 'https://github.com/cernops/puppet-argus',
   :ref => 'master'
-# CERN OPS fork
-mod 'htcondor_ce',
-  :git => 'https://github.com/kreczko/puppet-htcondor_ce',
-  :ref => 'CE_5.X_branch'
 
 # secondary control repo
 mod 'site_private',
