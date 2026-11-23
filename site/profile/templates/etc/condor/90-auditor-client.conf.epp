@@ -1,0 +1,5 @@
+<%- | Stdlib::Absolutepath $token_dir, String[1] $collector_host | -%>
+# Managed by Puppet (profile::auditor::htcondor_client)
+COLLECTOR_HOST = <%= $collector_host %>
+SEC_CLIENT_AUTHENTICATION_METHODS = IDTOKENS
+SEC_TOKEN_DIRECTORY = <%= $token_dir %>

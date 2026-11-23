@@ -1,0 +1,56 @@
+<%- | String[1] $api_addr,
+      Integer[1, 65535] $api_port,
+      Stdlib::Absolutepath $state_db,
+      Integer[1] $interval,
+      String[1] $pool,
+      Array[String[1], 1] $schedd_names,
+      Array[Integer, 1] $job_status,
+      String[1] $site_name,
+      String[1] $benchmark | -%>
+# Managed by Puppet (profile::auditor::htcondor_collector)
+addr: <%= $api_addr %>
+port: <%= $api_port %>
+timeout: 10
+state_db: <%= $state_db %>
+record_prefix: htcondor
+interval: <%= $interval %>
+query_type: exec
+pool: <%= $pool %>
+schedd_names:
+<% $schedd_names.each |$s| { -%>
+  - <%= $s %>
+<% } -%>
+job_status:
+<% $job_status.each |$j| { -%>
+  - <%= $j %>
+<% } -%>
+
+meta:
+  user:
+    key: Owner
+    matches: ^(.+)$
+  group:
+    key: VoName
+    matches: ^(.+)$
+  submithost:
+    key: GlobalJobId
+    matches: ^(.*)#\d+.\d+#\d+$
+  site:
+    - name: "<%= $site_name %>"
+      key: LastRemoteHost
+      matches: ^slot.+@.+$
+
+components:
+  - name: Cores
+    key: CpusProvisioned
+    scores:
+      - name: "<%= $benchmark %>"
+        key: MachineAttrApelSpecs0
+        matches: <%= $benchmark %>\D+(\d+(\.\d+)?)
+  - name: Memory
+    key: MemoryProvisioned
+  - name: TotalCPU
+    key: "RemoteUserCpu+RemoteSysCpu"
+
+tls_config:
+  use_tls: False

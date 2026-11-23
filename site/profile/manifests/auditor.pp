@@ -41,8 +41,9 @@ class profile::auditor (
 
   $pgdata = "${data_dir}/pgsql"
 
-  # State directories for the collector and the APEL plugin (used from slice 3).
-  file { ["${data_dir}/auditor", "${data_dir}/auditor/collector", "${data_dir}/auditor/apel"]:
+  # State directories. The collector's directory is managed by
+  # profile::auditor::htcondor_collector (it is owned by the collector user).
+  file { ["${data_dir}/auditor", "${data_dir}/auditor/apel"]:
     ensure => directory,
     owner  => 'root',
     group  => 'root',

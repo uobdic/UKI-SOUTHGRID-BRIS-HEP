@@ -1,6 +1,7 @@
 ---
 classes:
   - profile::auditor
+  - profile::auditor::htcondor_client
   - profile::auditor::htcondor_collector
   - profile::auditor::apel_publisher
 
@@ -10,3 +11,7 @@ profile::auditor::data_dir: /data
 profile::auditor::journal_max_use: 500M
 profile::auditor::postgresql_version: '17'
 profile::auditor::auditor_version: '0.11.2-1'
+profile::auditor::htcondor_collector::pool: htc01.dice.priv
+profile::auditor::htcondor_collector::schedd_names:
+  - lcgce02.phy.bris.ac.uk
+profile::auditor::htcondor_collector::site_name: UKI-SOUTHGRID-BRIS-HEP
