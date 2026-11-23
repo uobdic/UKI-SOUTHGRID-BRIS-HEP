@@ -15,11 +15,18 @@
 #   Extra entries (`pattern`, `vo`) for deriving VoName from the pool account
 #   name of token-only jobs, for VOs without an accounting group mapping. The
 #   accounting_map entries are used too.
+# @param history_max_size
+#   Size in bytes at which the schedd rotates its job history file.
+# @param history_rotations
+#   Number of rotated history files to keep. With the default size (50 MB,
+#   about a week of jobs at the current rate) this keeps at least a month.
 class profile::htcondor::ce_settings (
   Array[Hash] $accounting_map = [],
   String[1] $default_group = 'group_physics',
   Array[String] $unmapped_vos_ok = [],
   Array[Hash] $owner_vos = [],
+  Integer[1] $history_max_size = 52428800,
+  Integer[1] $history_rotations = 5,
 ) {
   # Warn about supported VOs without an accounting group mapping.
   $site_info = lookup('site::site_info', Hash, 'first', {})
@@ -90,6 +97,16 @@ class profile::htcondor::ce_settings (
       source => "puppet:///modules/profile/etc/condor/config.d/${name}",
       notify => Exec['condor_reconfig'],
     }
+  }
+
+  # Job history kept by the schedd: Auditor's collector reads it.
+  file { '/etc/condor/config.d/63-history.conf':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => "# Managed by Puppet (profile::htcondor::ce_settings)\nENABLE_HISTORY_ROTATION = True\nMAX_HISTORY_LOG = ${history_max_size}\nMAX_HISTORY_ROTATIONS = ${history_rotations}\n",
+    notify  => Exec['condor_reconfig'],
   }
 
   file { '/etc/condor/config.d/00-site-common.conf':
