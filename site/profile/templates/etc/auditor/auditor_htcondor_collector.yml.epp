@@ -6,7 +6,8 @@
       Array[String[1], 1] $schedd_names,
       Array[Integer, 1] $job_status,
       String[1] $site_name,
-      String[1] $benchmark | -%>
+      String[1] $benchmark,
+      Optional[String[1]] $earliest_datetime | -%>
 # Managed by Puppet (profile::auditor::htcondor_collector)
 addr: <%= $api_addr %>
 port: <%= $api_port %>
@@ -14,6 +15,10 @@ timeout: 10
 state_db: <%= $state_db %>
 record_prefix: htcondor
 interval: <%= $interval %>
+<% if $earliest_datetime { -%>
+# only used on the first start (empty state database); quoted so YAML keeps a string
+earliest_datetime: "<%= $earliest_datetime %>"
+<% } -%>
 query_type: exec
 pool: <%= $pool %>
 schedd_names:
