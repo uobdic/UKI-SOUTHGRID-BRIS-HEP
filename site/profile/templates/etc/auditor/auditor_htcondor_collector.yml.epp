@@ -46,7 +46,7 @@ components:
     scores:
       - name: "<%= $benchmark %>"
         key: MachineAttrApelSpecs0
-        matches: <%= $benchmark %>\D+(\d+(\.\d+)?)
+        matches: (?:<%= $benchmark %>|HEPSCORE)\D+(\d+(\.\d+)?)
   - name: Memory
     key: MemoryProvisioned
   - name: TotalCPU
