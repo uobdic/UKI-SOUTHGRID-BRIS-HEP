@@ -59,3 +59,5 @@ profile::htcondor::ce_settings::accounting_map:
 # accounting group of their own. Add the other DUNE pool account prefixes here.
 profile::htcondor::ce_settings::owner_vos:
   - {pattern: '/^dnpil[0-9]+$/', vo: dune}
+  - {pattern: '/^mu3e.*/', vo: mu3e.org}
+  - {pattern: '/^gridpp.*/', vo: gridpp}
