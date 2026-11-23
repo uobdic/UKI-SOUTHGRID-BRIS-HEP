@@ -115,10 +115,17 @@ class profile::htcondor::execute (
     default => $node_info.dig('benchmark', 'hepspec06', 'per_core'),
   }
 
+  # HEPscore23 is the name the Auditor collector and APEL expect; HEPSCORE is
+  # kept for existing consumers.
+  $hepscore23_spec = $baseline_type ? {
+    'hepscore23' => "; HEPscore23=${hepscore_per_core_str}",
+    default      => '',
+  }
+
   if $si2k_val {
-    $apel_specs = "[HEPSCORE=${hepscore_per_core_str}; SI2K=${si2k_val}]"
+    $apel_specs = "[HEPSCORE=${hepscore_per_core_str}${hepscore23_spec}; SI2K=${si2k_val}]"
   } else {
-    $apel_specs = "[HEPSCORE=${hepscore_per_core_str}]"
+    $apel_specs = "[HEPSCORE=${hepscore_per_core_str}${hepscore23_spec}]"
   }
 
   # create the worker config file
