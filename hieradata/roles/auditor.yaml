@@ -15,6 +15,15 @@ profile::auditor::htcondor_collector::pool: htc01.dice.priv
 profile::auditor::htcondor_collector::schedd_names:
   - lcgce02.phy.bris.ac.uk
 profile::auditor::htcondor_collector::site_name: UKI-SOUTHGRID-BRIS-HEP
+# Local schedds: collected into Auditor for reports, never published to APEL
+# (sites_to_report below lists only the grid site).
+profile::auditor::htcondor_collector::local_schedd_names:
+  - hm01.dice.priv
+  - prometheus.phy.bris.ac.uk
+  - sc01.dice.priv
+  - status.dice.priv
+profile::auditor::htcondor_collector::local_site_name: DICE-LOCAL
+profile::auditor::htcondor_collector::local_record_prefix: htcondor-local
 # Publishing to APEL stays off until an operator has reviewed a dry run.
 profile::auditor::apel_publisher::publish_enabled: false
 profile::auditor::apel_publisher::benchmark_type: HEPscore23

@@ -8,9 +8,20 @@
 # @param pool
 #   HTCondor pool (central manager) passed to condor_history -pool.
 # @param schedd_names
-#   Schedds whose job history is collected.
+#   Schedds whose job history is collected (grid CEs, published to APEL).
 # @param site_name
 #   Value of the Auditor "site" meta field.
+# @param record_prefix
+#   Prefix of the Auditor record ids written by the grid collector.
+# @param local_schedd_names
+#   Local (non-grid) schedds collected by a second collector instance. Empty
+#   (default): no second instance. These records are stored but not published to
+#   APEL, because the APEL plugin reports only the sites in its sites_to_report.
+# @param local_site_name
+#   Value of the Auditor "site" meta field for the local schedds.
+# @param local_record_prefix
+#   Prefix of the record ids of the local instance. It must differ from
+#   record_prefix: the state database and the record ids are keyed by it.
 # @param state_dir
 #   Directory for the collector state database.
 # @param interval
@@ -32,6 +43,10 @@ class profile::auditor::htcondor_collector (
   String[1] $pool = 'htc01.dice.priv',
   Array[String[1], 1] $schedd_names = ['lcgce02.phy.bris.ac.uk'],
   String[1] $site_name = 'UKI-SOUTHGRID-BRIS-HEP',
+  String[1] $record_prefix = 'htcondor',
+  Array[String[1]] $local_schedd_names = [],
+  String[1] $local_site_name = 'DICE-LOCAL',
+  String[1] $local_record_prefix = 'htcondor-local',
   Stdlib::Absolutepath $state_dir = '/data/auditor/collector',
   Integer[1] $interval = 900,
   Array[Integer, 1] $job_status = [3, 4],
@@ -69,6 +84,7 @@ class profile::auditor::htcondor_collector (
         'pool'              => $pool,
         'schedd_names'      => $schedd_names,
         'job_status'        => $job_status,
+        'record_prefix'     => $record_prefix,
         'site_name'         => $site_name,
         'benchmark'         => $benchmark,
         'earliest_datetime' => $earliest_datetime,
@@ -81,5 +97,48 @@ class profile::auditor::htcondor_collector (
     ensure  => stopped,
     enable  => false,
     require => Package['auditor_htcondor_collector'],
+  }
+
+  # Second instance for the local schedds: own config, state database, record
+  # prefix and site, so APEL (which selects on site) never sees these records.
+  # It stays stopped until an operator enables it, like the grid instance.
+  unless empty($local_schedd_names) {
+    if $local_record_prefix == $record_prefix {
+      fail('profile::auditor::htcondor_collector: local_record_prefix must differ from record_prefix')
+    }
+
+    $local_config = '/etc/auditor/auditor_htcondor_collector_local.yml'
+
+    file { $local_config:
+      ensure  => file,
+      owner   => 'root',
+      group   => 'auditor',
+      mode    => '0640',
+      content => epp('profile/etc/auditor/auditor_htcondor_collector.yml.epp', {
+          'api_addr'          => $api_addr,
+          'api_port'          => $api_port,
+          'state_db'          => "${state_dir}/htcondor_local_history_state.db",
+          'interval'          => $interval,
+          'pool'              => $pool,
+          'schedd_names'      => $local_schedd_names,
+          'job_status'        => $job_status,
+          'record_prefix'     => $local_record_prefix,
+          'site_name'         => $local_site_name,
+          'benchmark'         => $benchmark,
+          'earliest_datetime' => $earliest_datetime,
+      }),
+      require => Package['auditor_htcondor_collector'],
+      notify  => Systemd::Unit_file['auditor_htcondor_collector_local.service'],
+    }
+
+    # Copy of the packaged unit with a different --config.
+    systemd::unit_file { 'auditor_htcondor_collector_local.service':
+      content => epp('profile/etc/systemd/auditor_htcondor_collector_local.service.epp', {
+          'config' => $local_config,
+      }),
+      enable  => false,
+      active  => false,
+      require => Package['auditor_htcondor_collector'],
+    }
   }
 }
