@@ -43,6 +43,9 @@ profile::cephfs::mounts:
 
 # Schedd fallback accounting groups (AssignAccountingGroup), first match wins.
 # Supported VOs without an entry here trigger a warning in the Puppet run.
+# Per-job history of the CE schedd (the batch schedd uses the class default
+# /var/lib/condor/per-job-history); archive only, see profile::htcondor::per_job_history.
+profile::htcondor::per_job_history::ce_dir: /var/lib/condor-ce/per-job-history
 profile::htcondor::ce_settings::default_group: group_physics
 profile::htcondor::ce_settings::accounting_map:
   - {pattern: '/^atlas[0-9]+$/', group: group_atlas, vo: atlas}

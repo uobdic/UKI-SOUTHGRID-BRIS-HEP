@@ -5,6 +5,7 @@ class profile::htcondor::submit (
   Hash $periodic_remove_requirements = {},
 ) {
   include profile::htcondor::apel_specs
+  include profile::htcondor::per_job_history
 
   file { '/etc/condor/config.d/00_accounting.conf':
     ensure => file,

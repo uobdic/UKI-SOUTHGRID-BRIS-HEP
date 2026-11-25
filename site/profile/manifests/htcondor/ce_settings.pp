@@ -89,6 +89,7 @@ class profile::htcondor::ce_settings (
 
   # --- /etc/condor/config.d (the CE's schedd) -----------------------------
   include profile::htcondor::apel_specs
+  include profile::htcondor::per_job_history
 
   ['01-submit.config', '60-accounting.conf'].each |$name| {
     file { "/etc/condor/config.d/${name}":
