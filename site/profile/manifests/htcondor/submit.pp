@@ -4,6 +4,8 @@
 class profile::htcondor::submit (
   Hash $periodic_remove_requirements = {},
 ) {
+  include profile::htcondor::apel_specs
+
   file { '/etc/condor/config.d/00_accounting.conf':
     ensure => file,
     source => "puppet:///modules/${module_name}/etc/condor/00_accounting.conf",

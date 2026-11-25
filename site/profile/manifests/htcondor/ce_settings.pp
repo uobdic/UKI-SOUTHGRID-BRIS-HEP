@@ -88,7 +88,9 @@ class profile::htcondor::ce_settings (
   }
 
   # --- /etc/condor/config.d (the CE's schedd) -----------------------------
-  ['01-submit.config', '60-accounting.conf', '62-apel-specs.conf'].each |$name| {
+  include profile::htcondor::apel_specs
+
+  ['01-submit.config', '60-accounting.conf'].each |$name| {
     file { "/etc/condor/config.d/${name}":
       ensure => file,
       owner  => 'root',
