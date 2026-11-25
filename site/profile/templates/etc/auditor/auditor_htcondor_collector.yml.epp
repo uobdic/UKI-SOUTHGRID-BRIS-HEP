@@ -8,7 +8,8 @@
       String[1] $record_prefix,
       String[1] $site_name,
       String[1] $benchmark,
-      Optional[String[1]] $earliest_datetime | -%>
+      Optional[String[1]] $earliest_datetime,
+      Optional[Integer[0]] $max_overrun | -%>
 # Managed by Puppet (profile::auditor::htcondor_collector)
 addr: <%= $api_addr %>
 port: <%= $api_port %>
@@ -21,6 +22,11 @@ interval: <%= $interval %>
 earliest_datetime: "<%= $earliest_datetime %>"
 <% } -%>
 query_type: exec
+<% if $max_overrun =~ Integer { -%>
+# AUDITOR#2023: skip jobs whose runtime (stop - LastMatchTime) exceeds RemoteWallClockTime
+# by more than <%= $max_overrun %> s (held, then removed). Stop time chosen like the collector.
+constraint: "(ifThenElse(CompletionDate =!= undefined && CompletionDate > 0, CompletionDate, ifThenElse(EpochWriteDate =!= undefined && EpochWriteDate > 0, EpochWriteDate, EnteredCurrentStatus)) - LastMatchTime) <= RemoteWallClockTime + <%= $max_overrun %>"
+<% } -%>
 pool: <%= $pool %>
 schedd_names:
 <% $schedd_names.each |$s| { -%>

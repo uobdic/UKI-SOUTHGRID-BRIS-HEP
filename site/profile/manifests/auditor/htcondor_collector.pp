@@ -34,6 +34,13 @@
 #   First start only: oldest job end time to collect (ISO 8601, e.g.
 #   2024-01-01T00:00:00+00:00). Ignored once the state database exists.
 #   Unset: start at the time of the first run.
+# @param max_overrun
+#   Workaround for AUDITOR#2023 (held and then removed jobs get a runtime from
+#   match to removal, so held time counts as walltime). Jobs whose recorded
+#   runtime (stop time - LastMatchTime) exceeds RemoteWallClockTime by more than
+#   this many seconds are not collected: their real usage is lost, but the
+#   inflation is avoided. Applies to both collector instances. Unset (default):
+#   no filter. Remove it once the upstream fix is released.
 # @param api_addr
 #   Address of the Auditor API.
 # @param api_port
@@ -52,6 +59,7 @@ class profile::auditor::htcondor_collector (
   Array[Integer, 1] $job_status = [3, 4],
   String[1] $benchmark = 'HEPscore23',
   Optional[String[1]] $earliest_datetime = undef,
+  Optional[Integer[0]] $max_overrun = undef,
   String[1] $api_addr = '127.0.0.1',
   Integer[1, 65535] $api_port = 8000,
 ) {
@@ -88,6 +96,7 @@ class profile::auditor::htcondor_collector (
         'site_name'         => $site_name,
         'benchmark'         => $benchmark,
         'earliest_datetime' => $earliest_datetime,
+        'max_overrun'       => $max_overrun,
     }),
     require => Package['auditor_htcondor_collector'],
     notify  => Service['auditor_htcondor_collector'],
@@ -126,6 +135,7 @@ class profile::auditor::htcondor_collector (
           'site_name'         => $local_site_name,
           'benchmark'         => $benchmark,
           'earliest_datetime' => $earliest_datetime,
+        'max_overrun'       => $max_overrun,
       }),
       require => Package['auditor_htcondor_collector'],
       notify  => Systemd::Unit_file['auditor_htcondor_collector_local.service'],

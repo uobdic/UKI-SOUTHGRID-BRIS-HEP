@@ -15,6 +15,9 @@ profile::auditor::htcondor_collector::pool: htc01.dice.priv
 profile::auditor::htcondor_collector::schedd_names:
   - lcgce02.phy.bris.ac.uk
 profile::auditor::htcondor_collector::site_name: UKI-SOUTHGRID-BRIS-HEP
+# AUDITOR#2023 workaround: drop jobs held for more than ~3 h before removal (their
+# recorded runtime includes the held time). Remove once the upstream fix is released.
+profile::auditor::htcondor_collector::max_overrun: 10800
 # Local schedds: collected into Auditor for reports, never published to APEL
 # (sites_to_report below lists only the grid site). The schedd list
 # (local_schedd_names) is in the private repository, node data of the auditor.
