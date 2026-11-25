@@ -1,0 +1,18 @@
+<%- | Stdlib::Absolutepath $config | -%>
+# Managed by Puppet (profile::auditor::htcondor_collector)
+# Copy of the packaged auditor_htcondor_collector.service with another --config.
+[Unit]
+Description=HTCondor collector for AUDITOR (local schedds)
+Documentation=https://alu-schumacher.github.io/AUDITOR/
+
+[Install]
+RequiredBy=multi-user.target
+
+[Service]
+Type=simple
+User=auditor-htcondor-collector
+Group=auditor
+WorkingDirectory=/opt/auditor_htcondor_collector
+ExecStart=/opt/auditor_htcondor_collector/venv/bin/auditor-htcondor-collector --config <%= $config %>
+Restart=on-failure
+RestartSec=60

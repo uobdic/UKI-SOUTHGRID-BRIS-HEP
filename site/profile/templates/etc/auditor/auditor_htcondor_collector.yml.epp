@@ -5,6 +5,7 @@
       String[1] $pool,
       Array[String[1], 1] $schedd_names,
       Array[Integer, 1] $job_status,
+      String[1] $record_prefix,
       String[1] $site_name,
       String[1] $benchmark,
       Optional[String[1]] $earliest_datetime | -%>
@@ -13,7 +14,7 @@ addr: <%= $api_addr %>
 port: <%= $api_port %>
 timeout: 10
 state_db: <%= $state_db %>
-record_prefix: htcondor
+record_prefix: <%= $record_prefix %>
 interval: <%= $interval %>
 <% if $earliest_datetime { -%>
 # only used on the first start (empty state database); quoted so YAML keeps a string
