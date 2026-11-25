@@ -22,6 +22,10 @@ profile::auditor::htcondor_collector::max_overrun: 10800
 # 2026-11-17). Only used while the collector state database does not exist yet,
 # and shared with the local collector.
 profile::auditor::htcondor_collector::earliest_datetime: "2026-11-17T00:00:00+00:00"
+# Start the collectors (grid CE and local schedds). Records are stored in Auditor
+# only; publishing to APEL stays off (apel_publisher::publish_enabled).
+profile::auditor::htcondor_collector::enable: true
+profile::auditor::htcondor_collector::local_enable: true
 # Local schedds: collected into Auditor for reports, never published to APEL
 # (sites_to_report below lists only the grid site). The schedd list
 # (local_schedd_names) is in the private repository, node data of the auditor.
