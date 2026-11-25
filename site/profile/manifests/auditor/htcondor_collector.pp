@@ -1,7 +1,9 @@
 # AUDITOR HTCondor collector: reads job history from the schedds into Auditor.
 #
-# The service stays stopped until the configuration is reviewed and the
-# condor_history hand test works (see profile::auditor::htcondor_client).
+# The services stay stopped until `enable` (grid collector) and `local_enable`
+# (local collector) are set: review the configuration and run the
+# condor_history hand test first (see profile::auditor::htcondor_client). Both
+# need the read-only token in place and the `auditor` service running.
 #
 # @param version
 #   Version-release of the auditor_htcondor_collector RPM (WLCG repository).
@@ -34,6 +36,10 @@
 #   First start only: oldest job end time to collect (ISO 8601, e.g.
 #   2024-01-01T00:00:00+00:00). Ignored once the state database exists.
 #   Unset: start at the time of the first run.
+# @param enable
+#   Run the grid collector service. Keep false until the hand test works.
+# @param local_enable
+#   Run the local collector service (only used when local_schedd_names is set).
 # @param max_overrun
 #   Workaround for AUDITOR#2023 (held and then removed jobs get a runtime from
 #   match to removal, so held time counts as walltime). Jobs whose recorded
@@ -60,6 +66,8 @@ class profile::auditor::htcondor_collector (
   String[1] $benchmark = 'HEPscore23',
   Optional[String[1]] $earliest_datetime = undef,
   Optional[Integer[0]] $max_overrun = undef,
+  Boolean $enable = false,
+  Boolean $local_enable = false,
   String[1] $api_addr = '127.0.0.1',
   Integer[1, 65535] $api_port = 8000,
 ) {
@@ -103,8 +111,8 @@ class profile::auditor::htcondor_collector (
   }
 
   service { 'auditor_htcondor_collector':
-    ensure  => stopped,
-    enable  => false,
+    ensure  => $enable ? { true => running, default => stopped },
+    enable  => $enable,
     require => Package['auditor_htcondor_collector'],
   }
 
@@ -146,8 +154,8 @@ class profile::auditor::htcondor_collector (
       content => epp('profile/etc/systemd/auditor_htcondor_collector_local.service.epp', {
           'config' => $local_config,
       }),
-      enable  => false,
-      active  => false,
+      enable  => $local_enable,
+      active  => $local_enable,
       require => Package['auditor_htcondor_collector'],
     }
   }
