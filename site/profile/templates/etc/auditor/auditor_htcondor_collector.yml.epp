@@ -56,7 +56,7 @@ components:
   - name: Memory
     key: MemoryProvisioned
   - name: TotalCPU
-    key: "RemoteUserCpu+RemoteSysCpu"
+    key: "CumulativeRemoteUserCpu+CumulativeRemoteSysCpu"
 
 tls_config:
   use_tls: False
