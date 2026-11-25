@@ -18,6 +18,10 @@ profile::auditor::htcondor_collector::site_name: UKI-SOUTHGRID-BRIS-HEP
 # AUDITOR#2023 workaround: drop jobs held for more than ~3 h before removal (their
 # recorded runtime includes the held time). Remove once the upstream fix is released.
 profile::auditor::htcondor_collector::max_overrun: 10800
+# First start: collect the whole history the CE schedd still holds (it starts on
+# 2026-11-17). Only used while the collector state database does not exist yet,
+# and shared with the local collector.
+profile::auditor::htcondor_collector::earliest_datetime: "2026-11-17T00:00:00+00:00"
 # Local schedds: collected into Auditor for reports, never published to APEL
 # (sites_to_report below lists only the grid site). The schedd list
 # (local_schedd_names) is in the private repository, node data of the auditor.
