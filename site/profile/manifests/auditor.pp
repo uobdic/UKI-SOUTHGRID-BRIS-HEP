@@ -12,7 +12,12 @@
 # @param db_password
 #   Password of the auditor database role (EYAML in the private node data).
 # @param api_addr
-#   Address the API listens on. Keep loopback until a remote client is approved.
+#   Address the API always listens on. Keep loopback: the collectors and the
+#   APEL plugin on this host use it.
+# @param api_extra_addrs
+#   Further addresses the API listens on, for approved remote clients. The API
+#   has no authentication, so restrict the clients with a host firewall rule
+#   (see the network page in docs-admin) before adding an address.
 # @param api_port
 #   API port.
 # @param db_name
@@ -29,6 +34,7 @@ class profile::auditor (
   String[1] $auditor_version = '0.11.2-1',
   String[1] $db_password,
   String[1] $api_addr = '127.0.0.1',
+  Array[String[1]] $api_extra_addrs = [],
   Stdlib::Port $api_port = 8000,
   String[1] $db_name = 'auditor',
   String[1] $db_user = 'auditor',
@@ -154,7 +160,7 @@ class profile::auditor (
     group   => 'auditor',
     mode    => '0640',
     content => Sensitive(epp('profile/etc/auditor/auditor.yml.epp', {
-      addr        => $api_addr,
+      addrs       => unique([$api_addr] + $api_extra_addrs),
       port        => $api_port,
       db_name     => $db_name,
       db_user     => $db_user,

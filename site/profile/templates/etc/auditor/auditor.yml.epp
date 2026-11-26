@@ -1,4 +1,4 @@
-<%- | String[1] $addr,
+<%- | Array[String[1], 1] $addrs,
       Stdlib::Port $port,
       String[1] $db_name,
       String[1] $db_user,
@@ -9,7 +9,9 @@
 # https://alu-schumacher.github.io/AUDITOR/latest/#configuration-files
 application:
   addr:
-    - "<%= $addr %>"
+<% $addrs.each |$a| { -%>
+    - "<%= $a %>"
+<% } -%>
   port: <%= $port %>
 database:
   host: "localhost"
