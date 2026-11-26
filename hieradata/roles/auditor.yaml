@@ -22,8 +22,8 @@ profile::auditor::htcondor_collector::max_overrun: 10800
 # 2026-11-17). Only used while the collector state database does not exist yet,
 # and shared with the local collector.
 profile::auditor::htcondor_collector::earliest_datetime: "2026-11-17T00:00:00+00:00"
-# Start the collectors (grid CE and local schedds). Records are stored in Auditor
-# only; publishing to APEL stays off (apel_publisher::publish_enabled).
+# Start the collectors (grid CE and local schedds). Only the grid site is
+# published to APEL (apel_publisher::publish_enabled).
 profile::auditor::htcondor_collector::enable: true
 profile::auditor::htcondor_collector::local_enable: true
 # Local schedds: collected into Auditor for reports, never published to APEL
@@ -31,8 +31,9 @@ profile::auditor::htcondor_collector::local_enable: true
 # (local_schedd_names) is in the private repository, node data of the auditor.
 profile::auditor::htcondor_collector::local_site_name: DICE-LOCAL
 profile::auditor::htcondor_collector::local_record_prefix: htcondor-local
-# Publishing to APEL stays off until an operator has reviewed a dry run.
-profile::auditor::apel_publisher::publish_enabled: false
+# Publishing to APEL: enabled 26 November 2026 after a reviewed dry run. The first
+# month (November) is partial: Auditor records start on 17 November.
+profile::auditor::apel_publisher::publish_enabled: true
 profile::auditor::apel_publisher::benchmark_type: HEPscore23
 profile::auditor::apel_publisher::sites_to_report:
   UKI-SOUTHGRID-BRIS-HEP:
